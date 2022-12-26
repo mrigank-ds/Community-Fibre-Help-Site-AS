@@ -23,14 +23,10 @@ const StandardLayout: LayoutComponent = ({ page }) => {
   const isVertical = useAnswersState(s => s.meta.searchType) === SearchTypeEnum.Vertical;
   const PreText : any = useAnswersState(state => state.vertical.verticalKey);
   var PlaceholderText = '';
-  if(PreText==='products'){
-    PlaceholderText = 'Have a look at our Products';
-  }else if(PreText==='locations'){
-    PlaceholderText = 'Find Our Shops';
+  if(PreText==='help_articles'){
+    PlaceholderText = 'Search Our Help Articles';
   }else if(PreText==='faqs'){
     PlaceholderText = 'Your Frequently Asked Questions';
-  }else if(PreText==='articles'){
-    PlaceholderText = 'Have a look at our Articles';
   }
 
   
