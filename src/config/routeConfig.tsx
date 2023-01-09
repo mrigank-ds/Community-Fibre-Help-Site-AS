@@ -27,6 +27,7 @@ export const routeConfig = [
   },
   {
     path: '/products',
+    exact:true,
     page: <ProductPage verticalKey='products' />
   },
  {
