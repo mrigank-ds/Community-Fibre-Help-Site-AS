@@ -25,9 +25,11 @@ export const routeConfig = [
     path: '/locations',
     page: <LocationsPage verticalKey="locations" />
   },
+
+
+
   {
     path: '/products',
-    exact:true,
     page: <ProductPage verticalKey='products' />
   },
  {
