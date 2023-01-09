@@ -1,5 +1,5 @@
 import { ComponentType } from 'react';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { BrowserRouter as Router,  Route, Routes } from 'react-router-dom';
 
 interface RouteData {
   path: string,
@@ -33,9 +33,9 @@ export default function PageRouter({ Layout, routes }: PageProps) {
 
   return (
     <Router>
-      <Switch>
+      <Routes>
         {pages}
-      </Switch>
+      </Routes>
     </Router>
   );
 }
