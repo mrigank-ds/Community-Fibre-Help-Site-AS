@@ -99,11 +99,11 @@ module.exports = function (proxy, allowedHost) {
       disableDotRule: false,
       index: '/index.html',
     },
-  //   devServer: {
-  //     historyApiFallback: true,
-  //     contentBase: './',
-  //     hot: true
-  //  },
+    devServer: {
+      historyApiFallback: true,
+      contentBase: './',
+      hot: true
+   },
     public: allowedHost,
     // `proxy` is run between `before` and `after` `webpack-dev-server` hooks
     proxy,
