@@ -752,13 +752,7 @@ module.exports = function (webpackEnv) {
       child_process: 'empty',
     },
 
-    devServer: {
-    open: true,
-    historyApiFallback: true,
-   allowedHosts: 'all',
-   hot: true
-    
-  },
+   
     // Turn off performance processing because we utilize
     // our own hints via the FileSizeReporter
     performance: false,
