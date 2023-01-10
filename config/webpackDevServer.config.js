@@ -98,6 +98,7 @@ module.exports = function (proxy, allowedHost) {
       // See https://github.com/facebook/create-react-app/issues/387.
       disableDotRule: false,
       index: '/index.html',
+      hot: true
     },
   //   devServer: {
   //     historyApiFallback: true,
