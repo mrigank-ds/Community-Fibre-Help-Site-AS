@@ -30,7 +30,7 @@ export const routeConfig = [
 
   {
     path: '/products',
-    exact:false
+    exact:false,
     page: <ProductPage verticalKey='products' />
   },
  {
