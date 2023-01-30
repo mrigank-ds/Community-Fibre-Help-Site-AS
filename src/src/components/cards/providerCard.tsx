@@ -57,7 +57,7 @@ export function ProviderCard(props: StandardCardProps): JSX.Element {
   const { configuration, result, customCssClasses, cssCompositionMethod } = props;
   const cssClasses = useComposedCssClasses(builtInCssClasses, customCssClasses, cssCompositionMethod);
 
-  console.log(result, "result");
+  // console.log(result, "result");
 
   const products: any = result.rawData;
   //const productsku = products.mpn ? products.mpn: 'SKU is not available';

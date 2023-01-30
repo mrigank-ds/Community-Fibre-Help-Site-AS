@@ -77,7 +77,7 @@ function limit(string = '', limit = 0) {
 }
 const greeting = limit(name, 33);
 const decs = limit(Productdec, 53);
-console.log(greeting, "greeting");
+// console.log(greeting, "greeting");
 
 
 

@@ -134,7 +134,7 @@ function Pagination(props: PaginationProps): JSX.Element | null {
   const offset = useAnswersState(state => state.vertical.offset) || 0;
   const limit = useAnswersState(state => state.vertical.limit) || 9;
 
-console.log(limit,'limit');
+// console.log(limit,'limit');
 
   const executeSearchWithNewOffset = (newOffset: number) => {
     answersAction.setOffset(newOffset);

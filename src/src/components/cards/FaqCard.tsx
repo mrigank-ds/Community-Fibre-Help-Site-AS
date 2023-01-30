@@ -75,7 +75,7 @@ export function FaqCard(props: TrainerCardProps): JSX.Element {
      return string.substring(0, limit)
    }
    const greeting = limit(Ans, 100);
-   console.log(greeting, "greeting");
+  //  console.log(greeting, "greeting");
   const [faqClass, setFaqClass] = useState("");
 
   const cssClasses = useComposedCssClasses(builtInCssClasses);
@@ -99,7 +99,7 @@ export function FaqCard(props: TrainerCardProps): JSX.Element {
   const isShowContent = (e: any, index: any) => { // alert('Hello');
 
     let parent = e.target.parentNode.parentNode;
-    console.log(parent, "parent");
+    // console.log(parent, "parent");
     if (parent.classList.contains("opened")) {
       setFaqClass("");
       // console.log(e.target.parentNode.parentNode.classList); 

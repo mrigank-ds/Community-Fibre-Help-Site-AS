@@ -11,7 +11,7 @@ verticalKey: string,
 
 export default function Icons(props: SectionHeaderConfig): JSX.Element {
     const {  verticalKey} = props;
-    console.log('helparticle', helparticle)
+    // console.log('helparticle', helparticle)
     
     const vidicon =()=>{
        
@@ -27,7 +27,7 @@ export default function Icons(props: SectionHeaderConfig): JSX.Element {
         if(verticalKey == 'products'){
             return <img src={CollectionIcon} />
         }
-        console.log(verticalKey,'verticalKey')
+        // console.log(verticalKey,'verticalKey')
         return null;
     }
   

@@ -98,9 +98,6 @@ export default function MapGoogle(): JSX.Element {
   // })
   const activelist = (marker:any) => {
     if (marker === activelist) {
-      
-   
-      console.log('sonal');
     }
     
   }

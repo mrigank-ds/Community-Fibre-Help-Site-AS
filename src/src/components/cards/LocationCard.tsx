@@ -125,7 +125,7 @@ const handleMouseLeave = () => {
   for (let index = 0; index < elements.length; index++) {
     //elements[index].classList.remove('active')
   //var IdNew: any= document.getElementById(("result-"+location.id)) ? document.getElementById("result-"+location.id) : 'this';
-  console.log(elements[index]);
+  // console.log(elements[index]);
 }
   }
   

@@ -36,7 +36,7 @@ export const universalResultsConfig: UniversalResultsConfig = {
       showOrdinal: false
     }
   },
-   videos: {
+  video: {
      //SectionComponent: StandardSection,
      label: 'Videos',
      viewAllButton: true,

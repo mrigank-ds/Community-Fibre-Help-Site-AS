@@ -100,7 +100,7 @@ export default function MapGoogle(): JSX.Element {
     if (marker === activelist) {
       
    
-      console.log('sonal');
+      // console.log('sonal');
     }
     
   }

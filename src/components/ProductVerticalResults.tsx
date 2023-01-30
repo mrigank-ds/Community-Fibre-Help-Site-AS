@@ -150,7 +150,7 @@ function Pagination(props: PaginationProps): JSX.Element | null {
     const newPageNumber = Number(evt.currentTarget.textContent);
     newPageNumber && executeSearchWithNewOffset(limit * (newPageNumber - 1));
   }
-  console.log(onSelectNewPage,"newPageNumber");
+  // console.log(onSelectNewPage,"newPageNumber");
 
   const maxPageCount = Math.ceil(numResults / limit);
   if (maxPageCount <= 1) {

@@ -38,7 +38,7 @@ export const routeConfig = [
   },
   {
     path: '/videos',
-    page: <VideoPages verticalKey='videos' />
+    page: <VideoPages verticalKey='video' />
     
   }
  
