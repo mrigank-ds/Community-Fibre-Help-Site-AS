@@ -21,7 +21,8 @@ export interface VerticalConfig {
   SectionComponent?: SectionComponent,
   cardConfig?: CardConfig,
   label?: string,
-  viewAllButton?: boolean
+  viewAllButton?: boolean,
+  limit?:number,
 }
 
 interface AppliedFiltersConfig extends Omit<AppliedFiltersProps, 'appliedQueryFilters'> {

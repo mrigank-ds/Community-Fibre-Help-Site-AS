@@ -18,8 +18,8 @@ export const routeConfig = [
     page: <UniversalSearchPage universalResultsConfig={universalResultsConfig} />
   },
   {
-    path: '/faqs',
-    page: <FAQsPage verticalKey='faqs'/>
+    path: '/help_articles',
+    page: <FAQsPage verticalKey='help_articles'/>
   },
   {
     path: '/locations',
@@ -29,16 +29,17 @@ export const routeConfig = [
 
 
   {
-    path: '/products',
-    exact:false,
-    page: <ProductPage verticalKey='products' />
+    path: '/product',
+    page: <ProductPage verticalKey='product'   />
   },
  {
-    path: '/provider_switching_',
-    page: <ProviderSwitchingPage verticalKey='provider_switching_' />
+    path: '/provider_switching',
+    page: <ProviderSwitchingPage verticalKey='provider_switching' />
   },
   {
     path: '/videos',
     page: <VideoPages verticalKey='videos' />
+    
   }
+ 
 ];

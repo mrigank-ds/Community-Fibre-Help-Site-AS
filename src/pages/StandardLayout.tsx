@@ -10,7 +10,7 @@ import Footer from '../components/Footer'
 const navLinks = [
   {
     to: '/',
-    label: 'Tools'
+    label: 'All'
   },
   ...Object.entries(universalResultsConfig).map(([verticalKey, config]) => ({
     to: verticalKey,
@@ -24,14 +24,8 @@ const navLinks = [
 const StandardLayout: LayoutComponent = ({ page }) => {
   const isVertical = useAnswersState(s => s.meta.searchType) === SearchTypeEnum.Vertical;
   return (
-    <><Header/>
-      {isVertical
-        ? <SearchBar
-          placeholder= 'Search your Query....'
-        />
-        : <SampleVisualSearchBar />
-      }
-      <Navigation links={navLinks} />
+    <>
+    <Header/>
       {page}
       <Footer/>
     </>

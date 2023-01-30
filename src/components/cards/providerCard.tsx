@@ -1,6 +1,9 @@
 import { CompositionMethod, useComposedCssClasses } from '../../hooks/useComposedCssClasses';
 import { CardProps } from '../../models/cardComponent';
 import '../../sass/style.css';
+import { useAnswersState } from '@yext/answers-headless-react';
+import { eventClickAnalytics } from '../../config/analyticsConfig';
+
 
 export interface StandardCardConfig {
   showOrdinal?: boolean
@@ -38,7 +41,7 @@ const builtInCssClasses: StandardCardCssClasses = {
   cta1: 'min-w-max bg-blue-600 text-white font-medium rounded-lg py-2 px-5 shadow',
   cta2: 'min-w-max bg-white text-blue-600 font-medium rounded-lg py-2 px-5 mt-2 shadow',
   ordinal: 'mr-1.5 text-lg font-medium',
-  title: 'text-lg font-bold text-black-800',
+  title: 'text-lg font-bold text-purple1',
   ProductPriceClass : 'ProductPrice flex flex-row'
 }
 
@@ -57,14 +60,25 @@ export function ProviderCard(props: StandardCardProps): JSX.Element {
   const { configuration, result, customCssClasses, cssCompositionMethod } = props;
   const cssClasses = useComposedCssClasses(builtInCssClasses, customCssClasses, cssCompositionMethod);
 
-  console.log(result, "result");
+  //console.log(result, "result");
 
   const products: any = result.rawData;
   //const productsku = products.mpn ? products.mpn: 'SKU is not available';
-  const Productdec = products.services ? products.services: 'SKU is not available';
-  const ProductPhoto = products.primaryPhoto ? products.primaryPhoto.image.url : 'https://a.mktgcdn.com/p-sandbox/ICqsT6dBI9UeKt2G4bKSDEZC5U8q8AvRlATjy2v_E7Y/1152x960.jpg';
+  const name = result.name;
+  const Productdec = products.c_description ? products.c_description: '';
+  const ProductPhoto = products.c_image ? products.c_image[0].url : 'https://a.mktgcdn.com/p-sandbox/ICqsT6dBI9UeKt2G4bKSDEZC5U8q8AvRlATjy2v_E7Y/1152x960.jpg';
   const ProductLandingPage = products.landingPageUrl ? products.landingPageUrl : '#';
   const ProductPrice = products.price ? products.price : '23';
+
+//console.log(Productdec,'Productdec')
+
+function limit(string = '', limit = 0) {
+  return string.substring(0, limit)
+}
+const greeting = limit(name, 33);
+const decs = limit(Productdec, 53);
+console.log(greeting, "greeting");
+
 
 
 
@@ -79,6 +93,14 @@ export function ProviderCard(props: StandardCardProps): JSX.Element {
   function renderTitle(title: string) {
     return <div className={cssClasses.title}>{title}</div>
   }
+  const queryId = useAnswersState(state => state.query.queryId) || ""; 
+  const verticalKey = useAnswersState(state => state.vertical.verticalKey) || "";
+  let searcher = verticalKey ? 'VERTICAL' : 'UNIVERSAL';   
+  
+  const knowmoreEventClick = () => {           
+    eventClickAnalytics( 'VIEW_WEBSITE', products.id , "provider_switching_", queryId, searcher );
+    
+  };
 
   return (
     <div className={cssClasses.container}>
@@ -87,24 +109,27 @@ export function ProviderCard(props: StandardCardProps): JSX.Element {
       
       <div className={cssClasses.header}>
         <div className='ProductTitle'>
-          {configuration.showOrdinal && result.index && renderOrdinal(result.index)}
-          {result.name && renderTitle(result.name)}
+         
+
+          <div className={cssClasses.title}>
+          <p>{greeting} ....</p>
+        </div>
         </div>
         
         <div className='Productdec'>
-          {/* <p>{Productdec}</p> */}
+          <p>{decs}.....</p>
         </div>
         <div className={cssClasses.ProductPriceClass}>
         
         </div>
         <div className='ProductCta'>
-          <a target="_blank" href={ProductLandingPage}>
+          
             <div className={cssClasses.ctaButton}>
               <div className="sm:text-body align-middle font-heading  font-medium sm:text-base">
-                <a href="" className='ctaBtn'>Learn More</a>
+                <a target="_blank" onClick={knowmoreEventClick} href={ProductLandingPage} className='ctaBtn'>Learn More</a>
                  </div>
             </div>
-          </a>
+          
         </div>
       </div>
       </div> 

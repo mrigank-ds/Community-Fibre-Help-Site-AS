@@ -115,10 +115,10 @@ interface PaginationCssClasses {
 const builtInPaginationCssClasses: PaginationCssClasses = {
   container: 'flex justify-center mb-4',
   labelContainer: 'inline-flex shadow-sm -space-x-px',
-  label: 'z-0 inline-flex items-center px-4 py-2 text-sm font-semibold border border-gray-300 text-gray-500',
-  selectedLabel: 'z-10 inline-flex items-center px-4 py-2 text-sm font-semibold border border-blue-600 text-blue-600 bg-blue-50',
-  leftIconContainer: 'inline-flex items-center px-3.5 py-2 border border-gray-300 rounded-l-md',
-  rightIconContainer: 'inline-flex items-center px-3.5 py-2 border border-gray-300 rounded-r-md',
+  label: 'z-0 inline-flex items-center px-4 py-2 text-sm font-semibold border border-primary text-primary',
+  selectedLabel: 'z-10 inline-flex items-center px-4 py-2 text-sm font-semibold border border-primary text-primary bg-blue-50',
+  leftIconContainer: 'inline-flex items-center px-3.5 py-2 border border-primary rounded-l-md',
+  rightIconContainer: 'inline-flex items-center px-3.5 py-2 border border-primary rounded-r-md',
   icon: 'w-3 text-gray-500'
 }
 
@@ -137,16 +137,20 @@ function Pagination(props: PaginationProps): JSX.Element | null {
   const cssClasses = useComposedCssClasses(builtInPaginationCssClasses, customCssClasses, cssCompositionMethod);
   const answersAction = useAnswersActions();
   const offset = useAnswersState(state => state.vertical.offset) || 0;
-  const limit = useAnswersState(state => state.vertical.limit) || 10;
+  const limit = 9;
 
   const executeSearchWithNewOffset = (newOffset: number) => {
     answersAction.setOffset(newOffset);
     answersAction.executeVerticalQuery();
+    
   }
+  
+
   const onSelectNewPage = (evt: React.MouseEvent) => {
     const newPageNumber = Number(evt.currentTarget.textContent);
     newPageNumber && executeSearchWithNewOffset(limit * (newPageNumber - 1));
   }
+  console.log(onSelectNewPage,"newPageNumber");
 
   const maxPageCount = Math.ceil(numResults / limit);
   if (maxPageCount <= 1) {
@@ -154,7 +158,6 @@ function Pagination(props: PaginationProps): JSX.Element | null {
   }
   const pageNumber = (offset / limit) + 1;
   const paginationLabels: string[] = generatePaginationLabels(pageNumber, maxPageCount);
-
   return (
     <div className={cssClasses.container}>
       <nav className={cssClasses.labelContainer} aria-label="Pagination">
@@ -196,6 +199,8 @@ function generatePaginationLabels(pageNumber: number, maxPageCount: number): str
     paginationLabels.push('1', '...', `${previousPageNumber}`);
   } else if (previousPageNumber !== 0) {
     [...Array(previousPageNumber)].forEach((_, index) => paginationLabels.push(`${index + 1}`));
+    
+
   }
   paginationLabels.push(`${pageNumber}`);
   if (maxPageCount - nextPageNumber > 2) {

@@ -12,22 +12,25 @@ import {ProviderCard} from '../components/cards/providerCard';
 
 
 
+
 export type UniversalResultsConfig = Record<string, VerticalConfig>;
 
 export const universalResultsConfig: UniversalResultsConfig = {
 
-  products: {
+  product: {
      label: 'products',
      viewAllButton: true,
+     
      cardConfig: {
        CardComponent: ProductsCard,
        showOrdinal: false
      }
    },
   
-  faqs: {
+  help_articles: {
     label: 'Help Articles',
     viewAllButton: true,
+  
     cardConfig: {
       CardComponent: FaqCard,
       showOrdinal: false
@@ -52,7 +55,7 @@ export const universalResultsConfig: UniversalResultsConfig = {
       showOrdinal: false,
     },
   },
-  provider_switching_: {
+  provider_switching: {
     label: 'Provider Switching',
     //SectionComponent: LocationSection,
     //viewMapButton: true,
@@ -61,5 +64,5 @@ export const universalResultsConfig: UniversalResultsConfig = {
       CardComponent: ProviderCard,
       showOrdinal: false,
     },
-  },
+  }
 }

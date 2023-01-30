@@ -5,18 +5,13 @@ import DirectAnswer from '../components/DirectAnswer';
 import VerticalResults from '../components/VerticalResults';
 import SpellCheck from '../components/SpellCheck';
 import LocationBias from '../components/LocationBias';
-import { VideoCard } from '../components/cards/VideoCard';
+import { ArticlesCard } from '../components/cards/ArticlesCard';
 import usePageSetupEffect from '../hooks/usePageSetupEffect';
 import StaticFilters from '../components/StaticFilters';
 import FilterDisplayManager from '../components/FilterDisplayManager';
 import ViewFiltersButton from '../components/ViewFiltersButton';
 import { useContext } from 'react';
 import { PageView, PageViewContext } from '../context/PageViewContext';
-import { universalResultsConfig } from '../config/universalResultsConfig';
-import { SearchTypeEnum, useAnswersState } from '@yext/answers-headless-react';
-import SearchBar from '../components/SearchBar';
-import SampleVisualSearchBar from '../components/VisualAutocomplete/SampleVisualSearchBar';
-import Navigation from '../components/Navigation';
 
 /**
  * Static Filter/Facets
@@ -36,33 +31,14 @@ import Navigation from '../components/Navigation';
 //     },
 //   ]
 // }]
-const navLinks = [
-  {
-    to: '/',
-    label: 'All'
-  },
-  ...Object.entries(universalResultsConfig).map(([verticalKey, config]) => ({
-    to: verticalKey,
-    label: config.label || verticalKey
-  }))
-]
 
-export default function VideoPage({ verticalKey }: {
+export default function ArticlesPage({ verticalKey }: {
   verticalKey: string
 }) {
   const { pageView } = useContext(PageViewContext);
   usePageSetupEffect(verticalKey);
-  const isVertical = useAnswersState(s => s.meta.searchType) === SearchTypeEnum.Vertical;
 
   return (
-    <>
-    {isVertical
-        ? <SearchBar
-          placeholder= 'Videos'
-        />
-        : <SampleVisualSearchBar />
-      }
-      <Navigation links={navLinks} /> 
     <div className='flex'>
       <FilterDisplayManager>
         {/* <StaticFilters
@@ -82,21 +58,22 @@ export default function VideoPage({ verticalKey }: {
             hiddenFields={['builtin.entityType']}
           />
           <AlternativeVerticals
-            currentVerticalLabel='Video'
+            currentVerticalLabel='Articles'
             verticalsConfig={[
-              { label: 'Help Articles', verticalKey: 'help_articles'}, 
-              { label: 'Products', verticalKey: 'product'},
+              { label: 'FAQs', verticalKey: 'faqs'}, 
+              { label: 'Products', verticalKey: 'products'},
               { label: 'Blogs', verticalKey: 'blogs'},
-              { label: 'Provider Switching', verticalKey:'provider_switching'},
+              { label: 'Member Options', verticalKey: 'member_options'}
+
+
             ]}
           />
           <VerticalResults
-            CardComponent={VideoCard}
+            CardComponent={ArticlesCard}
           />
           <LocationBias />
         </div>
       }
     </div>
-    </>
   )
 }

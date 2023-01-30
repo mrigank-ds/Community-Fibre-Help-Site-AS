@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import { useContext, useEffect } from 'react';
+import { useRef, useEffect, useState, useContext } from 'react';
 import { SectionConfig } from '../models/sectionComponent';
 import AlternativeVerticals from './AlternativeVerticals';
 import { StandardCard } from './cards/StandardCard';
@@ -7,6 +7,7 @@ import { LocationContext } from './LocationContext';
 import { LocationActionTypes } from './locationReducers';
 import Mapbox, { MapLocationData } from './mapbox/Mapbox';
 import MapGoogle from './mapbox/MapGoogle';
+import { GoogleMaps } from './mapbox/GoogleMaps';
 import { VerticalResultsDisplay } from './VerticalResults'; 
 
 
@@ -19,7 +20,8 @@ export default function LocationResults(props: LocationResultsProps): JSX.Elemen
 
   const { results, cardConfig } = props;
   const cardComponent = cardConfig?.CardComponent || StandardCard;
-  
+  const refLcation = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
     const mapLocations: MapLocationData[] = [];
     for (const result of results) {
@@ -41,14 +43,29 @@ export default function LocationResults(props: LocationResultsProps): JSX.Elemen
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [results]);
 
+  const googleMapsConfig =  {
+    centerLatitude: 41.9110711,
+    centerLongitude:-87.653912,
+    googleMapsApiKey: "AIzaSyDZNQlSlEIkFAct5VzUtsP4dSbvOr2bE18"   
+  };
+  
+
   const renderMap = () => {
     if (!state.mapLocations) return null;
 
-    return <MapGoogle/>;
+    return <GoogleMaps
+    apiKey={googleMapsConfig.googleMapsApiKey}
+    centerLatitude={googleMapsConfig.centerLatitude}
+    centerLongitude={googleMapsConfig.centerLongitude}
+    defaultZoom={6}
+    showEmptyMap={true}
+    refLcation={refLcation}
+  />;
   };
 
   return (
-    <div className="flex flex-wrap">
+    <div className='border border-blackLight border-opacity-10'>
+    <div className="flex flex-wrap" ref={refLcation}>
       <div className={classNames('w-full map-section', { hidden: screenSize !== 'xl' && !state.showMap })}>
         {renderMap()}
       </div>
@@ -92,7 +109,7 @@ export default function LocationResults(props: LocationResultsProps): JSX.Elemen
           />
         )}
       </div>
-      
+      </div>
     </div>
   );
 }

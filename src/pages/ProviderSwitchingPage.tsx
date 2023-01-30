@@ -3,7 +3,7 @@ import ResultsCount from '../components/ResultsCount';
 import AlternativeVerticals from '../components/AlternativeVerticals';
 import AppliedFilters from '../components/AppliedFilters';
 import DirectAnswer from '../components/DirectAnswer';
-import ProductVerticalResults from '../components/ProductVerticalResults';
+import VerticalResults from '../components/VerticalResults';
 import SpellCheck from '../components/SpellCheck';
 import LocationBias from '../components/LocationBias';
 import {ProviderCard} from '../components/cards/providerCard';
@@ -15,34 +15,54 @@ import { Divider } from '../components/StaticFilters';
 import ViewFiltersButton from '../components/ViewFiltersButton';
 import { useContext } from 'react';
 import { PageView, PageViewContext } from '../context/PageViewContext';
+import SearchBar from '../components/SearchBar';
+import SampleVisualSearchBar from '../components/VisualAutocomplete/SampleVisualSearchBar';
+import Navigation from '../components/Navigation';
+import { SearchTypeEnum, useAnswersState } from '@yext/answers-headless-react';
+import { universalResultsConfig } from '../config/universalResultsConfig';
 
-const filterSearchFields = [{
-  fieldApiName: 'name',
-  entityType: 'location'
-}, {
-  fieldApiName: 'paymentOptions',
-  entityType: 'location'
-}, {
-  fieldApiName: 'services',
-  entityType: 'location'
-}];
+
+const navLinks = [
+  {
+    to: '/',
+    label: 'All'
+  },
+  ...Object.entries(universalResultsConfig).map(([verticalKey, config]) => ({
+    to: verticalKey,
+    label: config.label || verticalKey
+  }))
+]
 
 export default function ProviderSwitchingPage({ verticalKey }: {
   verticalKey: string
 }) {
   const { pageView } = useContext(PageViewContext);
   usePageSetupEffect(verticalKey);
+  const isVertical = useAnswersState(s => s.meta.searchType) === SearchTypeEnum.Vertical;
+
 
   return (
+    <>
+     {isVertical
+        ? <SearchBar
+          placeholder= 'Provider Switching'
+        />
+        : <SampleVisualSearchBar />
+      }
+      <Navigation links={navLinks} />
+      
     <div className='flex'> 
       <FilterDisplayManager>
        
-        
-        <Facets
+      <Facets
           searchOnChange={true}
           searchable={false}
           collapsible={true}
-          defaultExpanded={true}/>
+         
+          defaultExpanded={true}
+         
+          />
+    
       </FilterDisplayManager>
       { (pageView === PageView.Desktop || pageView === PageView.FiltersHiddenMobile) &&
         <div className='flex-grow'>
@@ -61,22 +81,23 @@ export default function ProviderSwitchingPage({ verticalKey }: {
         currentVerticalLabel='Provider Switcher'
         verticalsConfig={[
          
-          { label: 'Help Articles', verticalKey: 'faqs'},
+          { label: 'Help Articles', verticalKey: 'help_articles'},
           { label: 'Blogs', verticalKey: 'blogs'},
           { label: 'Video', verticalKey:'videos'},
           { label: 'Location', verticalKey:'location'},
-          { label: 'Products', verticalKey: 'products'},
+          { label: 'Products', verticalKey: 'product'},
 
           
         ]}
           />
-          <ProductVerticalResults
+          <VerticalResults
             CardComponent={ProviderCard}
           />
           <LocationBias />
         </div>
       }
     </div>
+    </>
   )
 }
 

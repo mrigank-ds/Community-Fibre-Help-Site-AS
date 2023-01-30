@@ -1,6 +1,9 @@
 import { CompositionMethod, useComposedCssClasses } from '../../hooks/useComposedCssClasses';
 import { CardProps } from '../../models/cardComponent';
 import '../../sass/style.css';
+import { useAnswersState } from '@yext/answers-headless-react';
+import { eventClickAnalytics } from '../../config/analyticsConfig';
+
 
 export interface StandardCardConfig {
   showOrdinal?: boolean
@@ -30,7 +33,7 @@ export interface StandardCardCssClasses {
 }
 
 const builtInCssClasses: StandardCardCssClasses = {
-  container: 'border border-blackLight border-opacity-10 rounded-lg mb-4 p-4 pb-8 shadow-sm ProductVerticalContainer relative',
+  container: 'border border-blackLight border-opacity-10 rounded-lg mb-4 p-4 pb-8 shadow-sm ProductVerticalContainer product-page relative',
   header: 'ProductHeaderClass',
   body: 'flex justify-end pt-2.5',
   imageContainer: 'relative h-0 inline-block w-full overflow-hidden mb-5 imageContainer',
@@ -40,9 +43,9 @@ const builtInCssClasses: StandardCardCssClasses = {
   cta1: 'min-w-max text-white font-medium rounded-lg py-2 px-5 shadow',
   cta2: 'min-w-max bg-white font-medium rounded-lg py-2 px-5 mt-2 shadow',
   ordinal: 'mr-1.5 text-lg font-medium',
-  title: 'text-lg font-bold truncate',
+  title: 'text-lg font-bold truncate text-purple1',
   ctaButton: 'ctaBtn',
-  ProductPriceClass : 'ProductPrice flex flex-row mb-2.5'
+  ProductPriceClass : 'ProductPrice flex flex-row mb-2.5 font-bold '
 }
 
 interface CtaData {
@@ -64,11 +67,11 @@ export function ProductsCard(props: StandardCardProps): JSX.Element {
 
    const products: any = result.rawData;
   const productsbrand = products.material? products.material: "";
-  const productsSpeed = products.color? products.color: "";
-  const Productdec = products.richTextDescription ? products.richTextDescription: "";
+  const productsSpeed = products.c_speed? products.c_speed: "";
+  const Productdec = products.description ? products.description: "";
   const ProductPhoto = products.primaryPhoto ? products.primaryPhoto.image.url : null;
   const ProductLandingPage = products.landingPageUrl ? products.landingPageUrl : '#';
-  const ProductPrice = products.brand? products.brand: "";
+  const ProductPrice = products.c_product_price? products.c_product_price: "";
 
 
 
@@ -83,6 +86,14 @@ export function ProductsCard(props: StandardCardProps): JSX.Element {
   function renderTitle(title: string) {
     return <div className={cssClasses.title}>{title}</div>
   }
+  const queryId = useAnswersState(state => state.query.queryId) || ""; 
+  const verticalKey = useAnswersState(state => state.vertical.verticalKey) || "";
+  let searcher = verticalKey ? 'VERTICAL' : 'UNIVERSAL';   
+  
+  const knowmoreEventClick = () => {           
+    eventClickAnalytics( 'VIEW_WEBSITE', products.id , "products", queryId, searcher );
+  };
+
 
   return (
     <div className={cssClasses.container}>
@@ -99,19 +110,20 @@ export function ProductsCard(props: StandardCardProps): JSX.Element {
           <p>{productsSpeed}</p>
         </div>
         <div className='Productdec'>
-          {/* <p>{Productdec}</p> */}
+          <p>{Productdec}</p>
         </div>
         <div className={cssClasses.ProductPriceClass}>
           <p>{ProductPrice}</p>
         </div>
-        <div className='ProductCta'>
-          <a target="_blank" href={ProductLandingPage}>
+        
+      </div>
+      <div className='ProductCta'>
+          <a target="_blank" onClick={knowmoreEventClick} href={ProductLandingPage}>
             <div className={cssClasses.ctaButton}>
               <div className="sm:text-body align-middle font-heading  font-medium sm:text-base">Enquiry</div>
             </div>
           </a>
         </div>
-      </div>
     </div>
   );
 }

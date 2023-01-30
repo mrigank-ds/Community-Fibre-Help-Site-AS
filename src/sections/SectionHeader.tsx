@@ -6,7 +6,7 @@ import { ReactComponent as CollectionIcon } from '../icons/collection.svg';
 import { useAnswersState } from '@yext/answers-headless-react';
 import { DisplayableFilter } from "../models/displayableFilter";
 import classNames from "classnames";
-
+import Icons from '../sections/Icons'
 interface SectionHeaderCssClasses extends AppliedFiltersCssClasses {
   sectionHeaderContainer?: string,
   sectionHeaderIconContainer?: string,
@@ -18,9 +18,9 @@ interface SectionHeaderCssClasses extends AppliedFiltersCssClasses {
 const builtInCssClasses: SectionHeaderCssClasses = {
   sectionHeaderContainer: 'section-header flex items-center bg-blackLight bg-opacity-5 text-blue py-2.5 px-4 capitalize',
   sectionHeaderIconContainer: 'w-5 h-5',
-  sectionHeaderLabel: 'font-bold text-blackLight text-2xl pl-3', 
+  sectionHeaderLabel: 'font-bold text-purple1 text-2xl pl-3', 
   viewMoreContainer: 'flex justify-end flex-grow ml-auto font-medium text-blackLight',
-  viewMoreLink: 'text-blue font-bold pr-1 pl-3',
+  viewMoreLink: 'text-purple1 font-bold pr-1 pl-3',
   appliedFiltersContainer: 'ml-3 flex flex-wrap',
   nlpFilter: 'border rounded-3xl px-3 py-1.5 text-sm font-medium italic text-gray-800 mr-2',
   removableFilter: 'flex items-center border rounded-3xl px-3 py-1.5 text-sm font-medium text-gray-900 mr-2',
@@ -54,11 +54,14 @@ export default function SectionHeader(props: SectionHeaderConfig): JSX.Element {
   cssClasses.appliedFiltersContainer = classNames(cssClasses.appliedFiltersContainer, {
     [cssClasses.appliedFiltersContainer___loading ?? '']: isLoading
   });
-
+ 
   return (
     <div className={cssClasses.sectionHeaderContainer}>
       <div className={cssClasses.sectionHeaderIconContainer}> 
-        <CollectionIcon></CollectionIcon>
+        {/* <CollectionIcon></CollectionIcon> */}
+       <Icons verticalKey={verticalKey}/>
+      
+       
       </div>
       <h2 className={cssClasses.sectionHeaderLabel}>{label}</h2>
       {/* TODO (cea2aj): Add support for ResultsCountDisplay once we get the mocks from UX

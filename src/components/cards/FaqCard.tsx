@@ -4,6 +4,7 @@ import { useComposedCssClasses } from '../../hooks/useComposedCssClasses';
 import { CardProps } from '../../models/cardComponent';
 import { useEffect, useState } from "react";
 import '../../sass/style.css'
+import { eventClickAnalytics } from '../../config/analyticsConfig';
 
 
 //prettier-ignore
@@ -36,6 +37,7 @@ interface PrimaryPhoto {
 
 //prettier-ignore
 export interface TrainerData {
+  body: any;
   id: any | null | undefined;
   answer: string | undefined;
   name?: string,
@@ -57,8 +59,8 @@ export interface TrainerCardCssClasses {
 //prettier-ignore
 const builtInCssClasses: TrainerCardCssClasses = {
   container: 'flex flex-col p-4 shadow-sm my-2 align-items-center',
-  descriptionContainer: 'w-full text-sm font-heading ',
-  name: 'text-xl font-medium',
+  descriptionContainer: 'w-full text-md font-heading ',
+  name: 'text-lg font-medium text-purple1',
   ctaButton: 'flex rounded-md mt-4 justify-center',
   ctaButtonText: 'text-base px-3 py-3 sm:py-0',
 };
@@ -68,22 +70,25 @@ export function FaqCard(props: TrainerCardProps): JSX.Element {
   const { result } = props;
   const trainer = result.rawData as unknown as TrainerData;
   const FaqVertical: any = result.rawData;
-  const Ans = trainer.answer;
+  const Ans = trainer.body;
   const FaqLandingPage = FaqVertical.landingPageUrl ? FaqVertical.landingPageUrl : '#';
   //   const screenSize = useContext(ResponsiveContext);/
+
    function limit(string = '', limit = 0) {
      return string.substring(0, limit)
    }
    const greeting = limit(Ans, 100);
    console.log(greeting, "greeting");
+   
   const [faqClass, setFaqClass] = useState("");
 
   const cssClasses = useComposedCssClasses(builtInCssClasses);
 
   function renderName(name?: string) {
     return <div className={cssClasses.name}>{name}</div>;
+   
   }
-
+  console.log(renderName)
   function renderQuote(quote?: string) {
     return <div className={cssClasses.descriptionContainer}>{quote}</div>;
   }
@@ -113,6 +118,15 @@ export function FaqCard(props: TrainerCardProps): JSX.Element {
       parent.classList.add("opened");
     }
   };
+  const queryId = useAnswersState(state => state.query.queryId) || ""; 
+  const verticalKey = useAnswersState(state => state.vertical.verticalKey) || "";
+  let searcher = verticalKey ? 'VERTICAL' : 'UNIVERSAL';   
+  
+  const knowmoreEventClick = () => {           
+    eventClickAnalytics( 'CTA_CLICK', trainer.id , "faqs", queryId, searcher );
+    
+  };
+
 
   return (
     <>
@@ -120,7 +134,7 @@ export function FaqCard(props: TrainerCardProps): JSX.Element {
         <div className='faq-title' onClick={(e) => isShowContent(e, trainer.id)} >{renderName(trainer.name)}</div>
         <div className={cssClasses.ctaButton + ' faq-content'}>
           {renderQuote(greeting)}
-          <a href={FaqLandingPage}>
+          <a target="_blank" onClick={knowmoreEventClick}  href={FaqLandingPage}>
             <div className={cssClasses.ctaButtonText}>Read more</div>
           </a>
         </div>

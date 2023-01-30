@@ -9,16 +9,18 @@ import { PageViewContextProvider } from './context/PageViewContext';
 export default function App() {
   return (
     <AnswersHeadlessProvider {...answersHeadlessConfig}>
-      <PageViewContextProvider >
-      <div className='flex justify-center'>
-          <div className='w-full max-w-5xl'>
-            <PageRouter
-              Layout={StandardLayout}
-              routes={routeConfig}
-            />
+    
+        <PageViewContextProvider >
+        <div className='flex justify-center'>
+            <div className='w-full max-w-5xl'>
+              <PageRouter
+                Layout={StandardLayout}
+                routes={routeConfig}
+              />
+            </div>
           </div>
-        </div>
-      </PageViewContextProvider>
+        </PageViewContextProvider>
+   
     </AnswersHeadlessProvider>
   );
 }

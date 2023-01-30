@@ -1,6 +1,9 @@
 import { CompositionMethod, useComposedCssClasses } from '../../hooks/useComposedCssClasses';
 import { CardProps } from '../../models/cardComponent';
 import '../../sass/style.css';
+import { useAnswersState } from '@yext/answers-headless-react';
+import { eventClickAnalytics } from '../../config/analyticsConfig';
+
 
 export interface StandardCardConfig {
     showOrdinal?: boolean
@@ -31,7 +34,7 @@ export interface StandardCardConfig {
   
   
   const builtInCssClasses: StandardCardCssClasses = {
-  container: 'border border-blackLight border-opacity-10 rounded-lg mb-4 p-4 pb-8 shadow-sm ProductVerticalContainer relative',
+  container: 'border border-blackLight border-opacity-10 rounded-lg mb-4 p-4 pb-8 shadow-sm ProductVerticalContainer videoVertical relative',
   header: 'text-grey-800 ProductHeaderClass',
   body: 'flex justify-end pt-2.5',
   imageContainer: 'relative h-0 inline-block w-full mb-5 imageContainer',
@@ -41,7 +44,7 @@ export interface StandardCardConfig {
   cta1: 'min-w-max bg-blue-600 text-white font-medium rounded-lg py-2 px-5 shadow',
   cta2: 'min-w-max bg-white text-blue-600 font-medium rounded-lg py-2 px-5 mt-2 shadow',
   ordinal: 'mr-1.5 text-lg font-medium',
-  title: 'text-lg font-bold text-black-800',
+  title: 'text-lg font-bold text-purple1',
   ctaButton: 'ctaBtn',
   ProductPriceClass : 'ProductPrice flex flex-row'
   }
@@ -58,11 +61,11 @@ export interface StandardCardConfig {
     const cssClasses = useComposedCssClasses(builtInCssClasses, customCssClasses, cssCompositionMethod);
   
     const VideoCard : any  = result.rawData;
-    const Videosdec = VideoCard.description ;
-    const Videodate = VideoCard.c_publishedAt ;
+    const Videosdec = VideoCard.richTextDescription ;
+    const Videodate = VideoCard.c_video_published_date ;
  
-    const videoImageUrl = VideoCard.c_thumbnailPhoto ? VideoCard.c_thumbnailPhoto.url : null ;
-    const videoLandingPage = VideoCard.c_videoURL;
+    const videoImageUrl = VideoCard.c_thumbnail_photo ? VideoCard.c_thumbnail_photo.url : null ;
+    const videoLandingPage = VideoCard.c_video_url;
   
 
     //console.log(Videos);
@@ -91,6 +94,14 @@ export interface StandardCardConfig {
     function renderTitle(title: string) {
       return <div className={cssClasses.title}>{title}</div>;
     }
+    const queryId = useAnswersState(state => state.query.queryId) || ""; 
+    const verticalKey = useAnswersState(state => state.vertical.verticalKey) || "";
+    let searcher = verticalKey ? 'VERTICAL' : 'UNIVERSAL';   
+    
+    const knowmoreEventClick = () => {           
+      eventClickAnalytics( 'CTA_CLICK', VideoCard.id , "video", queryId, searcher );
+      
+    };
   
     return (
       <div className={cssClasses.container}>
@@ -104,7 +115,7 @@ export interface StandardCardConfig {
           {result.name && renderTitle(result.name)}
         </div>
         </div>
-        <p className='mb-2.5'>{Videodate}</p>
+        <p className='mb-2.5 text-primary'>{Videodate}</p>
         </div>
         <div className='videosDescription mt-2'>
          <p>{Videosdec}</p>
@@ -112,7 +123,7 @@ export interface StandardCardConfig {
         </div>
 
         <div>
-            <a href={videoLandingPage} className='ctaBtn'><p  className=''><button>Watch video</button></p></a>
+            <a target="_blank" onClick={knowmoreEventClick} href={videoLandingPage} className='ctaBtn'><p  className=''><button>Watch video</button></p></a>
         </div>
       </div>
     );

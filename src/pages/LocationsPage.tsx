@@ -6,9 +6,13 @@ import usePageSetupEffect from '../hooks/usePageSetupEffect';
 import { LocationCard } from '../components/cards/LocationCard';
 import { LocationProvider } from '../components/LocationContext';
 // import { useContext } from 'react';
-import { useAnswersState } from '@yext/answers-headless-react';
+import { SearchTypeEnum, useAnswersState } from '@yext/answers-headless-react';
 import LocationResults from '../components/LocationResults';
 import MapToggleButton from '../components/MapToggleButton';
+import SearchBar from '../components/SearchBar';
+import SampleVisualSearchBar from '../components/VisualAutocomplete/SampleVisualSearchBar';
+import Navigation from '../components/Navigation';
+import { universalResultsConfig } from '../config/universalResultsConfig';
 
 {/* const filterSearchFields = [
   {
@@ -24,16 +28,36 @@ import MapToggleButton from '../components/MapToggleButton';
     entityType: 'location',
   },
 ]; */}
+const navLinks = [
+  {
+    to: '/',
+    label: 'All'
+  },
+  ...Object.entries(universalResultsConfig).map(([verticalKey, config]) => ({
+    to: verticalKey,
+    label: config.label || verticalKey
+  }))
+]
 
 export default function LocationsPage({ verticalKey }: { verticalKey: string }) {
   usePageSetupEffect(verticalKey);
   const screenSize = 'sm';  
   const results = useAnswersState((state) => state.vertical.results) || [];
   { /*const latestQuery = useAnswersState((state) => state.query.mostRecentSearch); */}
-  
+  const isVertical = useAnswersState(s => s.meta.searchType) === SearchTypeEnum.Vertical;
+
   return (
+    <>
+    {isVertical
+      ? <SearchBar
+        placeholder= 'Locations'
+      />
+      : <SampleVisualSearchBar />
+    }
+    <Navigation links={navLinks} />
+  
     <LocationProvider>
-      <div className="flex">
+      <div className="flex location-page">
         <div className="flex-grow">
           <DirectAnswer />
           <SpellCheck
@@ -63,5 +87,6 @@ export default function LocationsPage({ verticalKey }: { verticalKey: string }) 
         </div>
       </div>
     </LocationProvider>
+    </>
   );
 }

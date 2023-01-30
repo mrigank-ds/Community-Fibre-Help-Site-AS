@@ -14,6 +14,11 @@ import { Divider } from '../components/StaticFilters';
 import ViewFiltersButton from '../components/ViewFiltersButton';
 import { useContext } from 'react';
 import { PageView, PageViewContext } from '../context/PageViewContext';
+import { SearchTypeEnum, useAnswersState } from '@yext/answers-headless-react';
+import SearchBar from '../components/SearchBar';
+import SampleVisualSearchBar from '../components/VisualAutocomplete/SampleVisualSearchBar';
+import Navigation from '../components/Navigation';
+import { universalResultsConfig } from '../config/universalResultsConfig';
 
 
 
@@ -27,14 +32,33 @@ const filterSearchFields = [{
   fieldApiName: 'services',
   entityType: 'location'
 }];
-
+const navLinks = [
+  {
+    to: '/',
+    label: 'All'
+  },
+  ...Object.entries(universalResultsConfig).map(([verticalKey, config]) => ({
+    to: verticalKey,
+    label: config.label || verticalKey
+  }))
+]
 export default function ProductPage({ verticalKey }: {
   verticalKey: string
 }) {
   const { pageView } = useContext(PageViewContext);
   usePageSetupEffect(verticalKey);
-
+  const isVertical = useAnswersState(s => s.meta.searchType) === SearchTypeEnum.Vertical;
   return (
+    <>
+    {isVertical
+        ? <SearchBar
+          placeholder= 'Products'
+        />
+        : <SampleVisualSearchBar />
+      }
+      <Navigation links={navLinks} />
+    
+   
     <div className='flex'> 
       <FilterDisplayManager>
         {/* <FilterSearch
@@ -65,11 +89,11 @@ export default function ProductPage({ verticalKey }: {
         currentVerticalLabel='products'
         verticalsConfig={[
          
-          { label: 'Help Articles', verticalKey: 'faqs'},
+          { label: 'Help Articles', verticalKey: 'help_articles'},
           { label: 'Blogs', verticalKey: 'blogs'},
           { label: 'Video', verticalKey:'videos'},
           { label: 'Location', verticalKey:'location'},
-          { label: 'Provider Switching', verticalKey:'provider_switching_'},
+          { label: 'Provider Switching', verticalKey:'provider_switching'},
 
         ]}
           />
@@ -80,6 +104,7 @@ export default function ProductPage({ verticalKey }: {
         </div>
       }
     </div>
+    </>
   )
 }
 

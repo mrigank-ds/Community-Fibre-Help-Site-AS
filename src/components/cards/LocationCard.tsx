@@ -3,9 +3,17 @@ import { CardProps } from '../../models/cardComponent';
 import { useContext, useState } from 'react';
 import { LocationContext } from '../LocationContext';
 import { LocationActionTypes } from '../locationReducers';
-
+import { eventClickAnalytics } from '../../config/analyticsConfig';
+import { useAnswersState } from '@yext/answers-headless-react';
+import locationpin from '../../icons/location-pin.svg';
+import callicon from '../../icons/icon-call.svg';
 
 //prettier-ignore
+
+// const metersToMiles = (meters: number) => {
+//   const miles = meters * 0.0006213712;
+//   return miles.toFixed(2);
+// }
 export interface LocationCardConfig {
   showOrdinal?: boolean
 }
@@ -60,13 +68,13 @@ export interface LocationData {
 const builtInCssClasses = {
   container: 'location-result result',
   header: 'flex text-base',
-  body: 'text-sm',
-  descriptionContainer: 'text-sm relative pl-8',
+  body: 'text-md',
+  descriptionContainer: 'text-md relative pl-8',
   ctaContainer: 'flex flex-col justify-between ml-4',
   cta1: 'min-w-max bg-blue-600 text-white font-medium rounded-lg py-2 px-5 shadow',
   cta2: 'min-w-max bg-white text-blue-600 font-medium rounded-lg py-2 px-5 mt-2 shadow',
   ordinal: 'mr-1.5 text-lg font-medium',
-  title: 'text-lg font-medium font-body font-bold',
+  title: 'text-lg font-medium font-body font-bold title-location',
   ctaButton: 'ctaBtn',
 };
 
@@ -87,7 +95,7 @@ export function LocationCard(props: LocationCardProps): JSX.Element {
   const screenSize = 'sm';
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { state, dispatch } = useContext(LocationContext);
-
+  
   function renderTitle(title: string) {
     return <div className={cssClasses.title}>{title}</div>;
   }
@@ -96,7 +104,7 @@ export function LocationCard(props: LocationCardProps): JSX.Element {
     if (!address) return;
     return (
       <div className={cssClasses.descriptionContainer}>
-        <img className="addressLogo absolute top-0 left-0 w-5" src="https://www.kindpng.com/picc/m/705-7056384_address-png-file-address-icon-png-transparent-png.png" width="28" height="28"
+        <img className="addressLogo absolute top-0 left-0 w-5" src= {locationpin} width="28" height="28"
           alt="" />
         <div>{location.address?.line1}</div>
         <div>{`${location.address?.city}, ${location.address?.region} `}</div>
@@ -107,11 +115,11 @@ export function LocationCard(props: LocationCardProps): JSX.Element {
 
   /* hover effect on card */
   const [isHover, setIsHover] = useState(false);
-  const boxStyle = {
+//   const boxStyle = {
    
-    backgroundColor: isHover ? 'rgba(236, 98, 37)' : 'white',
-    color: isHover ? 'black' : 'black',
- };
+//     backgroundColor: isHover ? 'rgba(236, 98, 37)' : 'white',
+//     color: isHover ? 'black' : 'black',
+//  };
  const handleMouseEnter = () => {
   setIsHover(true);
 };
@@ -125,18 +133,30 @@ const handleMouseLeave = () => {
   for (let index = 0; index < elements.length; index++) {
     //elements[index].classList.remove('active')
   //var IdNew: any= document.getElementById(("result-"+location.id)) ? document.getElementById("result-"+location.id) : 'this';
-  console.log(elements[index]);
+  
 }
   }
   
-   
+ 
+  
+  const queryId = useAnswersState(state => state.query.queryId) || ""; 
+  const verticalKey = useAnswersState(state => state.vertical.verticalKey) || "";
+  let searcher = verticalKey ? 'VERTICAL' : 'UNIVERSAL';   
+  
+  const getDirectionEventClick = () => {           
+    eventClickAnalytics( 'DRIVING_DIRECTIONS', location.id , "locations", queryId, searcher );
+  };
+
+  const getPhoneEventClick = () => {      
+    eventClickAnalytics( 'TAP_TO_CALL', location.id , "locations", queryId, searcher );
+  };
+  
+
   return (
     <div
       id={"result-" + location.id}
       className={cssClasses.container}
-      style={boxStyle}
-            onMouseEnter={handleMouseEnter}
-            onMouseLeave={handleMouseLeave}>
+>
       <div className='flex flex-wrap flex-col'>
         <div className={cssClasses.header}>
           {/* {configuration.showOrdinal && result.index && renderOrdinal(result.index)} */}
@@ -145,25 +165,36 @@ const handleMouseLeave = () => {
         <div className={cssClasses.body + ' my-2.5'}>
           {renderAddress(location.address)}
         </div>
+        
+       
         <div className="flex flex-row relative pl-8 single-line">
-          <div className="absolute top-0 left-0 w-5"><img className=" " src="https://static.vecteezy.com/system/resources/thumbnails/003/720/476/small/phone-icon-telephone-icon-symbol-for-app-and-messenger-vector.jpg" width="28" height="28" alt="" />
+          <div className="absolute top-0 left-0">
+          { PhoneNumber ?  <img className=" " src={callicon} width="28" height="28" alt="" /> :
+           ""
+
+} 
+           
           </div>
-          <a className={cssClasses.body} target="_blank" href={`tel:${PhoneNumber}`}>
+         <a className={cssClasses.body} target="_blank" href={`tel:${PhoneNumber}`}  onClick={getPhoneEventClick} >
               {PhoneNumber}
           </a>
         </div>
-
+        <div>
+          {/* {metersToMiles(result.distance ?? 0)} mi */}
+        </div>
       </div>
       <div className='buttons'>
-        <a className={cssClasses.ctaButton} target="_blank" href={`https://www.google.com/maps/dir/?api=1&destination=${CtaAddress}`}>
+        <div>
+        <a className={cssClasses.ctaButton} target="_blank" onClick={getDirectionEventClick} href={`https://www.google.com/maps/dir/?api=1&destination=${CtaAddress}`}>
             Get Direction
         </a>
-        {/* <a target="_blank" href={LandingPage} onClick={() => pagesAnalyticsCtaClick()}>
-        <div className={cssClasses.ctaButton}>
-        onClick={() => pagesAnalyticsCtaClick()} 
-          <div className="sm:text-body align-middle font-heading  font-medium sm:text-base">View Restaurants</div>
         </div>
-      </a> */}
+        <div className='mt-2'>
+        <a className={cssClasses.ctaButton} target="_blank" onClick={getDirectionEventClick} href='#'>
+            See More
+        </a>
+        </div>
+       
       </div>
 
     </div>

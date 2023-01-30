@@ -16,8 +16,6 @@ export interface StandardCardCssClasses {
   container?: string,
   header?: string,
   body?: string,
-  imageContainer?: string,
-  image?:string,
   descriptionContainer?: string,
   ctaContainer?: string,
   cta1?: string,
@@ -27,17 +25,15 @@ export interface StandardCardCssClasses {
 }
 
 const builtInCssClasses: StandardCardCssClasses = {
-  container: 'border border-blackLight border-opacity-10 rounded-lg mb-4 p-4 pb-16 shadow-sm relative ArticlesCardContainer',
-  header: 'flex mb-2.5',
+  container: 'flex flex-col justify-between border rounded-lg mb-4 p-4 shadow-sm ArticlesCardContainer',
+  header: 'flex text-gray-800',
   body: 'flex justify-end pt-2.5',
-  imageContainer: 'relative h-0 inline-block w-full overflow-hidden mb-5 imageContainer',
-  image: 'absolute top-0 left-0 w-full h-full object-cover',
   descriptionContainer: 'w-full text-base',
   ctaContainer: 'flex flex-col justify-end ml-4',
-  cta1: 'min-w-max text-white font-medium rounded-lg py-2 px-5 shadow',
-  cta2: 'min-w-max bg-white font-medium rounded-lg py-2 px-5 mt-2 shadow',
+  cta1: 'min-w-max bg-blue-600 text-white font-medium rounded-lg py-2 px-5 shadow',
+  cta2: 'min-w-max bg-white text-blue-600 font-medium rounded-lg py-2 px-5 mt-2 shadow',
   ordinal: 'mr-1.5 text-lg font-medium',
-  title: 'font-bold ArticlesTitle text-xl truncate',
+  title: 'font-bold ArticlesTitle'
 }
 
 
@@ -92,9 +88,8 @@ export function ArticlesCard(props: StandardCardProps): JSX.Element {
       <div className='ArticlesDescription'>
         
       </div>
-      
-      <div className='ArticleCta m-auto table'>
-      <a className='ctaBtn' href={ArticleLandingPage}><p className='ArticleCtaP'>Continue Reading</p></a>
+      <div className='ArticleCta'>
+          <a href={ArticleLandingPage}><p  className='ArticleCtaP'>Continue Reading</p></a>
       </div>
     </div>
   );
