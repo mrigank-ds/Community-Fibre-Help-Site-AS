@@ -60,7 +60,7 @@ export interface TrainerCardCssClasses {
 const builtInCssClasses: TrainerCardCssClasses = {
   container: 'flex flex-col p-4 shadow-sm my-2 align-items-center',
   descriptionContainer: 'w-full text-sm font-heading ',
-  name: 'text-2xl font-bold',
+  name: 'text-xl font-bold',
   ctaButton: 'flex rounded-md mt-4 justify-center',
   ctaButtonText: 'text-base px-3 py-3 sm:py-0',
 };
@@ -113,6 +113,16 @@ export function FaqCard(props: TrainerCardProps): JSX.Element {
     }
   };
 
+
+  /**
+ * 
+ * @param string 
+ * @param limit 
+ * @returns Limited number of words
+ */
+function limit(string?: string, limit = 0) {
+  return string?.substring(0, limit)
+}
   return (
     <>
       <div className={'faq-block md:col-span-3 ' + trainer.id + ' ' + faqClass} >
@@ -120,7 +130,7 @@ export function FaqCard(props: TrainerCardProps): JSX.Element {
         <div className={cssClasses.ctaButton + ' faq-content'}>
           {/* <div dangerouslySetInnerHTML={{ __html: RtfConverter.toHTML(trainer.answer) }} /> */}
           <div className='FaqAnswers'>
-            {trainer.answer}
+            {limit(trainer.answer,100)}
           </div>
           <a href={FaqLandingPage} className='FaqCtaButton'>
             <div className={cssClasses.ctaButtonText}>Read more</div>

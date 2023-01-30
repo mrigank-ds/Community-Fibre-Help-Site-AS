@@ -1,8 +1,10 @@
 import UniversalSearchPage from '../pages/UniversalSearchPage';
 import FAQsPage from '../pages/FAQsPage';
 import { universalResultsConfig } from './universalResultsConfig';
-import HelpArticlePage from '../pages/HelpArticlePage';
-
+import LocationsPage from '../pages/LocationsPage'; 
+import ProductPage from '../pages/ProductPage';
+import ProviderSwitchingPage from '../pages/ProviderSwitchingPage'
+import VideoPages from '../pages/VideoPages';
 
 
 
@@ -16,11 +18,28 @@ export const routeConfig = [
     page: <UniversalSearchPage universalResultsConfig={universalResultsConfig} />
   },
   {
-    path: '/faqs',
-    page: <FAQsPage verticalKey='faqs'/>
+    path: '/help_articles',
+    page: <FAQsPage verticalKey='help_articles'/>
   },
   {
-    path: '/help_articles',
-    page: <HelpArticlePage verticalKey='help_articles'/>
+    path: '/locations',
+    page: <LocationsPage verticalKey="locations" />
+  },
+
+
+
+  {
+    path: '/product',
+    page: <ProductPage verticalKey='product'   />
+  },
+ {
+    path: '/provider_switching',
+    page: <ProviderSwitchingPage verticalKey='provider_switching' />
+  },
+  {
+    path: '/videos',
+    page: <VideoPages verticalKey='videos' />
+    
   }
+ 
 ];

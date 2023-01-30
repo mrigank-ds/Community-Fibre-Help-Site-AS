@@ -1,28 +1,68 @@
-import { FaqCard } from '../components/cards/FaqCards';
+import { StandardCard } from '../components/cards/StandardCard';
+import { ProductsCard } from '../components/cards/ProductsCard';
+
+import { FaqCard } from '../components/cards/FaqCard';
 import { VerticalConfig } from '../components/UniversalResults';
-import { HelpArticlesCard } from '../components/cards/HelpArticlesCard';
+
+import LocationSection from '../sections/LocationSection';
+import StandardSection from '../sections/StandardSection';
+import { LocationCard } from '../components/cards/LocationCard';
+import { VideoCard } from '../components/cards/VideoCard';
+import {ProviderCard} from '../components/cards/providerCard';
 
 
 
 
 export type UniversalResultsConfig = Record<string, VerticalConfig>;
-/**
- * This is for the verticals you see in Front-end.
- */
+
 export const universalResultsConfig: UniversalResultsConfig = {
+
+  product: {
+     label: 'products',
+     viewAllButton: true,
+     
+     cardConfig: {
+       CardComponent: ProductsCard,
+       showOrdinal: false
+     }
+   },
+  
   help_articles: {
     label: 'Help Articles',
     viewAllButton: true,
-    cardConfig: {
-      CardComponent: HelpArticlesCard,
-    }
-  },
-  faqs: {
-    label: 'FAQs',
-    viewAllButton: true,
+  
     cardConfig: {
       CardComponent: FaqCard,
+      showOrdinal: false
     }
+  },
+   videos: {
+     //SectionComponent: StandardSection,
+     label: 'Videos',
+     viewAllButton: true,
+     cardConfig: {
+       CardComponent: VideoCard,
+       showOrdinal: false
+     }
+   },
+  locations: {
+    label: 'Location',
+    SectionComponent: LocationSection,
+    //viewMapButton: true,
+    viewAllButton: true,
+    cardConfig: {
+      CardComponent: LocationCard,
+      showOrdinal: false,
+    },
+  },
+  provider_switching: {
+    label: 'Provider Switching',
+    //SectionComponent: LocationSection,
+    //viewMapButton: true,
+    viewAllButton: true,
+    cardConfig: {
+      CardComponent: ProviderCard,
+      showOrdinal: false,
+    },
   }
-
 }

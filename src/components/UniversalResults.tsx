@@ -13,7 +13,7 @@ interface UniversalResultsCssClasses {
 }
 
 const builtInCssClasses: UniversalResultsCssClasses = {
-  container: 'max-w-5xl mx-auto py-0',
+  container: 'space-y-8 mt-6',
   results___loading: 'opacity-50'
 }
 
@@ -21,7 +21,8 @@ export interface VerticalConfig {
   SectionComponent?: SectionComponent,
   cardConfig?: CardConfig,
   label?: string,
-  viewAllButton?: boolean
+  viewAllButton?: boolean,
+  limit?:number,
 }
 
 interface AppliedFiltersConfig extends Omit<AppliedFiltersProps, 'appliedQueryFilters'> {

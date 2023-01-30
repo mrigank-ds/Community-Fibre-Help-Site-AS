@@ -1,4 +1,4 @@
-# Community Fibre Help Site Answer Search
+# React Site Search Starter
 
 <div>
   <a href="./LICENSE">

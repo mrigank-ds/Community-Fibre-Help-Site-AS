@@ -1,11 +1,38 @@
+@font-face {
+  font-family: 'Arboria-Medium';
+  src: url('../fonts/Arboria-Medium.woff2') format('woff2'),
+      url('../fonts/Arboria-Medium.woff') format('woff');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
 
+@font-face {
+  font-family: 'Arboria-Bold';
+  src: url('../fonts/Arboria-Bold.woff2') format('woff2'),
+      url('../fonts/Arboria-Bold.woff') format('woff');
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
 
+@font-face {
+  font-family: 'Arboria-Book';
+  src: url('../fonts/Arboria-Book.woff2') format('woff2'),
+      url('../fonts/Arboria-Book.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+body{
+  font-family: 'Arboria-Book';
+}
 body{
   @apply bg-white
 }
 
 .search-nav{
-  @apply py-5 bg-white
+  @apply py-5 bg-white px-2 lg:px-0
 }
 .search-nav > div{
   @apply max-w-5xl mx-auto
@@ -15,17 +42,7 @@ body{
 }
 
 .answer-nav{
-
-background-color: #F59E30;
-}
-
-.FaqCtaButton{
-  background-color: #F59E30;
-}
-
-/* [#a9d301] */
-.answer-nav{
-  @apply flex justify-center items-center; 
+  @apply flex justify-center items-center bg-primary; 
 }
 .answer-nav a{
   @apply px-5
@@ -53,7 +70,7 @@ background-color: #F59E30;
 }
 
 .location-result.result{
-  @apply flex flex-row justify-between items-center md:col-span-3 pb-4 border-b border-blackLight border-opacity-10 
+  @apply flex flex-row justify-between items-center md:col-span-3 pb-4 border-b border-secondary border-opacity-10 
 }
 .location-result.result.location-result.result:last-child{
   @apply border-b-0 pb-0
@@ -63,17 +80,15 @@ background-color: #F59E30;
 }
 
 .faq-block{
-  @apply  border-b border-blackLight border-opacity-10
+  @apply  border border-secondary border-opacity-10 px-3 py-2
 }
-.faq-block:last-child{
-  @apply border-b-0
-}
+
 .faq-title{
   @apply font-semibold py-2.5 relative cursor-pointer
 }
 .faq-title:after{
   content: '';
-  @apply absolute top-3.5 right-0.5 border-b-2 border-r-2 border-blue transform rotate-45 w-3 h-3 transition-all duration-300
+  @apply absolute top-3.5 right-0.5 border-b-2 border-r-2 border-primary transform rotate-45 w-3 h-3 transition-all duration-300
 }
 .faq-block.opened .faq-title:after{
   transform: rotate(-135deg);
@@ -82,36 +97,295 @@ background-color: #F59E30;
 .faq-content{
   @apply hidden pb-4
 }
-
-.FaqAnswers{
-  font-size: 20px;
-  margin-bottom: 20px;
-}
-/* font-size: 20px;
-margin-bottom: 20px; */
 .faq-block.opened .faq-content{
   @apply block
 }
 .faq-content a{
-  @apply  text-white px-5 py-2 inline-block rounded mt-3 capitalize
+  @apply bg-primary text-white px-5 py-2 inline-block rounded mt-3 capitalize hover:bg-purple1
 }
 
 
 .imageContainer{
   padding-top: 57%;
 }
+.imagelivechat{
+  padding-top: 24%;
+}
 .ctaBtn{
-  @apply bg-blue hover:bg-blackLight capitalize text-white px-5 py-2 inline-block rounded mt-3
+  @apply bg-primary hover:bg-secondary capitalize text-white px-5 py-2 inline-block rounded mt-3
 }
 
-.VechileDetails{
-  margin-right: 170px;
-  margin-left: 10px;
-}
 
 iframe{
   @apply hidden
 }
 
+.header-before{@apply flex justify-between px-6 lg:px-0}
+nav ul.menu{@apply flex}
+.trust-bx li{@apply p-4}
+nav ul.menu li{    font-size: 15px;
+  @apply pt-3 pl-3}
+.centered-container ul li a{font-family:Arboria-Medium;    color: #524658;
+  @apply text-lg}
+.centered-container nav{@apply flex justify-between}
+.submenu{@apply items-center}
+.container-custom-before{@apply border-b border-blackLight border-opacity-10}
+.footer-sec {@apply flex justify-between pt-5 p-8}
+.connect-img img{@apply w-7}
+.footer-sec li{@apply p-2 pl-0}
+.footer-sec h4{@apply text-xl font-bold text-purple1}
+.footer-sec li a{@apply text-purple1}
+.ArticlesImage{@apply m-auto}
+.ArticlesTitle{@apply m-auto}
+.menu span{@apply mx-1}
+
+/* Location */
+
+.title-location{@apply text-xl text-purple1}
+.location-page .p-4{@apply p-0}
+.location-result.result{@apply p-5}
+.location-page .gap-2{@apply gap-0}
+.flex.location-page .map-section{@apply mb-0}
+.location-page .buttons{@apply block}
+img.addressLogo{@apply w-6 h-6 bg-primary rounded-xl p-1}
+.location-page .single-line img{@apply w-6 h-6 bg-primary rounded-xl p-1}
+.location-result.result:hover{
+  background-color: #FEF1E1 !important;
+}
+.flex.location-page a.ctaBtn{@apply text-center}
+.drop-shadow-page {
+  box-shadow: 0 5px 20px #0000001a;
+}
+/* header */
+.menu-button svg path{@apply fill-current}
+ul.menu.menu-right a {
+  font-weight: 400;
+  color: #524658;
+}
+ul.menu.menu-right li{
+  padding-left: 0;
+}
+.menu-left li {
+  padding: 10px 23px;
+}
+.top-1{@apply p-4}
+.menu-btn {
+  box-shadow: 0 0.125rem 0.625rem 0 rgb(0 0 0 / 20%);
+  z-index: +111;
+  width: 15.625rem;
+}
+.menu-opened .submenu{
+  right: 0px;
+}
+
+.menu-toggle span, .menu-toggle span:after, .menu-toggle span:before {
+  position: absolute;
+  right: 0px;
+  display: block;
+  height: 3px;
+  width: 25px;
+  --tw-bg-opacity: 1;
+  background-color: rgb(58 53 109 / var(--tw-bg-opacity));
+  --tw-content: "";
+  content: var(--tw-content);
+}
+.menu-toggle span:after {
+  bottom: -7px;
+  margin-left: 0;
+  transition-property: all;
+  transition-duration: .2s;
+  transition-timing-function: cubic-bezier(.4,0,.2,1);
+}
+.menu-toggle span:before {
+  top: -7px;
+  margin-left: 0;
+  transition-property: all;
+  transition-duration: .2s;
+  transition-timing-function: cubic-bezier(.4,0,.2,1);
+}
+.menu-toggle {
+  position: absolute;
+  right: 1.5rem;
+  top: 17px;
+  border-left-width: 1px;
+  border-color: transparent;
+  z-index: 111;
+}
+.menu-opened .menu-toggle span {
+  background-color: transparent;
+}
+.menu-opened .menu-toggle span:before {
+  top: 0px;
+  transform: rotate(45deg);
+ 
+  background-color: rgb(58 53 109 / var(--tw-bg-opacity));
+}
+.menu-opened .menu-toggle span:after {
+  bottom: 0px;
+  transform: rotate(-45deg);
+ 
+  background-color: rgb(58 53 109 / var(--tw-bg-opacity));
+}
+
+.centered-container .trust-bx  nav{
+  justify-content: center;
+}
+.centered-container .trust-bx a {
+  font-family: 'Arboria-Book';
+}
+.centered-container .trust-bx nav .nav-elements {
+  border-bottom: 1px solid #dfdde2;
+}
+
+/* Video */
+.videoVertical .ProductTitle {
+  min-height: 90px;
+}
+.videoVertical p.mb-2\.5.text-primary,.faq-block .text-purple1 {
+  font-family: 'Arboria-Medium';}
 
 
+
+/* faq */
+  .faq-block.opened{@apply border border-primary}
+  .faq-title .text-md.lg\:text-lg.font-medium.text-purple1 {
+    margin-right: 25px;
+}
+
+/* Product */
+  .product-page .ProductHeaderClass {
+    min-height: 152px;
+}
+.videoVertical:hover,.product-page:hover,.ProductVerticalContainer:hover {
+  background-color: #FEF1E1 !important;
+}
+
+
+/* Provider Switching */
+.ProviderVerticalContainer img {
+  width: 500px;
+  max-height: 190px;
+  object-fit: contain;
+}
+.ProviderVerticalContainer .ProductTitle {
+  min-height: 70px;
+}
+.ProviderVerticalContainer .Productdec {
+  min-height: 85px;
+}
+.ProviderVerticalContainer .text-lg.font-bold.text-purple1:hover,.title-location:hover,.videoVertical .text-lg.font-bold.text-purple1:hover,.product-page .text-lg.font-bold.truncate.text-purple1:hover
+{   
+   text-decoration: underline;
+} 
+.ProductVerticalContainer .text-purple1:hover{
+  text-decoration: underline;
+}
+.top-1 .call{@apply w-6 h-6 bg-primary rounded-xl p-1}
+.ProviderVerticalContainer:hover {
+  background-color: #FEF1E1 !important;
+}
+/* footer */
+
+.footer-link1 h5 {
+  font-size: 12px;
+  color: #370050;
+}
+@media screen and (min-width: 1024px) {
+  .centered-container .submenu .trust-bx,.centered-container .submenu li svg {
+    display: none;
+  }
+}
+@media screen and (max-width: 1024px) {
+  .product-page .ProductHeaderClass {
+    min-height: 200px;
+}
+.centered-container {
+  padding-left: 24px;
+  padding-right: 24px;
+  position: relative;
+}
+.centered-container .submenu{
+  display: none;
+}
+.container-custom-before .header-before{
+  display: none;
+}
+.centered-container .submenu li {
+  padding: 8px 16px;
+  display: flex;
+    align-items: center;
+}
+.centered-container .submenu li svg {
+  max-height: 18px;
+  margin-right: 16px;
+}
+.centered-container .trust-bx {
+  padding: 60px 0 32px;
+}
+.submenu {
+  display: block !important;
+  width: 100%;
+  position: fixed;
+  right: -100%;
+  top: 0px;
+  bottom: 0px;
+  z-index: 50;
+  display: flex;
+  max-width: 100%;
+  max-width: 100%;
+  flex-wrap: wrap;
+  overflow-y: auto;
+  overflow-x: hidden;
+  --tw-bg-opacity: 1;
+  background-color: rgb(255 255 255 / var(--tw-bg-opacity));
+  transition-property: all;
+  transition-duration: .2s;
+  transition-timing-function: cubic-bezier(.4,0,.2,1);
+  background-color: #f8f8f8;
+
+}
+}
+
+@media screen and (max-width: 767px) {
+  .footer-sec{
+    display: block;
+  }
+  footer .items-right {
+    justify-content: start;
+}
+footer .text-right {
+  text-align: inherit;
+}
+.product-page .ProductHeaderClass {
+  min-height: auto;
+}
+.ProviderVerticalContainer .Productdec,.ProviderVerticalContainer .ProductTitle,.videoVertical .ProductTitle {
+  min-height: initial;
+}
+.ProviderVerticalContainer img{
+  width: initial;
+}
+.header-before{display: block;  padding-left: 6px;  padding-right: 6px;}
+.header-before nav ul.menu{
+  justify-content: center;
+}
+.centered-container img{
+  width: 150px;
+  max-width: initial;
+}
+ul.menu.menu-right a {
+  font-size: 12px;
+}
+.menu-left li {
+  padding-right: 10px;
+}
+}
+
+@media screen and (max-width: 575px) {
+  .location-result.result {
+    display: block;
+  }
+  .location-page .buttons{
+    margin-top: 15px;
+  }
+}

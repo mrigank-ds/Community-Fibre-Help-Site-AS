@@ -559,7 +559,7 @@ export const verticalQueryResponseWithNlpFilters = {
       },
       {
         fieldId: "products",
-        displayName: "Products",
+        displayName: "products",
         options: []
       }
     ],

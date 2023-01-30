@@ -5,19 +5,22 @@ import { answersHeadlessConfig } from './config/answersHeadlessConfig';
 import { routeConfig } from './config/routeConfig';
 import { PageViewContextProvider } from './context/PageViewContext';
 
+
 export default function App() {
   return (
     <AnswersHeadlessProvider {...answersHeadlessConfig}>
-      <PageViewContextProvider >
+    
+        <PageViewContextProvider >
         <div className='flex justify-center'>
-          <div className='w-full max-w-5xl'>
-            <PageRouter
-              Layout={StandardLayout}
-              routes={routeConfig}
-            />
+            <div className='w-full max-w-5xl'>
+              <PageRouter
+                Layout={StandardLayout}
+                routes={routeConfig}
+              />
+            </div>
           </div>
-        </div>
-      </PageViewContextProvider>
+        </PageViewContextProvider>
+   
     </AnswersHeadlessProvider>
   );
 }

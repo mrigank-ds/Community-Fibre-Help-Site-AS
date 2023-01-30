@@ -4,6 +4,8 @@ import { universalResultsConfig } from '../config/universalResultsConfig';
 import { LayoutComponent } from '../PageRouter';
 import SearchBar from '../components/SearchBar';
 import SampleVisualSearchBar from '../components/VisualAutocomplete/SampleVisualSearchBar';
+import Header from '../components/Header'
+import Footer from '../components/Footer'
 
 const navLinks = [
   {
@@ -21,25 +23,11 @@ const navLinks = [
  */
 const StandardLayout: LayoutComponent = ({ page }) => {
   const isVertical = useAnswersState(s => s.meta.searchType) === SearchTypeEnum.Vertical;
-  const PreText : any = useAnswersState(state => state.vertical.verticalKey);
-  var PlaceholderText = '';
-  if(PreText==='help_articles'){
-    PlaceholderText = 'Search Our Help Articles';
-  }else if(PreText==='faqs'){
-    PlaceholderText = 'Your Frequently Asked Questions';
-  }
-
-  
   return (
     <>
-      {isVertical
-        ? <SearchBar
-          placeholder= {PlaceholderText ? PlaceholderText :'Search...'}
-        />
-        : <SampleVisualSearchBar />
-      }
-      <Navigation links={navLinks} />
+    <Header/>
       {page}
+      <Footer/>
     </>
   )
 }
