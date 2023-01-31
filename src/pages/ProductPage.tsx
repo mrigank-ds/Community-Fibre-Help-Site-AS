@@ -19,6 +19,7 @@ import SearchBar from '../components/SearchBar';
 import SampleVisualSearchBar from '../components/VisualAutocomplete/SampleVisualSearchBar';
 import Navigation from '../components/Navigation';
 import { universalResultsConfig } from '../config/universalResultsConfig';
+import VerticalResults from '../components/VerticalResults';
 
 
 
@@ -45,6 +46,8 @@ const navLinks = [
 export default function ProductPage({ verticalKey }: {
   verticalKey: string
 }) {
+
+  
   const { pageView } = useContext(PageViewContext);
   usePageSetupEffect(verticalKey);
   const isVertical = useAnswersState(s => s.meta.searchType) === SearchTypeEnum.Vertical;

@@ -29,6 +29,11 @@ const universalResultsFilterConfig = {
 export default function UniversalSearchPage(props: { universalResultsConfig: UniversalResultsConfig }) {
   const { universalResultsConfig } = props;
   usePageSetupEffect();
+  let PathUrl = window.location.pathname + "?&query=Help+Articles";
+  let wwNewVar = window.location.search;
+  let wwNewBar = wwNewVar.split("=");
+ console.log(wwNewBar,"Varnew")
+  
   const isVertical = useAnswersState(s => s.meta.searchType) === SearchTypeEnum.Vertical;
   return (
     <>

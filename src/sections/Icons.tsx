@@ -18,13 +18,13 @@ export default function Icons(props: SectionHeaderConfig): JSX.Element {
         if(verticalKey == 'help_articles'){
             return <img src={helparticle} />
         }
-        if(verticalKey == 'videos'){
+        if(verticalKey == 'video'){
             return <img src={videoicon} />
         }
-        if(verticalKey == 'provider_switching_'){
+        if(verticalKey == 'provider_switching'){
             return <img src={Provider} />
         }
-        if(verticalKey == 'products'){
+        if(verticalKey == 'product'){
             return <img src={CollectionIcon} />
         }
         // console.log(verticalKey,'verticalKey')
