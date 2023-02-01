@@ -2,56 +2,47 @@ import { Link } from "react-router-dom";
 export default function Footer() {
     return (
         <>
+        <hr></hr>
             <footer className="footer-sec ">
                 <div className="container-custom py-3 mr-5 text-bold">
                     <h4 className="nav-dropdown-main hover:text-[#9c9090]">Company</h4>
                     <ul>
                         <li>
-                            <Link className="course-accordion" href="#" rel="noopener noreferrer" to={""} >Legal Stuff </Link>
+                            <Link className="course-accordion" href="#" rel="noopener noreferrer" to={""} >Community Connect Blog</Link>
                         </li>
                         <li>
-                            <Link className="course-accordion" href="#" rel="noopener noreferrer" to={""} >Careers
+                            <Link className="course-accordion" href="#" rel="noopener noreferrer" to={""} >Media Centre
                             </Link>
                         </li>
                         <li>
-                            <Link className="course-accordion" href="#" rel="noopener noreferrer" to={""} >Media Centre </Link>
+                            <Link className="course-accordion" href="#" rel="noopener noreferrer" to={""} >Careers</Link>
                         </li>
                         <li>
-                            <Link className="course-accordion" href="#" rel="noopener noreferrer" to={""} >Community Connect Blog </Link>
+                            <Link className="course-accordion" href="#" rel="noopener noreferrer" to={""} >Affiliates</Link>
                         </li>
                         <li>
                             <Link className="course-accordion" href="#" rel="noopener noreferrer" to={""} >
-                                Contact Us </Link>
+                            Legal Stuff </Link>
                         </li>
                     </ul>
                 </div>
                 <div className="footer-bx footer-link py-3 mr-5">
-                    <h4>Useful links</h4>
+                    <h4>Help & Support</h4>
                     <ul>
                         <li key="" className="nav-dropdown-main">
-                            <Link className="course-accordion" href="#" rel="noopener noreferrer" to={""} >COVID-19 </Link>
+                            <Link className="course-accordion" href="#" rel="noopener noreferrer" to={""} >Contact Us</Link>
                         </li>
                         <li key="" className="nav-dropdown-main">
-                            <Link className="course-accordion" href="#" rel="noopener noreferrer" to={""} >Site Map </Link>
+                            <Link className="course-accordion" href="#" rel="noopener noreferrer" to={""} >FAQs</Link>
 
                         </li>
                         <li key="" className="nav-dropdown-main">
-                            <Link className="course-accordion" href="#" rel="noopener noreferrer" to={""} >Student Discount </Link>
+                            <Link className="course-accordion" href="#" rel="noopener noreferrer" to={""} >COVID-19</Link>
                         </li>
                         <li key="" className="nav-dropdown-main">
-                            <Link className="course-accordion" href="#" rel="noopener noreferrer" to={""} >Refer a Friend </Link>
+                            <Link className="course-accordion" href="#" rel="noopener noreferrer" to={""} >Site Map</Link>
                         </li>
-                        <li key="" className="nav-dropdown-main">
-                            <Link className="course-accordion" href="#" rel="noopener noreferrer" to={""} >FAQs </Link>
-
-                        </li>
-                        <li key="" className="nav-dropdown-main">
-                            <Link className="course-accordion" href="#" rel="noopener noreferrer" to={""} >Existing Customers </Link>
-
-                        </li>
-                        <li key="" className="nav-dropdown-main">
-                            <Link className="course-accordion" href="#" rel="noopener noreferrer" to={""} >All our products</Link>
-                        </li>
+                        
                     </ul>
                 </div>
                 <div className="footer-bx footer-link py-3 mr-5 connect-img">
@@ -70,8 +61,6 @@ export default function Footer() {
 
                                 <a href="#" className=" text-gray-600">
                                     <img src="https://communityfibre.co.uk/_next/image?url=https%3A%2F%2Fcdn.buttercms.com%2F6rzZHRkToOEbGHVd83z2&w=1920&h=1&q=75" alt="footericon"></img></a>
-                                <a href="#" className="ml-2 mr-4 text-gray-600">
-                                    <img src="https://communityfibre.co.uk/_next/image?url=https%3A%2F%2Fcdn.buttercms.com%2FcNBUqv3VRJEGmRdUbgG7&w=1920&q=75" alt="footericon"></img></a>
                             </p>
                         </div>
                     </ul>

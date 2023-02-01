@@ -52,7 +52,7 @@ export function ResultsCountDisplay({
     'Showing ',
     offset + 1,
     ' to ',
-    resultsLength ,
+    resultsLength+offset ,
     ' of ',
     resultsCount,
     ' Results'

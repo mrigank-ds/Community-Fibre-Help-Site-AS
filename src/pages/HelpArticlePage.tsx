@@ -7,6 +7,7 @@ import SpellCheck from '../components/SpellCheck';
 import LocationBias from '../components/LocationBias';
 import { HelpArticlesCard } from '../components/cards/HelpArticlesCard';
 import usePageSetupEffect from '../hooks/usePageSetupEffect';
+// import VerticalResults from '../components/VerticalResults';
 
 export default function HelpArticlePage({ verticalKey }: {
   verticalKey: string

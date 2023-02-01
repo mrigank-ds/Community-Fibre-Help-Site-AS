@@ -3,6 +3,7 @@ import { useAnswersState, Result, useAnswersActions } from '@yext/answers-headle
 import classNames from 'classnames';
 import { CompositionMethod, useComposedCssClasses } from '../hooks/useComposedCssClasses';
 import { ReactComponent as PageNavigationIcon } from '../icons/chevron.svg';
+import NewPagination from './pagination';
 
 interface VerticalResultsCssClasses extends PaginationCssClasses {
   results___loading?: string
@@ -87,10 +88,8 @@ export default function VerticalResults(props: VerticalResultsProps): JSX.Elemen
     <>
       <VerticalResultsDisplay results={results} isLoading={isLoading} {...otherProps}/>
       {allowPagination 
-        && <Pagination 
+        && <NewPagination 
           numResults={resultsCount}
-          customCssClasses={otherProps.customCssClasses}
-          cssCompositionMethod={otherProps.cssCompositionMethod}
         />
       }
     </>
@@ -133,7 +132,7 @@ function Pagination(props: PaginationProps): JSX.Element | null {
   const answersAction = useAnswersActions();
   const offset = useAnswersState(state => state.vertical.offset) || 0;
   const limit = useAnswersState(state => state.vertical.limit) || 9;
-
+  // let NewLimit : any  = answersAction.setVerticalLimit(9);
 // console.log(limit,'limit');
 
   const executeSearchWithNewOffset = (newOffset: number) => {
@@ -145,11 +144,11 @@ function Pagination(props: PaginationProps): JSX.Element | null {
     newPageNumber && executeSearchWithNewOffset(limit * (newPageNumber - 1));
   }
 
-  const maxPageCount = Math.ceil(numResults / limit);
+  const maxPageCount : number = Math.ceil(numResults / limit);
   if (maxPageCount <= 1) {
     return null;
   }
-  const pageNumber = (offset / limit) + 1;
+  const pageNumber : number = (offset / limit) + 1;
   const paginationLabels: string[] = generatePaginationLabels(pageNumber, maxPageCount);
 
   return (
@@ -194,6 +193,7 @@ function generatePaginationLabels(pageNumber: number, maxPageCount: number): str
   } else if (previousPageNumber !== 0) {
     [...Array(previousPageNumber)].forEach((_, index) => paginationLabels.push(`${index + 1}`));
   }
+  console.log(paginationLabels,"paginationLabels");
   paginationLabels.push(`${pageNumber}`);
   if (maxPageCount - nextPageNumber > 2) {
     paginationLabels.push(`${nextPageNumber}`, '...', `${maxPageCount}`);

@@ -21,7 +21,7 @@ export default function Header() {
 
   return (
     <>
-    
+      <hr></hr>
       <div>
         <div className="container-custom-before">
 
@@ -29,22 +29,22 @@ export default function Header() {
 
             <div className="header-before">
               <div className="trust-bx">
-              <nav className="navbar">
-        <div className={`nav-elements `}>
-                  <ul className="menu font-semibold menu-left">
-                    {/* <li className="hover:text-[#9c9090]"><Link href="#" rel="noopener noreferrer"  >
+                <nav className="navbar">
+                  <div className={`nav-elements `}>
+                    <ul className="menu font-semibold menu-left">
+                      {/* <li className="hover:text-[#9c9090]"><Link href="#" rel="noopener noreferrer"  >
 
             </Link>  */}
 
-                    <li className="nav-dropdown-main hover:text-[#9c9090]"> <Link className="course-accordion" href="#" rel="noopener noreferrer" to={""} > Residential</Link>
-                    </li>
-
-                  
-                    <li className="hover:text-[#9c9090]"><Link href="#" rel="noopener noreferrer" to={""}  >Business</Link></li>
-                    <li className="hover:text-[#9c9090]"> <Link href="#" rel="noopener noreferrer" to={""}  >Landlord</Link></li>
+                      <li className="nav-dropdown-main hover:text-[#9c9090]"> <Link className="course-accordion" href="#" rel="noopener noreferrer" to={""} > Residential</Link>
+                      </li>
 
 
-                  </ul>
+                      <li className="hover:text-[#9c9090]"><Link href="#" rel="noopener noreferrer" to={""}  >Business</Link></li>
+                      <li className="hover:text-[#9c9090]"> <Link href="#" rel="noopener noreferrer" to={""}  >Landlord</Link></li>
+
+
+                    </ul>
                   </div>
                 </nav>
               </div>
@@ -66,7 +66,7 @@ export default function Header() {
             </div>
 
           </div>
-       
+
         </div>
       </div>
       <br></br>
@@ -80,16 +80,16 @@ export default function Header() {
                 height="50" ></img></Link>
           </div>
           <div>
-          <button type="button" className="menu-toggle w-8 h-6 flex flex-col justify-between lg:hidden hello" onClick={toggle}>
-          <span></span>
-              </button>
+            <button type="button" className="menu-toggle w-8 h-6 flex flex-col justify-between lg:hidden hello" onClick={toggle}>
+              <span></span>
+            </button>
           </div>
           <ul className="submenu flex  gap-x-10 text-2xl font-normal ">
 
             <div className="trust-bx">
               <nav className="navbar">
-              
-        <div className={`nav-elements `}>
+
+                <div className={`nav-elements `}>
                   <ul className="menu font-semibold menu-left">
                     {/* <li className="hover:text-[#9c9090]"><Link href="#" rel="noopener noreferrer"  >
 
@@ -98,43 +98,43 @@ export default function Header() {
                     <li className="nav-dropdown-main hover:text-[#9c9090]"> <Link className="course-accordion" href="#" rel="noopener noreferrer" to={""} > Residential</Link>
                     </li>
 
-                  
+
                     <li className="hover:text-[#9c9090]"><Link href="#" rel="noopener noreferrer" to={""}  >Business</Link></li>
                     <li className="hover:text-[#9c9090]"> <Link href="#" rel="noopener noreferrer" to={""}  >Landlord</Link></li>
 
 
                   </ul>
-                  </div>
-                </nav>
-              </div>
-           
+                </div>
+              </nav>
+            </div>
+
             <li className="nav-dropdown-main hover:text-[#9c9090]">
-           {svgIcons.Broadband}
-               <Link className="course-accordion" href="#" rel="noopener noreferrer" to={""} >Broadband</Link>
+              {svgIcons.Broadband}
+              <Link className="course-accordion" href="#" rel="noopener noreferrer" to={""} >Broadband</Link>
 
             </li><li className="nav-dropdown-main hover:text-[#9c9090]">
-            {svgIcons.TV}
+              {svgIcons.TV}
 
-              
-               <Link className="course-accordion" href="#" rel="noopener noreferrer" to={""} >TV</Link>
+
+              <Link className="course-accordion" href="#" rel="noopener noreferrer" to={""} >TV</Link>
 
             </li><li className="nav-dropdown-main hover:text-[#9c9090]">
-          
-            {svgIcons.Call}
-              
-               <Link className="course-accordion" href="#" rel="noopener noreferrer" to={""} >Calls</Link>
+
+              {svgIcons.Call}
+
+              <Link className="course-accordion" href="#" rel="noopener noreferrer" to={""} >Calls</Link>
 
             </li>
             <li className="nav-dropdown-main hover:text-[#9c9090]">
-       
-            {svgIcons.Deals}
-               <Link className="course-accordion" href="#" rel="noopener noreferrer" to={""} >Deals</Link>
+
+              {svgIcons.Deals}
+              <Link className="course-accordion" href="#" rel="noopener noreferrer" to={""} >Deals</Link>
 
             </li>
-            <li className="nav-dropdown-main hover:text-[#9c9090]"> 
-          
-            {svgIcons.CHOOSE}
-            <Link className="course-accordion" href="#" rel="noopener noreferrer" to={""} >Why choose us</Link>
+            <li className="nav-dropdown-main hover:text-[#9c9090]">
+
+              {svgIcons.CHOOSE}
+              <Link className="course-accordion" href="#" rel="noopener noreferrer" to={""} >Why choose us</Link>
 
             </li>
             <li className="nav-dropdown-main hover:text-[#9c9090]"> <Link className="course-accordion" href="#" rel="noopener noreferrer" to={""} ><button className="ctaBtn">Get Started</button></Link>
@@ -144,7 +144,7 @@ export default function Header() {
 
 
         </nav>
-       
+
       </div>
 
     </>

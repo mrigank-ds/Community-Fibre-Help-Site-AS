@@ -31,6 +31,9 @@ body{
   @apply bg-white
 }
 
+.active-pagination-button{
+  background-color: yellowgreen;
+}
 .search-nav{
   @apply py-5 bg-white px-2 lg:px-0
 }
