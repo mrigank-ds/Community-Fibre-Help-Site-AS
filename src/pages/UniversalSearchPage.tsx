@@ -6,7 +6,7 @@ import usePageSetupEffect from '../hooks/usePageSetupEffect';
 import SearchBar from '../components/SearchBar';
 import SampleVisualSearchBar from '../components/VisualAutocomplete/SampleVisualSearchBar';
 import Navigation from '../components/Navigation';
-import { SearchTypeEnum, useAnswersState } from '@yext/answers-headless-react';
+import { SearchTypeEnum, useAnswersActions, useAnswersState } from '@yext/answers-headless-react';
 import locationpin from '../icons/location-pin.svg';
 import callicon from '../icons/icon-call.svg';
 import { useEffect } from 'react';
@@ -34,14 +34,15 @@ export default function UniversalSearchPage(props: { universalResultsConfig: Uni
   // Getting URL code starts here
 
   const queryString = window.location.search;
-  const urlParams = new URLSearchParams(queryString);
-  const product = urlParams.get('query')
-  console.log(product,"product");
-  // useEffect(()=>{})
-   
-      // 
-      //  c
-
+  let  urlParams : any = new URLSearchParams(queryString);
+  const product = urlParams.get('query');
+  // const product = "djsfbs"
+  const answersActions = useAnswersActions();
+  // console.log(product,"product");
+  useEffect(() => {
+      // onPageLoad()
+      answersActions.setQuery(product)
+  }, []);
    
 
   // Getting URL code ends here
