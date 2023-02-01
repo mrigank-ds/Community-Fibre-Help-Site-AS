@@ -9,6 +9,7 @@ import Navigation from '../components/Navigation';
 import { SearchTypeEnum, useAnswersState } from '@yext/answers-headless-react';
 import locationpin from '../icons/location-pin.svg';
 import callicon from '../icons/icon-call.svg';
+import { useEffect } from 'react';
 
 
 const navLinks = [
@@ -29,10 +30,21 @@ const universalResultsFilterConfig = {
 export default function UniversalSearchPage(props: { universalResultsConfig: UniversalResultsConfig }) {
   const { universalResultsConfig } = props;
   usePageSetupEffect();
-  let PathUrl = window.location.pathname + "?&query=Help+Articles";
-  let wwNewVar = window.location.search;
-  let wwNewBar = wwNewVar.split("=");
- console.log(wwNewBar,"Varnew")
+
+  // Getting URL code starts here
+
+  const queryString = window.location.search;
+  const urlParams = new URLSearchParams(queryString);
+  const product = urlParams.get('query')
+  console.log(product,"product");
+  // useEffect(()=>{})
+   
+      // 
+      //  c
+
+   
+
+  // Getting URL code ends here
   
   const isVertical = useAnswersState(s => s.meta.searchType) === SearchTypeEnum.Vertical;
   return (
@@ -44,6 +56,7 @@ export default function UniversalSearchPage(props: { universalResultsConfig: Uni
           />
           : <SampleVisualSearchBar />
         }
+        {/* {thisFunction()} */}
         <Navigation links={navLinks} />
         <SpellCheck />
         <DirectAnswer />
