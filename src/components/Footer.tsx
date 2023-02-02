@@ -2,7 +2,11 @@ import { Link } from "react-router-dom";
 export default function Footer() {
     return (
         <>
-        <hr></hr>
+        <div className="mt-5">
+            <hr>
+            </hr>
+        </div>
+        
             <footer className="footer-sec ">
                 <div className="container-custom py-3 mr-5 text-bold">
                     <h4 className="nav-dropdown-main hover:text-[#9c9090]">Company</h4>
