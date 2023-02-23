@@ -1,92 +1,143 @@
-import ResultsCount from '../components/ResultsCount';
-import DirectAnswer from '../components/DirectAnswer';
-import SpellCheck from '../components/SpellCheck';
-import LocationBias from '../components/LocationBias';
-import usePageSetupEffect from '../hooks/usePageSetupEffect';
-import { LocationCard } from '../components/cards/LocationCard';
-import { LocationProvider } from '../components/LocationContext';
+import ResultsCount from "../components/ResultsCount";
+import DirectAnswer from "../components/DirectAnswer";
+import SpellCheck from "../components/SpellCheck";
+import LocationBias from "../components/LocationBias";
+import usePageSetupEffect from "../hooks/usePageSetupEffect";
+import { LocationCard } from "../components/cards/LocationCard";
+import { LocationProvider } from "../components/LocationContext";
 // import { useContext } from 'react';
-import { SearchTypeEnum, useAnswersState } from '@yext/answers-headless-react';
-import LocationResults from '../components/LocationResults';
-import MapToggleButton from '../components/MapToggleButton';
-import SearchBar from '../components/SearchBar';
-import SampleVisualSearchBar from '../components/VisualAutocomplete/SampleVisualSearchBar';
-import Navigation from '../components/Navigation';
-import { universalResultsConfig } from '../config/universalResultsConfig';
+import {
+  LocationBiasMethod,
+  SearchTypeEnum,
+  useAnswersActions,
+  useAnswersState,
+} from "@yext/answers-headless-react";
+import LocationResults from "../components/LocationResults";
+import MapToggleButton from "../components/MapToggleButton";
+import SearchBar from "../components/SearchBar";
+import SampleVisualSearchBar from "../components/VisualAutocomplete/SampleVisualSearchBar";
+import Navigation from "../components/Navigation";
+import { universalResultsConfig } from "../config/universalResultsConfig";
+import {
+  CompositionMethod,
+  useComposedCssClasses,
+} from "../hooks/useComposedCssClasses";
+import { executeSearch, getUserLocation } from "../utils/search-operations";
+import VerticalResults from "../components/VerticalResults";
+import { SetStateAction, useState } from "react";
+import AlternativeVerticals from "../components/AlternativeVerticals";
 
-{/* const filterSearchFields = [
-  {
-    fieldApiName: 'name',
-    entityType: 'location',
-  },
-  {
-    fieldApiName: 'paymentOptions',
-    entityType: 'location',
-  },
-  {
-    fieldApiName: 'services',
-    entityType: 'location',
-  },
-]; */}
+export const builtInCssClasses: SearchBarCssClasses = {
+  button: "text-blue-600 cursor-pointer hover:underline focus:underline",
+};
+export interface SearchBarCssClasses extends InputDropdownCssClasses {
+  button?: string;
+  source?: string;
+}
+export interface InputDropdownCssClasses {
+  inputDropdownContainer?: string;
+  inputDropdownContainer___active?: string;
+  dropdownContainer?: string;
+  inputElement?: string;
+  inputContainer?: string;
+  divider?: string;
+  logoContainer?: string;
+  searchButtonContainer?: string;
+}
+interface Props {
+  verticalKey?: any;
+  geolocationOptions?: PositionOptions;
+}
 const navLinks = [
   {
-    to: '/',
-    label: 'All'
+    to: "/",
+    label: "All",
   },
   ...Object.entries(universalResultsConfig).map(([verticalKey, config]) => ({
     to: verticalKey,
-    label: config.label || verticalKey
-  }))
-]
+    label: config.label || verticalKey,
+  })),
+];
 
-export default function LocationsPage({ verticalKey }: { verticalKey: string }) {
+export default function LocationsPage(
+  { verticalKey, geolocationOptions }: Props,
+) {
   usePageSetupEffect(verticalKey);
-  const screenSize = 'sm';  
+  const screenSize = "sm";
   const results = useAnswersState((state) => state.vertical.results) || [];
-  { /*const latestQuery = useAnswersState((state) => state.query.mostRecentSearch); */}
-  const isVertical = useAnswersState(s => s.meta.searchType) === SearchTypeEnum.Vertical;
+  {/*const latestQuery = useAnswersState((state) => state.query.mostRecentSearch); */ }
+  const isVertical =
+    useAnswersState((s) => s.meta.searchType) === SearchTypeEnum.Vertical;
+  const answersActions = useAnswersActions();
 
+  const locationBias = useAnswersState((s) => s.location.locationBias);
+  const cssClasses = useComposedCssClasses(builtInCssClasses);
+  const verticalResults = useAnswersState((state) => state.vertical.results) ||
+    [];
+  const [text, setText] = useState("");
+  if (!locationBias?.displayName) return null;
+  const location = locationBias.displayName;
+
+  const attributionMessage = locationBias?.method === LocationBiasMethod.Ip
+    ? " (based on your internet address) - "
+    : locationBias?.method === LocationBiasMethod.Device
+      ? " (based on your device) - "
+      : " - ";
+
+  async function handleGeolocationClick() {
+    try {
+      const position = await getUserLocation(geolocationOptions);
+      answersActions.setUserLocation({
+        latitude: position.coords.latitude,
+        longitude: position.coords.longitude,
+      });
+    } catch (e) {
+      console.error(e);
+    }
+    executeSearch(answersActions, isVertical);
+  }
+  // console.log(verticalResults.length, "verticalResults");
+  const changeText = (text: any) => setText(text);
   return (
     <>
-    {isVertical
-      ? <SearchBar
-        placeholder= 'Locations'
-      />
-      : <SampleVisualSearchBar />
-    }
-    <Navigation links={navLinks} />
-  
-    <LocationProvider>
-      <div className="flex location-page">
-        <div className="flex-grow">
-          <DirectAnswer />
-          <SpellCheck
-            cssCompositionMethod="assign"
-            customCssClasses={{
-              container: 'font-body text-xl',
-              helpText: '',
-              link: 'text-gold font-bold cursor-pointer hover:underline focus:underline',
-            }}
-          />
-          <ResultsCount cssCompositionMethod="assign" customCssClasses={{ text: 'text-sm font-body' }} />
-          {/* <AppliedFilters
-          hiddenFields={['builtin.entityType']}
-          customCssClasses={{
-            nlpFilter: 'mb-4',
-            removableFilter: 'mb-4',
-          }}
-        /> */}
-          {/* <VerticalResults CardComponent={LocationCard} displayAllResults={true} /> */}
-          {screenSize === 'sm' && (
-            <div className="pb-2">
-              <MapToggleButton />
-            </div>
-          )}
-          <LocationResults results={results} verticalKey={verticalKey} cardConfig={{ CardComponent: LocationCard }} />
-          <LocationBias customCssClasses={{ container: 'p-8' }} />
+      {isVertical
+        ? <SearchBar placeholder="Locations" />
+        : <SampleVisualSearchBar />}
+      <Navigation links={navLinks} />
+      <span className="locationName" onClick={() => changeText(location)}>
+
+
+        {text}
+      </span>
+      <LocationProvider>
+        <div className="flex location-page">
+          <div className="flex-grow">
+            <DirectAnswer />
+            <SpellCheck
+              cssCompositionMethod="assign"
+              customCssClasses={{
+                container: "font-body text-xl",
+                helpText: "",
+                link:
+                  "text-gold font-bold cursor-pointer hover:underline focus:underline",
+              }}
+            />
+            <ResultsCount
+              cssCompositionMethod="assign"
+              customCssClasses={{ text: "text-sm font-body" }}
+            />
+
+            
+                <LocationResults
+                  results={results}
+                  verticalKey={verticalKey}
+                  cardConfig={{ CardComponent: LocationCard }}
+                />
+                  <LocationBias />
+
+          </div>
         </div>
-      </div>
-    </LocationProvider>
+      </LocationProvider>
     </>
   );
 }

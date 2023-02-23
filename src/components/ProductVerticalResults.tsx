@@ -3,13 +3,20 @@ import { useAnswersState, Result, useAnswersActions } from '@yext/answers-headle
 import classNames from 'classnames';
 import { CompositionMethod, useComposedCssClasses } from '../hooks/useComposedCssClasses';
 import { ReactComponent as PageNavigationIcon } from '../icons/chevron.svg';
+import { useState } from 'react';
+import '../sass/index.scss'
+
+
 
 interface VerticalResultsCssClasses extends PaginationCssClasses {
   results___loading?: string
+  onclickonbutton?: string
 }
 
 const builtInCssClasses: VerticalResultsCssClasses = {
-  results___loading: 'opacity-50'
+  results___loading: 'opacity-50',
+  onclickonbutton: '#808080'
+
 }
 
 interface VerticalResultsDisplayProps {
@@ -41,7 +48,7 @@ export function VerticalResultsDisplay(props: VerticalResultsDisplayProps): JSX.
 
   return (
     <div className={resultsClassNames}>
-        <div className='grid grid-cols-1 md:grid-cols-3 gap-2'>
+        <div className='grid grid-cols-1 mt-4 md:grid-cols-3 gap-2'>
             {results && results.map(result => renderResult(CardComponent, cardConfig, result))}
         </div>
     </div>
@@ -88,6 +95,7 @@ export default function ProductVerticalResults(props: VerticalResultsProps): JSX
     resultsCount = allResultsCountForVertical;
   }
 
+
   return (
     <>
       <VerticalResultsDisplay results={results} isLoading={isLoading} {...otherProps}/>
@@ -114,9 +122,9 @@ interface PaginationCssClasses {
 
 const builtInPaginationCssClasses: PaginationCssClasses = {
   container: 'flex justify-center mb-4',
-  labelContainer: 'inline-flex shadow-sm -space-x-px',
+  labelContainer: 'inline-flex shadow-sm pagination-bx  -space-x-px',
   label: 'z-0 inline-flex items-center px-4 py-2 text-sm font-semibold border border-primary text-primary',
-  selectedLabel: 'z-10 inline-flex items-center px-4 py-2 text-sm font-semibold border border-primary text-primary bg-blue-50',
+  selectedLabel: 'z-10 inline-flex items-center px-4 py-2 text-sm font-semibold border border-primary text-primary bg-blue-50 add',
   leftIconContainer: 'inline-flex items-center px-3.5 py-2 border border-primary rounded-l-md',
   rightIconContainer: 'inline-flex items-center px-3.5 py-2 border border-primary rounded-r-md',
   icon: 'w-3 text-gray-500'
@@ -138,8 +146,7 @@ function Pagination(props: PaginationProps): JSX.Element | null {
   const answersAction = useAnswersActions();
   const offset = useAnswersState(state => state.vertical.offset) || 0;
   const limit = 9;
- const NewLimit = useAnswersState(state=> state.vertical.offset);
- console.log(NewLimit,"NewLimit")
+
   const executeSearchWithNewOffset = (newOffset: number) => {
     answersAction.setOffset(newOffset);
     answersAction.executeVerticalQuery();
@@ -150,8 +157,10 @@ function Pagination(props: PaginationProps): JSX.Element | null {
   const onSelectNewPage = (evt: React.MouseEvent) => {
     const newPageNumber = Number(evt.currentTarget.textContent);
     newPageNumber && executeSearchWithNewOffset(limit * (newPageNumber - 1));
+
   }
-  // console.log(onSelectNewPage,"newPageNumber");
+
+
 
   const maxPageCount = Math.ceil(numResults / limit);
   if (maxPageCount <= 1) {
@@ -160,7 +169,7 @@ function Pagination(props: PaginationProps): JSX.Element | null {
   const pageNumber = (offset / limit) + 1;
   const paginationLabels: string[] = generatePaginationLabels(pageNumber, maxPageCount);
   return (
-    <div className={cssClasses.container}>
+    <div className={cssClasses.container }>
       <nav className={cssClasses.labelContainer} aria-label="Pagination">
         <button
           aria-label='Navigate to the previous results page'
@@ -172,11 +181,11 @@ function Pagination(props: PaginationProps): JSX.Element | null {
         {paginationLabels.map((label, index) => {
           switch (label) {
             case '...':
-              return <button key={index} className={cssClasses.label}>{label}</button>
+              return <button id={label} key={index} className={cssClasses.label  } >{label}</button>
             case `${pageNumber}`:
-              return <button key={index} className={cssClasses.selectedLabel} onClick={onSelectNewPage}>{label}</button>
+              return <button id={label} key={index} className={cssClasses.selectedLabel + ' active'} onClick={onSelectNewPage}>{label}</button>
             default:
-              return <button key={index} className={cssClasses.label} onClick={onSelectNewPage}>{label}</button>
+              return <button id={label}  key={index} className={cssClasses.label + ' transform rotate-360'} onClick={onSelectNewPage}>{label}</button>
           }
         })}
         <button

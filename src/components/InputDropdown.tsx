@@ -1,5 +1,5 @@
 import classNames from "classnames";
-import React, { useReducer, KeyboardEvent, useRef, useEffect, useState, useMemo, FocusEvent, Children } from "react"
+import React, { useReducer, KeyboardEvent, useRef, useEffect, useState, useMemo, FocusEvent, Children, SetStateAction } from "react"
 import DropdownSection, { DropdownSectionProps } from "./DropdownSection";
 import ScreenReader from "./ScreenReader";
 import recursivelyMapChildren from './utils/recursivelyMapChildren';
@@ -21,9 +21,12 @@ interface Props {
   placeholder?: string,
   screenReaderInstructions: string,
   screenReaderText: string,
+  
   onlyAllowDropdownOptionSubmissions?: boolean,
   forceHideDropdown?: boolean,
   onSubmit?: (value: string) => void,
+  clear?: () => JSX.Element | null,
+ 
   renderSearchButton?: () => JSX.Element | null,
   renderLogo?: () => JSX.Element | null,
   onInputChange: (value: string) => void,
@@ -65,6 +68,8 @@ export default function InputDropdown({
   forceHideDropdown,
   children,
   onSubmit = () => {},
+  clear = () => null,
+
   renderSearchButton = () => null,
   renderLogo = () => null,
   onInputChange,
@@ -111,11 +116,12 @@ export default function InputDropdown({
       }
       return { ...option, onSelect: modifiedOnSelect }
     });
-
+  
     const modifiedOnFocusChange = (value: string, focusedOptionId: string) => {
       child.props.onFocusChange?.(value, focusedOptionId);
       setFocusedOptionId(focusedOptionId);
     };
+   
 
     if (focusedSectionIndex === currentSectionIndex) {
       return React.cloneElement(child, {
@@ -135,7 +141,6 @@ export default function InputDropdown({
     }
   });
 
-
   /**
    * Handles changing which section should become focused when focus leaves the currently-focused section.
    * @param pastSectionEnd Whether the section focus left from the end or the beginning of the section.
@@ -154,6 +159,7 @@ export default function InputDropdown({
       } else if (newSectionIndex > numSections - 1) {
         newSectionIndex = numSections - 1;
       }
+      
       dispatch({ type: 'FocusSection', newIndex: newSectionIndex });
     }
   }
@@ -199,6 +205,7 @@ export default function InputDropdown({
     ) {
       setLatestUserInput(inputValue);
       onSubmit(inputValue);
+      
       dispatch({ type: 'HideSections' });
     }
   }
@@ -218,17 +225,19 @@ export default function InputDropdown({
 
   return (
     <div className={inputDropdownContainerCssClasses} ref={inputDropdownRef} onBlur={handleBlur}>
-      <div className={cssClasses?.inputContainer}>
+      <div className={cssClasses?.inputContainer} >
         <div className={cssClasses.logoContainer}>
           {renderLogo()}
         </div>
         <input
           className={cssClasses.inputElement}
+          id="SearchBar"
           placeholder={placeholder}
-          id='SearchBar'
+          
           onChange={evt => {
             const value = evt.target.value;
             setLatestUserInput(value);
+          
             onInputChange(value);
             onInputFocus(value);
             setChildrenKey(childrenKey + 1);
@@ -237,6 +246,7 @@ export default function InputDropdown({
           }}
           onClick={() => {
             onInputFocus(inputValue);
+            
             setChildrenKey(childrenKey + 1);
             dispatch({ type: 'ShowSections' });
             if (numSections > 0 || inputValue) {
@@ -251,6 +261,10 @@ export default function InputDropdown({
         />
         <div className={cssClasses.searchButtonContainer}>
           {renderSearchButton()}
+          {setLatestUserInput.length == 1 ? clear():null }
+ 
+         
+
         </div>
       </div>
       <ScreenReader

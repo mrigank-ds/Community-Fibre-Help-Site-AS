@@ -6,6 +6,7 @@ import { SectionComponent } from "../models/sectionComponent";
 import { CardConfig } from '../models/cardComponent';
 import { useComposedCssClasses, CompositionMethod } from "../hooks/useComposedCssClasses";
 import classNames from "classnames";
+import { useEffect, useState } from "react";
 
 interface UniversalResultsCssClasses {
   container?: string,
@@ -48,11 +49,31 @@ export default function UniversalResults({
   const cssClasses = useComposedCssClasses(builtInCssClasses, customCssClasses, cssCompositionMethod);
   const resultsFromAllVerticals = useAnswersState(state => state?.universal?.verticals) || [];
   const isLoading = useAnswersState(state => state.searchStatus.isLoading);
-
-  if (resultsFromAllVerticals.length === 0) {
-    return null;
+  // const[noresult,setNoResult]=useState('');
+  // if (resultsFromAllVerticals.length === 0) {
+  //   return null;
+  // }
+  
+  // no result found Universal
+  // useEffect(()=>{
+  //      if(!isLoading){
+  //       setNoResult('No Result Found');
+  //      }
+  //      else{
+  //       setNoResult('');
+  //      }
+  // },[0])
+  if (resultsFromAllVerticals.length === 0 && isLoading===false) {
+    
+    return (
+      <>
+        <div className='no-result'> No results found</div>
+        <div>
+          {renderVerticalSections({ resultsFromAllVerticals, appliedFiltersConfig, verticalConfigs })}
+        </div>
+      </>
+    )
   }
-
   const resultsClassNames = classNames(cssClasses.container, {
     [cssClasses.results___loading ?? '']: isLoading
   });

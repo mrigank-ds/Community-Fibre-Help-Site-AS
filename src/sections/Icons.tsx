@@ -2,7 +2,9 @@ import * as React from "react";
 import videoicon from "../icons/video.svg";
 import helparticle from "../icons/Helparticles.svg"
 import Provider from "../icons/Provider.svg"
-import CollectionIcon  from '../icons/collection.svg';
+import icons from '../icons/product-icon.svg'
+import Location from '../icons/Location.svg'
+
 
 interface SectionHeaderConfig{
 verticalKey: string,
@@ -11,23 +13,25 @@ verticalKey: string,
 
 export default function Icons(props: SectionHeaderConfig): JSX.Element {
     const {  verticalKey} = props;
-    // console.log('helparticle', helparticle)
-    
+  
     const vidicon =()=>{
        
         if(verticalKey == 'help_articles'){
-            return <img src={helparticle} />
+            return <img src={helparticle}  alt="icon" />
         }
-        if(verticalKey == 'video'){
-            return <img src={videoicon} />
+        if(verticalKey == 'videos'){
+            return <img src={videoicon}  alt="icon"  />
         }
         if(verticalKey == 'provider_switching'){
-            return <img src={Provider} />
+            return <img src={Provider}  alt="icon"  />
         }
         if(verticalKey == 'product'){
-            return <img src={CollectionIcon} />
+            return <img src={icons}  alt="icon" />
         }
-        // console.log(verticalKey,'verticalKey')
+        if(verticalKey == 'locations'){
+            return <img src={Location}  alt="icon" />
+        }
+       
         return null;
     }
   

@@ -2,7 +2,7 @@ import { Wrapper } from "@googlemaps/react-wrapper";
 // import { useSearchState, Result } from "@yext/search-headless-react";
 import * as React from "react";
 import { useRef, useEffect, useState, useContext } from 'react';
-import {/*twMerge,*/ useComposedCssClasses} from "..//../hooks/useComposedCssClasses";
+import {/*twMerge,*/ useComposedCssClasses } from "..//../hooks/useComposedCssClasses";
 import Mapicon from "../../icons/map-pin.svg";
 import MapiconHover from "../../icons/map-pin-hover.svg";
 
@@ -41,14 +41,14 @@ export interface GoogleMapsProps {
 type UnwrappedGoogleMapsProps = Omit<GoogleMapsProps, "apiKey" | "locale">;
 
 let mapMarkerClusterer: { clearMarkers: () => void } | null = null;
-let infoWindow:any = null;
-let openMapCenter:any = "";
-let openMapZoom:any = "";
-let openInfoWindow:any = false;
-let searchCenter:any = null;
-let searchZoom:any = null;
+let infoWindow: any = null;
+let openMapCenter: any = "";
+let openMapZoom: any = "";
+let openInfoWindow: any = false;
+let searchCenter: any = null;
+let searchZoom: any = null;
 let stopAnimation = false;
-let currentMapZoom:number = 0;
+let currentMapZoom: number = 0;
 
 
 const builtInCssClasses: Readonly<GoogleMapsCssClasses> = {
@@ -64,7 +64,7 @@ const builtInCssClasses: Readonly<GoogleMapsCssClasses> = {
  *
  * @public
  */
-export function GoogleMaps(props: GoogleMapsProps) {
+export function Maps(props: GoogleMapsProps) {
   return (
     <div>
       <Wrapper apiKey={props.apiKey}>
@@ -90,7 +90,13 @@ function UnwrappedGoogleMaps({
     lng: centerLongitude,
   });
   const { state, dispatch } = useContext(LocationContext);
+
+  // console.log([centerLatitude,centerLongitude]);
   const locationResults = state.mapLocations || [];
+  // const userlat = useSearchState(s => s.location.locationBias) || [];
+
+  // console.log('state.mapLocations', state.mapLocations); 
+
   const cssClasses = useComposedCssClasses(builtInCssClasses, customCssClasses);
   const noResults = !locationResults.length;
   let containerCssClass = cssClasses.googleMapsContainer;
@@ -105,6 +111,7 @@ function UnwrappedGoogleMaps({
     stroke_selected: "#4e9c34",
     text_selected: "white",
   };
+
   let marker_icon = {
     url: Mapicon,
     fillColor: pinStyles.fill,
@@ -114,6 +121,7 @@ function UnwrappedGoogleMaps({
     strokeWeight: 1,
     labelOrigin: new google.maps.Point(21, 22),
   };
+
   let marker_hover_icon = {
     url: MapiconHover,
     fillColor: pinStyles.fill,
@@ -123,14 +131,18 @@ function UnwrappedGoogleMaps({
     strokeWeight: 1,
     labelOrigin: new google.maps.Point(21, 22),
   };
-  if(!infoWindow){infoWindow = new google.maps.InfoWindow();}
-map?.setZoom(6)
 
 
-  function zoomMapTo(map:any, zoomTo:any, centerToSet:any = false) {
-    currentMapZoom = (typeof map?.getZoom() != "undefined") ? map?.getZoom() : 6;
+  if (!infoWindow) { infoWindow = new google.maps.InfoWindow(); }
+
+
+  map?.setZoom(8)
+ alert("Savdhan");
+
+  function zoomMapTo(map: any, zoomTo: any, centerToSet: any = false) {
+    currentMapZoom = (typeof map?.getZoom() != "undefined") ? map?.getZoom() : 8;
     let newZoom =
-    currentMapZoom > zoomTo ? currentMapZoom - 1 : currentMapZoom + 1;      
+      currentMapZoom > zoomTo ? currentMapZoom - 1 : currentMapZoom + 1;
 
     map?.setZoom(newZoom);
     if (newZoom != zoomTo && !stopAnimation)
@@ -149,7 +161,7 @@ map?.setZoom(6)
     }
   }
 
-  function sleep(ms:any) {
+  function sleep(ms: any) {
     return new Promise((resolve) => setTimeout(resolve, ms));
   }
 
@@ -157,36 +169,36 @@ map?.setZoom(6)
   const markerPins = useRef<google.maps.Marker[]>([]);
   const usermarker = useRef<google.maps.Marker[]>([]);
   deleteMarkers();
-  
-  
+
+
   /**
    * user marker for use my location and define center points.
    * 
    * 
-   */ 
-  
- /* 
- userdeleteMarkers();
- const userlat = useSearchState((s) => s.location.locationBias) || [];
-  const iplat = userlat.latitude;
-  const iplong = userlat.longitude;
-  const position = {
-    lat: iplat,
-    lng: iplong,
-  };
-  const Usermarker1 = new google.maps.Marker({
-    position,
-    map,
-    icon: UserMarker,
-  });
-  usermarker.current.push(Usermarker1);
-*/
+   */
+
+  /* 
+  userdeleteMarkers();
+  const userlat = useSearchState((s) => s.location.locationBias) || [];
+   const iplat = userlat.latitude;
+   const iplong = userlat.longitude;
+   const position = {
+     lat: iplat,
+     lng: iplong,
+   };
+   const Usermarker1 = new google.maps.Marker({
+     position,
+     map,
+     icon: UserMarker,
+   });
+   usermarker.current.push(Usermarker1);
+ */
 
   try {
     if (mapMarkerClusterer) {
       mapMarkerClusterer.clearMarkers();
     }
-  } catch (e) {}
+  } catch (e) { }
   let index = 0;
 
   for (const result of locationResults) {
@@ -212,7 +224,7 @@ map?.setZoom(6)
   if (markerPins.current.length > 0) {
     let markers = markerPins.current;
     mapMarkerClusterer = new MarkerClusterer({ map, markers });
-    
+
   }
 
   useEffect(() => {
@@ -264,36 +276,50 @@ map?.setZoom(6)
       );
     }
   }, [center, map, providerOptions, zoom]);
- 
+
 
 
 
   useEffect(() => {
     if (markerPins.current.length > 0 && map) {
-      //  setTimeout(newZoom, 1000)
-     
-     map.setZoom(6)
-  // map.setZoom(12);
+      setTimeout(newZoom, 1000)
+
+
+
+
+
+      setTimeout(() => {
+
+
+        map.setZoom(8)
+
+      }, 500);
+
+
+
+
+      // map.setZoom(12);
       map.fitBounds(bounds);
-      // map.panToBounds(bounds);
+      map.panToBounds(bounds);
       const zoom = map.getZoom() ?? 0;
-      // if (zoom > 8) {
-      //   map.setZoom(6);
-      // } 
-      searchCenter = bounds.getCenter();
-      // searchZoom = 6;
-    
+      if (zoom > 8) {
+        map.setZoom(8);
+      }
+      // searchCenter = bounds.getCenter();
+      // searchZoom = map.getZoom();
+
+
       let elements = refLcation.current.querySelectorAll(".result");
       for (let index = 0; index < elements.length; index++) {
         /* Checking for the event binded or not if not then binding event */
-        if(!elements[index]?.classList.contains("markerEventBinded")){
+        if (!elements[index]?.classList.contains("markerEventBinded")) {
           elements[index].classList.add("markerEventBinded");
-          elements[index].addEventListener("click", () => { 
-                
+          elements[index].addEventListener("click", () => {
+
             if (!openInfoWindow) {
               openMapZoom = map?.getZoom();
               openMapCenter = map?.getCenter();
-            }else{
+            } else {
               openInfoWindow = false;
               infoWindow.close();
             }
@@ -303,8 +329,8 @@ map?.setZoom(6)
             scrollToRow(index);
 
             let position = getPosition(locationResults[index]);
-            let latLng  = new google.maps.LatLng(position.lat, position.lng);          
-            map.panTo(latLng);            
+            let latLng = new google.maps.LatLng(position.lat, position.lng);
+            map.panTo(latLng);
             zoomMapTo(map, 20, latLng);
             infoWindow.open(map, markerPins.current[index]);
             openInfoWindow = true;
@@ -320,25 +346,26 @@ map?.setZoom(6)
           });
         }
       }
-  }
+    }
   });
 
   for (let i = 0; i < markerPins.current.length; i++) {
-    markerPins.current[i]?.addListener("click", () => {      
-      
+    markerPins.current[i]?.addListener("click", () => {
+
       if (!openInfoWindow) {
         openMapZoom = map?.getZoom();
         openMapCenter = map?.getCenter();
-      }else{
+      } else {
         openInfoWindow = false;
         infoWindow.close();
       }
       scrollToRow(i);
+
       addActiveGrid(i);
       addClickGrid(i);
       InfowindowContents(i, locationResults[i]);
       let position = getPosition(locationResults[i]);
-      let latLng  = new google.maps.LatLng(position.lat, position.lng);      
+      let latLng = new google.maps.LatLng(position.lat, position.lng);
       map?.panTo(latLng);
       zoomMapTo(map, 20, latLng);
       infoWindow.open(map, markerPins.current[i]);
@@ -369,18 +396,20 @@ map?.setZoom(6)
   infoWindow.addListener("closeclick", () => {
     infoWindow.close();
     removeActiveGrid();
-    console.log(searchZoom, "searchZoom2");
-   map?.setZoom(8);
-    map?.fitBounds(bounds);
-    
+
+    if (searchZoom < 8) {
+      searchZoom = 7
+
+    }
+    zoomMapTo(map, searchZoom, false);
     openInfoWindow = false;
   });
 
- 
+
 
 
   function InfowindowContents(i: Number, result: any): void {
-   
+
 
     const MarkerContent = (
       <div className="markerContent  font-universpro font-normal text-darkgrey text-xs md:text-sm leading-6">
@@ -389,29 +418,29 @@ map?.setZoom(6)
         </div>
         <div className="addressData">
 
-        <div><img className="addressLogo absolute top-0 left-0 w-5" src= {locationpin} width="28" height="28"
-          alt="" /></div>
-          <div className='address'> 
+          <div><img className="addressLogo absolute top-0 left-0 w-5" src={locationpin} width="28" height="28"
+            alt="" /></div>
+          <div className='address'>
             <div>{result.address?.line1}</div>
 
-              <div>{`${result.address?.city}, ${result.address?.region} `}</div>
-              <div>{result.address?.postalCode}</div>
-             
-            </div>
+            <div>{`${result.address?.city}, ${result.address?.region} `}</div>
+            <div>{result.address?.postalCode}</div>
+
+          </div>
         </div>
 
         <div className="addressphone">
-        <img className="addressLogo " src={callicon} width="28" height="28" alt="" />
-      <div className="phone "><a id="address" className="" href={`tel:${result.mainPhone}`}>{result.mainPhone}</a>
-                          </div> 
-                          </div>
-                          <div className="button-bx map-card">
-        <a className="ctaBtn" target="_blank" href={`https://www.google.com/maps/dir/?api=1&destination=${result.address?.line1 + result.address?.line1}`}>
+          <img className="addressLogo " src={callicon} width="28" height="28" alt="" />
+          <div className="phone "><a id="address" className="" href={`tel:${result.mainPhone}`}>{result.mainPhone}</a>
+          </div>
+        </div>
+        <div className="button-bx map-card">
+          <a className="ctaBtn" target="_blank" href={`https://www.google.com/maps/dir/?api=1&destination=${result.address?.line1 + result.address?.line1}`}>
             Get Direction
-        </a>
-        <a className="ctaBtn" target="_blank"  href='#'>
+          </a>
+          <a className="ctaBtn" target="_blank" href='#'>
             See More
-        </a>
+          </a>
         </div>
 
         <div>{result.hours} </div>
@@ -440,7 +469,7 @@ map?.setZoom(6)
 
 // TEMPORARY FIX
 /* eslint-disable @typescript-eslint/no-explicit-any */
-function getPosition(result:any) {  
+function getPosition(result: any) {
   const lat = (result as any).yextDisplayCoordinate.latitude;
   const lng = (result as any).yextDisplayCoordinate.longitude;
   return { lat, lng };
@@ -470,17 +499,19 @@ function addClickGrid(index: any) {
   document.querySelectorAll(".result")[index]?.classList.add("click-active");
 }
 
- function scrollToRow(index: any) {
-   let result: any = [].slice.call(document.querySelectorAll(`.result`) || [])[0];
-let offset: any = [].slice.call(document.querySelectorAll(`.result`) || [])[index]
-//  alert( offsetTop); 
-let o = offset.offsetTop - result.offsetTop;
+function scrollToRow(index: any) {
+  let result: any = [].slice.call(document.querySelectorAll(`.result`) || [])[0];
+  let offset: any = [].slice.call(document.querySelectorAll(`.result`) || [])[index]
+  //  alert( offsetTop); 
+  let o = offset.offsetTop - result.offsetTop;
 
-[].slice.call(document.querySelectorAll(".scrollbar-container") || []).forEach(function (el: any) {
-  el.scrollTop = o;
-  
-})
- }
+  [].slice.call(document.querySelectorAll(".scrollbar-container") || []).forEach(function (el: any) {
+    el.scrollTop = o;
 
+  })
+}
 
+function newZoom(...args: any[]): void {
+  throw new Error("Function not implemented.");
+}
 

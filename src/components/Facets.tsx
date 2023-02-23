@@ -25,7 +25,7 @@ const builtInCssClasses: FacetsCssClasses = {
   searchableInputElement: 'text-sm bg-white h-9 w-full outline-none p-2 mb-2 rounded-md border border-gray-300 focus:border-blue-600',
   container: 'md:w-40 p-2 border border-blackLight border-opacity-10 m-3 rounded',
   buttonsContainer: 'flex justify-between mt-5',
-  button: 'border border-gray-300 px-2.5 py-1 rounded-md',
+  button: 'border ctaBtn border-gray-300 px-2.5 py-1 rounded-md',
   divider: 'w-full h-px bg-gray-200 my-4'
 }
 

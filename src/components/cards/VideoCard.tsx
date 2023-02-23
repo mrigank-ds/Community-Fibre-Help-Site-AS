@@ -75,12 +75,7 @@ export interface StandardCardConfig {
      * @param limit 
      * @returns The variable containing the truncated Description.
      */
-    // function limit(string = '', limit = 0) {
-    //   return string.substring(0, limit)
-    // }
-    // const greeting = limit(videoDescription, 100);
-    // console.log(greeting, "greeting");
-  
+   
     // TODO (cea2aj) Update this to render the ordinal once we get mocks from UX
     function renderOrdinal(index: number) {
       // return (
@@ -106,7 +101,7 @@ export interface StandardCardConfig {
     return (
       <div className={cssClasses.container}>
         <div className={cssClasses.imageContainer}>
-            <img className={cssClasses.image} src={videoImageUrl}></img>
+            <img className={cssClasses.image} src={videoImageUrl}  alt="video" ></img>
             <div>
               </div>
             <div className={cssClasses.header}>
@@ -123,7 +118,7 @@ export interface StandardCardConfig {
         </div>
 
         <div>
-            <a target="_blank" onClick={knowmoreEventClick} href={videoLandingPage} className='ctaBtn'><p  className=''><button>Watch video</button></p></a>
+            <a onClick={knowmoreEventClick} href='#' className='ctaBtn'><p  className=''><button>Watch video</button></p></a>
         </div>
       </div>
     );

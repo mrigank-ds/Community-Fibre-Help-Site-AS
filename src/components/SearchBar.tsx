@@ -1,4 +1,4 @@
-import { SearchTypeEnum, useAnswersActions, useAnswersState } from '@yext/answers-headless-react';
+import { SearchTypeEnum, useAnswersActions, useAnswersState, LocationBiasMethod } from '@yext/answers-headless-react';
 import InputDropdown, { InputDropdownCssClasses } from './InputDropdown';
 import { ReactComponent as YextLogoIcon } from '../icons/yext_logo.svg';
 import '../sass/Autocomplete.scss';
@@ -13,6 +13,8 @@ import renderAutocompleteResult, {
   builtInCssClasses as AutocompleteResultBuiltInCssClasses
 } from './utils/renderAutocompleteResult';
 import { ReactComponent as MagnifyingGlassIcon } from '../icons/magnifying_glass.svg';
+import ClearButton from './ClearButton';
+
 
 const SCREENREADER_INSTRUCTIONS = 'When autocomplete results are available, use up and down arrows to review and enter to select.'
 
@@ -27,8 +29,12 @@ export const builtInCssClasses: SearchBarCssClasses = {
   logoContainer: 'w-7 mx-2.5 my-2',
   optionContainer: 'flex items-stretch mb-3 mx-3.5 cursor-pointer',
   resultIconContainer: 'opacity-20 w-7 h-7 pl-1 mr-4',
-  searchButtonContainer: ' w-8 h-full mx-2 flex flex-col justify-center items-center',
-  submitButton: 'h-7 w-7',
+  searchButtonContainer: ' w-16 h-full mx-2 flex flex-row-reverse  items-center',
+  submitButton: 'h-7 w-7 submit-button',
+  button : 'text-blue-600 cursor-pointer hover:underline focus:underline',
+  clearButton: 'h-7 w-7 clear-button',
+  
+
   focusedOption: 'bg-gray-100',
   ...AutocompleteResultBuiltInCssClasses
 }
@@ -40,7 +46,10 @@ export interface SearchBarCssClasses
   container?: string,
   inputDropdownContainer?: string,
   resultIconContainer?: string,
-  submitButton?: string
+  submitButton?: string,
+  clearButton?: string,
+  button?: string,
+  source?: string,
 }
 
 interface Props {
@@ -61,7 +70,10 @@ export default function SearchBar({
 }: Props) {
   const cssClasses = useComposedCssClasses(builtInCssClasses, customCssClasses, cssCompositionMethod);
   const answersActions = useAnswersActions();
-  const query = useAnswersState(state => state.query.input);
+  const query = useAnswersState(state => state.query.input) ?? '';
+  const clear = useAnswersState(state => query.length===0) ?? false;
+
+
   const isLoading = useAnswersState(state => state.searchStatus.isLoading);
   const isVertical = useAnswersState(s => s.meta.searchType) === SearchTypeEnum.Vertical;
   const [autocompleteResponse, executeAutocomplete] = useSynchronizedRequest(() => {
@@ -70,6 +82,16 @@ export default function SearchBar({
       : answersActions.executeUniversalAutocomplete();
   });
   const [executeQuery, autocompletePromiseRef] = useSearchWithNearMeHandling(answersActions, geolocationOptions);
+
+// const [deletQuery] = () => {
+//   return {
+//     value: query, 
+//     onSelect: () => {
+//       answersActions.setQuery("");
+//       deletQuery();
+//     },
+//     }
+//  }
 
   const options: Option[] = autocompleteResponse?.results.map(result => {
     return {
@@ -81,6 +103,7 @@ export default function SearchBar({
       },
       display: renderAutocompleteResult(result, cssClasses, MagnifyingGlassIcon)
     }
+   
   }) ?? [];
 
   const screenReaderText = processTranslation({
@@ -88,7 +111,11 @@ export default function SearchBar({
     pluralForm: `${options.length} autocomplete options found.`,
     count: options.length
   });
-
+  
+  function clearInput(){
+    answersActions.setQuery('')
+    answersActions.executeVerticalQuery();
+}
   function renderSearchButton() {
     return <SearchButton
       className={cssClasses.submitButton}
@@ -96,6 +123,15 @@ export default function SearchBar({
       isLoading={isLoading || false}
     />
   }
+  function clearButton(){
+    return <ClearButton
+    className={cssClasses.clearButton}
+    handleClick={clearInput}
+    isnotclear= {clear}
+  />
+}
+
+
   return (
     <div className={cssClasses.container}>
       <InputDropdown
@@ -112,6 +148,9 @@ export default function SearchBar({
         }}
         renderLogo={() => <YextLogoIcon />}
         renderSearchButton={renderSearchButton}
+       
+        clear={clearButton}
+
         cssClasses={cssClasses}
         forceHideDropdown={options.length === 0}
       >
@@ -127,6 +166,8 @@ export default function SearchBar({
           />
         }
       </InputDropdown>
+      
+     
     </div>
   )
 }

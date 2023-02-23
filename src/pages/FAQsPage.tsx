@@ -5,13 +5,13 @@ import DirectAnswer from '../components/DirectAnswer';
 import VerticalResults from '../components/VerticalResults';
 import SpellCheck from '../components/SpellCheck';
 import LocationBias from '../components/LocationBias';
-import { FaqCard } from '../components/cards/FaqCard';
 import usePageSetupEffect from '../hooks/usePageSetupEffect';
 import SearchBar from '../components/SearchBar';
 import { universalResultsConfig } from '../config/universalResultsConfig';
 import { SearchTypeEnum, useAnswersState } from '@yext/answers-headless-react';
 import SampleVisualSearchBar from '../components/VisualAutocomplete/SampleVisualSearchBar';
 import Navigation from '../components/Navigation';
+import { ArticleCard } from '../components/cards/ArticleCard';
 
 const navLinks = [
   {
@@ -24,8 +24,9 @@ const navLinks = [
   }))
 ]
 
-export default function FAQsPage({ verticalKey }: {
-  verticalKey: string
+export default function FAQsPage({ verticalKey, limit }: {
+  verticalKey: string,
+  limit:number
 }) {
   usePageSetupEffect(verticalKey);
   const isVertical = useAnswersState(s => s.meta.searchType) === SearchTypeEnum.Vertical;
@@ -54,7 +55,7 @@ export default function FAQsPage({ verticalKey }: {
         
            { label: 'Products', verticalKey: 'product'},
            { label: 'Video', verticalKey:'videos'},
-              { label: 'Location', verticalKey:'location'},
+              { label: 'Location', verticalKey:'locations'},
               { label: 'Provider Switching', verticalKey:'provider_switching'},
 
    
@@ -62,7 +63,7 @@ export default function FAQsPage({ verticalKey }: {
         ]}
       />
       <VerticalResults
-        CardComponent={FaqCard}
+        CardComponent={ArticleCard}
       />
       <LocationBias />
     </div>

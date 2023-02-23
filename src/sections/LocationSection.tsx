@@ -35,7 +35,7 @@ const LocationSection: SectionComponent = function (props: LocationSectionConfig
 
   return (
     <LocationProvider>
-      <section className={cssClasses.section + "mt-5 border border-blackLight border-opacity-10"}>
+      <section className={cssClasses.section + "mt-5 location-page mx-4 md:mx-0 border border-blackLight border-opacity-10"}>
         {header}
         <LocationResults results={results} verticalKey="locations" cardConfig={cardConfig} />
         {/* {screenSize === 'sm' && renderViewAllLink({ verticalKey: props.verticalKey, latestQuery, label: props.label })} */}

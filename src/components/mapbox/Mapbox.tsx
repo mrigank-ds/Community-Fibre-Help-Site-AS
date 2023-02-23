@@ -16,6 +16,7 @@ mapboxgl.accessToken = 'pk.eyJ1IjoiYXBhdmxpY2siLCJhIjoiY2t5NHJkODFvMGV3ZDJ0bzRnN
 
 // prettier-ignore
 export interface MapLocationData extends LocationData {
+  mainPhone: string | undefined;
   yextDisplayCoordinate?: {
     latitude: number,
     longitude: number
@@ -346,6 +347,7 @@ export default function Mapbox(): JSX.Element {
       {state.selectedLocation &&
         renderSelectedLocation(
           state.selectedLocation.name,
+          state.selectedLocation.mainPhone,
           state.selectedLocation.address?.line1,
           `${state.selectedLocation.address?.city}, ${state.selectedLocation.address?.region}, ${state.selectedLocation.address?.postalCode}`
         )}

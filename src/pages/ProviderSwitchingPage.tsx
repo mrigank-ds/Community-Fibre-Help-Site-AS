@@ -1,7 +1,7 @@
 
 import ResultsCount from '../components/ResultsCount';
 import AlternativeVerticals from '../components/AlternativeVerticals';
-import AppliedFilters from '../components/AppliedFilters';
+import AppliedFilters, { AppliedFiltersDisplay } from '../components/AppliedFilters';
 import DirectAnswer from '../components/DirectAnswer';
 import VerticalResults from '../components/VerticalResults';
 import SpellCheck from '../components/SpellCheck';
@@ -20,6 +20,7 @@ import SampleVisualSearchBar from '../components/VisualAutocomplete/SampleVisual
 import Navigation from '../components/Navigation';
 import { SearchTypeEnum, useAnswersState } from '@yext/answers-headless-react';
 import { universalResultsConfig } from '../config/universalResultsConfig';
+
 
 
 const navLinks = [
@@ -54,15 +55,8 @@ export default function ProviderSwitchingPage({ verticalKey }: {
     <div className='flex'> 
       <FilterDisplayManager>
        
-      <Facets
-          searchOnChange={true}
-          searchable={false}
-          collapsible={true}
-         
-          defaultExpanded={true}
-         
-          />
-    
+      
+
       </FilterDisplayManager>
       { (pageView === PageView.Desktop || pageView === PageView.FiltersHiddenMobile) &&
         <div className='flex-grow'>
@@ -82,9 +76,9 @@ export default function ProviderSwitchingPage({ verticalKey }: {
         verticalsConfig={[
          
           { label: 'Help Articles', verticalKey: 'help_articles'},
-          { label: 'Blogs', verticalKey: 'blogs'},
+         
           { label: 'Video', verticalKey:'videos'},
-          { label: 'Location', verticalKey:'location'},
+          { label: 'Location', verticalKey:'locations'},
           { label: 'Products', verticalKey: 'product'},
 
           

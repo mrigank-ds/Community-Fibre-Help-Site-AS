@@ -118,7 +118,7 @@ export function ProductsCard(props: StandardCardProps): JSX.Element {
         
       </div>
       <div className='ProductCta'>
-          <a target="_blank" onClick={knowmoreEventClick} href={ProductLandingPage}>
+          <a onClick={knowmoreEventClick} href='#'>
             <div className={cssClasses.ctaButton}>
               <div className="sm:text-body align-middle font-heading  font-medium sm:text-base">Enquiry</div>
             </div>

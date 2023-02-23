@@ -25,15 +25,15 @@ interface NavigationCssClasses {
 
 const builtInCssClasses: NavigationCssClasses = {
   nav: 'answer-nav',
-  navLinkContainer: 'whitespace-nowrap py-3 mt-1 font-medium text-md border-b-2 border-transparent text-white capitalize',
+  navLinkContainer: 'whitespace-nowrap w-auto py-3 mt-1 font-medium text-md border-b-2 border-transparent text-white capitalize',
   navLink: 'py-3 px-2',
   navLinkContainer___active: 'border-white hover:border-white',
   kebabIcon: 'pointer-events-none',
   menuButtonContainer: 'relative flex flex-grow justify-end mr-4',
-  menuButton: 'flex items-center text-blackLight font-medium text-md h-12 mt-1 p-3 border-opacity-0 rounded-md hover:bg-blackLight',
-  menuButton___menuOpen: 'bg-blackLight text-white',
+  menuButton: 'more-button',
+  menuButton___menuOpen: 'more-button bg-purple1 text-white',
   menuButton___hasActiveLink: 'text-blue',
-  menuContainer: 'absolute flex-col bg-white border top-14 py-2 rounded-lg shadow-lg',
+  menuContainer: 'open-submenu',
   menuNavLink: 'px-4 py-2 flex-grow',
   menuNavLinkContainer: 'flex text-blackLight hover:bg-white text-lg hover:text-blackLight focus:text-blackLight',
   menuNavLinkContainer___active: 'text-blue hover:text-blue focus:text-blue'

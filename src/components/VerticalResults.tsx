@@ -3,7 +3,6 @@ import { useAnswersState, Result, useAnswersActions } from '@yext/answers-headle
 import classNames from 'classnames';
 import { CompositionMethod, useComposedCssClasses } from '../hooks/useComposedCssClasses';
 import { ReactComponent as PageNavigationIcon } from '../icons/chevron.svg';
-import NewPagination from './pagination';
 
 interface VerticalResultsCssClasses extends PaginationCssClasses {
   results___loading?: string
@@ -31,8 +30,9 @@ interface VerticalResultsDisplayProps {
 export function VerticalResultsDisplay(props: VerticalResultsDisplayProps): JSX.Element | null {
   const { CardComponent, results, cardConfig = {}, isLoading = false, customCssClasses, cssCompositionMethod } = props;
   const cssClasses = useComposedCssClasses(builtInCssClasses, customCssClasses, cssCompositionMethod);
+  const verticalResults = useAnswersState(state => state.vertical.results) || [];
 
-  if (results.length === 0) {
+  if (results.length === 0 ) {
     return null;
   }
 
@@ -42,10 +42,22 @@ export function VerticalResultsDisplay(props: VerticalResultsDisplayProps): JSX.
 
   return (
     <div className={resultsClassNames + "p-4"}>
-      <div className='grid grid-cols-1 md:grid-cols-3 gap-2'>
-        {results && results.map(result => renderResult(CardComponent, cardConfig, result))}
-      </div>
+      {verticalResults.length === 0 && isLoading === false ?
+        <>
+          <div className='grid grid-cols-1 md:grid-cols-3 gap-2'>
+
+            {results && results.map(result => renderResult(CardComponent, cardConfig, result))}
+          </div></>
+
+        :
+
+        <div className='grid grid-cols-1 md:grid-cols-3 gap-2'>
+
+          {results && results.map(result => renderResult(CardComponent, cardConfig, result))}
+        </div>
+      }
     </div>
+
   )
 }
 
@@ -57,7 +69,7 @@ export function VerticalResultsDisplay(props: VerticalResultsDisplayProps): JSX.
  * @param result - The result to render.
  */
 function renderResult(CardComponent: CardComponent, cardConfig: CardConfigTypes, result: Result): JSX.Element {
-  return <CardComponent result={result} configuration={cardConfig} key={result.id || result.index}/>;
+  return <CardComponent result={result} configuration={cardConfig} key={result.id || result.index} />;
 }
 
 interface VerticalResultsProps {
@@ -70,26 +82,40 @@ interface VerticalResultsProps {
 }
 
 export default function VerticalResults(props: VerticalResultsProps): JSX.Element | null {
+  const { CardComponent, cardConfig = {}, customCssClasses, cssCompositionMethod } = props;
+
   const { displayAllOnNoResults = true, allowPagination = true, ...otherProps } = props;
   const verticalResults = useAnswersState(state => state.vertical.results) || [];
   const allResultsForVertical = useAnswersState(state => state.vertical?.noResults?.allResultsForVertical.results) || [];
   const verticalResultsCount = useAnswersState(state => state.vertical.resultsCount) || 0;
   const allResultsCountForVertical = useAnswersState(state => state.vertical?.noResults?.allResultsForVertical.resultsCount) || 0;
   const isLoading = useAnswersState(state => state.searchStatus.isLoading);
+  const AlternativeVerticals = useAnswersState(state => state.vertical.noResults?.alternativeVerticals);
 
   let results = verticalResults;
   let resultsCount = verticalResultsCount;
-  if (verticalResults.length === 0 && displayAllOnNoResults) {
-    results = allResultsForVertical;
-    resultsCount = allResultsCountForVertical;
-  }
+
+  let AlternateVerticalResultscount = AlternativeVerticals?.map((i,e)=>{
+    let Rcount = i.resultsCount;
+    return Rcount
+
+  })
+
+  // if (verticalResults.length === 0 && isLoading===false) {
+
+  //    return (
+  //          <div className='no-result'> No results found </div>
+  //    )
+  // }
 
   return (
     <>
-      <VerticalResultsDisplay results={results} isLoading={isLoading} {...otherProps}/>
-      {allowPagination 
-        && <NewPagination 
+      <VerticalResultsDisplay results={results} isLoading={isLoading} {...otherProps} />
+      {allowPagination
+        && <Pagination
           numResults={resultsCount}
+          customCssClasses={otherProps.customCssClasses}
+          cssCompositionMethod={otherProps.cssCompositionMethod}
         />
       }
     </>
@@ -107,10 +133,10 @@ interface PaginationCssClasses {
 }
 
 const builtInPaginationCssClasses: PaginationCssClasses = {
-  container: 'flex justify-center mb-4',
-  labelContainer: 'inline-flex shadow-sm -space-x-px',
+  container: 'flex justify-center mb-4 pagination-bx',
+  labelContainer: 'inline-flex  pagination-bx shadow-sm -space-x-px',
   label: 'z-0 inline-flex items-center px-4 py-2 text-sm font-semibold border border-primary text-primary',
-  selectedLabel: 'z-10 inline-flex items-center px-4 py-2 text-sm font-semibold border border-primary text-primary bg-blue-50',
+  selectedLabel: 'z-10 inline-flex items-center px-4 py-2 text-sm font-semibold border border-primary text-primary bg-blue-50 add',
   leftIconContainer: 'inline-flex items-center px-3.5 py-2 border border-primary rounded-l-md',
   rightIconContainer: 'inline-flex items-center px-3.5 py-2 border border-primary rounded-r-md',
   icon: 'w-3 text-primary'
@@ -132,8 +158,8 @@ function Pagination(props: PaginationProps): JSX.Element | null {
   const answersAction = useAnswersActions();
   const offset = useAnswersState(state => state.vertical.offset) || 0;
   const limit = useAnswersState(state => state.vertical.limit) || 9;
-  // let NewLimit : any  = answersAction.setVerticalLimit(9);
-// console.log(limit,'limit');
+
+
 
   const executeSearchWithNewOffset = (newOffset: number) => {
     answersAction.setOffset(newOffset);
@@ -141,43 +167,54 @@ function Pagination(props: PaginationProps): JSX.Element | null {
   }
   const onSelectNewPage = (evt: React.MouseEvent) => {
     const newPageNumber = Number(evt.currentTarget.textContent);
+
     newPageNumber && executeSearchWithNewOffset(limit * (newPageNumber - 1));
   }
 
-  const maxPageCount : number = Math.ceil(numResults / limit);
+  const maxPageCount = Math.ceil(numResults / limit);
   if (maxPageCount <= 1) {
     return null;
   }
-  const pageNumber : number = (offset / limit) + 1;
+  const pageNumber = (offset / limit) + 1;
   const paginationLabels: string[] = generatePaginationLabels(pageNumber, maxPageCount);
 
   return (
     <div className={cssClasses.container}>
       <nav className={cssClasses.labelContainer} aria-label="Pagination">
-        <button
+        {pageNumber === 1 ? null : <button
           aria-label='Navigate to the previous results page'
           className={cssClasses.leftIconContainer}
           onClick={() => executeSearchWithNewOffset(offset - limit)} disabled={pageNumber === 1}
         >
-          <PageNavigationIcon className={cssClasses.icon + ' transform -rotate-90'}/>
-        </button>
+          <PageNavigationIcon className={cssClasses.icon + ' transform -rotate-90'} />
+        </button>}
+
         {paginationLabels.map((label, index) => {
           switch (label) {
             case '...':
-              return <button key={index} className={cssClasses.label}>{label}</button>
+              return <button key={index} className={cssClasses.label} >{label}</button>
             case `${pageNumber}`:
-              return <button key={index} className={cssClasses.selectedLabel} onClick={onSelectNewPage}>{label}</button>
+              return <button key={index} className={cssClasses.selectedLabel + ' transform rotate-360'} onClick={onSelectNewPage}>{label}</button>
             default:
               return <button key={index} className={cssClasses.label} onClick={onSelectNewPage}>{label}</button>
           }
+
         })}
-        <button
+
+        {pageNumber === maxPageCount ? null : <button
+          aria-label='Navigate to the next results page'
+          className={cssClasses.rightIconContainer}
+          onClick={() => executeSearchWithNewOffset(offset + limit)} disabled={pageNumber === maxPageCount}
+        >
+          <PageNavigationIcon className={cssClasses.icon + ' transform rotate-90'} />
+        </button>}
+        {/* <button
           aria-label='Navigate to the next results page'
           className={cssClasses.rightIconContainer}
           onClick={() => executeSearchWithNewOffset(offset + limit)} disabled={pageNumber === maxPageCount}
         >
           <PageNavigationIcon className={cssClasses.icon + ' transform rotate-90'}/>
-        </button>
+        </button> */}
       </nav>
     </div>
   );
@@ -193,7 +230,6 @@ function generatePaginationLabels(pageNumber: number, maxPageCount: number): str
   } else if (previousPageNumber !== 0) {
     [...Array(previousPageNumber)].forEach((_, index) => paginationLabels.push(`${index + 1}`));
   }
-  console.log(paginationLabels,"paginationLabels");
   paginationLabels.push(`${pageNumber}`);
   if (maxPageCount - nextPageNumber > 2) {
     paginationLabels.push(`${nextPageNumber}`, '...', `${maxPageCount}`);

@@ -9,6 +9,7 @@ import Mapbox, { MapLocationData } from './mapbox/Mapbox';
 import MapGoogle from './mapbox/MapGoogle';
 import { GoogleMaps } from './mapbox/GoogleMaps';
 import { VerticalResultsDisplay } from './VerticalResults'; 
+import { Maps } from './mapbox/mapMpbile';
 
 
 interface LocationResultsProps extends SectionConfig {}
@@ -30,6 +31,7 @@ export default function LocationResults(props: LocationResultsProps): JSX.Elemen
         mapLocations.push({
           id: result.id ?? '',
           name: location.name,
+          mainPhone: location.mainPhone,
           address: location.address,
           yextDisplayCoordinate: {
             latitude: location.yextDisplayCoordinate.latitude,
@@ -44,8 +46,8 @@ export default function LocationResults(props: LocationResultsProps): JSX.Elemen
   }, [results]);
 
   const googleMapsConfig =  {
-    centerLatitude: 41.9110711,
-    centerLongitude:-87.653912,
+    centerLatitude: 26.8894208,
+    centerLongitude:75.8349824,
     googleMapsApiKey: "AIzaSyDZNQlSlEIkFAct5VzUtsP4dSbvOr2bE18"   
   };
   
@@ -57,20 +59,35 @@ export default function LocationResults(props: LocationResultsProps): JSX.Elemen
     apiKey={googleMapsConfig.googleMapsApiKey}
     centerLatitude={googleMapsConfig.centerLatitude}
     centerLongitude={googleMapsConfig.centerLongitude}
-    defaultZoom={6}
+    defaultZoom={0}
+    showEmptyMap={true}
+    refLcation={refLcation}
+  />;
+  };
+  const mobileMap = () => {
+    if (!state.mapLocations) return null;
+
+    return <Maps
+    apiKey={googleMapsConfig.googleMapsApiKey}
+    centerLatitude={googleMapsConfig.centerLatitude}
+    centerLongitude={googleMapsConfig.centerLongitude}
+    defaultZoom={0}
     showEmptyMap={true}
     refLcation={refLcation}
   />;
   };
 
   return (
-    <div className='border border-blackLight border-opacity-10'>
+    <div className='border border-blackLight mx-4 md:mx-0 border-opacity-10'>
     <div className="flex flex-wrap" ref={refLcation}>
       <div className={classNames('w-full map-section', { hidden: screenSize !== 'xl' && !state.showMap })}>
-        {renderMap()}
+         {state.mapLocations && state.mapLocations.length > 0 ?
+       renderMap()  :null}
       </div>
       <div
-        className={classNames('overflow-y-auto sm:overflow-auto', {
+
+        className={classNames('overflow-y-auto p-2 sm:overflow-auto scrollbar-container', {
+
           hidden: state.showMap,
           'w-full': !state.showMap,
         })}
@@ -90,21 +107,20 @@ export default function LocationResults(props: LocationResultsProps): JSX.Elemen
           <AlternativeVerticals
             currentVerticalLabel="Locations"           
             verticalsConfig={[
-              { label: 'FAQs', verticalKey: 'faqs'}, 
-              { label: 'products', verticalKey: 'products'},
-              { label: 'Blogs', verticalKey: 'blogs'},
-              { label: 'Video', verticalKey:'videos'},
+              { label: 'Help Articles', verticalKey: 'help_articles'}, 
+              { label: 'products', verticalKey: 'product'},
              
-              { label: 'Provider Switching', verticalKey:'provider_switching_'},
+              { label: 'Video', verticalKey:'videos'},
+              { label: 'Provider Switching', verticalKey:'provider_switching'},
             ]}
             cssCompositionMethod="assign"
             customCssClasses={{
-              container: 'flex flex-col justify-between mb-4 p-4 shadow-sm',
+              container: 'flex flex-col justify-between mb-4 p-0 shadow-sm no-result-data',
               noResultsText: 'text-lg font-heading pb-2',
-              categoriesText: 'font-body',
-              suggestions: 'pt-4 ',
-              suggestion: 'pb-4 text-gold font-heading',
-              allCategoriesLink: 'text-gold cursor-pointer hover:underline focus:underline',
+              categoriesText: 'font-body text-gray-500',
+              suggestions: 'pt-0 ',
+              suggestion: 'pb-4  font-heading',
+              allCategoriesLink: 'cursor-pointer hover:underline focus:underline text-gray-500',
             }}
           />
         )}

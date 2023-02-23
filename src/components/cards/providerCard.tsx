@@ -60,10 +60,9 @@ export function ProviderCard(props: StandardCardProps): JSX.Element {
   const { configuration, result, customCssClasses, cssCompositionMethod } = props;
   const cssClasses = useComposedCssClasses(builtInCssClasses, customCssClasses, cssCompositionMethod);
 
-  //console.log(result, "result");
 
   const products: any = result.rawData;
-  //const productsku = products.mpn ? products.mpn: 'SKU is not available';
+  
   const name = result.name;
   const Productdec = products.c_description ? products.c_description: '';
   const ProductPhoto = products.c_image ? products.c_image[0].url : 'https://a.mktgcdn.com/p-sandbox/ICqsT6dBI9UeKt2G4bKSDEZC5U8q8AvRlATjy2v_E7Y/1152x960.jpg';
@@ -75,21 +74,8 @@ export function ProviderCard(props: StandardCardProps): JSX.Element {
 function limit(string = '', limit = 0) {
   return string.substring(0, limit)
 }
-const greeting = limit(name, 33);
-const decs = limit(Productdec, 53);
-// console.log(greeting, "greeting");
-
-
-
-
-  // TODO (cea2aj) Update this to render the ordinal once we get mocks from UX
-  function renderOrdinal(index: number) {
-    // return (
-    //   <div className={cssClasses.ordinal}>{index}</div>
-    // );
-    return null;
-  }
-
+const greeting = limit(Productdec, 60);
+ 
   function renderTitle(title: string) {
     return <div className={cssClasses.title}>{title}</div>
   }
@@ -98,13 +84,13 @@ const decs = limit(Productdec, 53);
   let searcher = verticalKey ? 'VERTICAL' : 'UNIVERSAL';   
   
   const knowmoreEventClick = () => {           
-    eventClickAnalytics( 'VIEW_WEBSITE', products.id , "provider_switching_", queryId, searcher );
+    eventClickAnalytics( 'VIEW_WEBSITE', products.id , "provider_switching", queryId, searcher );
     
   };
 
   return (
     <div className={cssClasses.container}>
-        <img src= {ProductPhoto} alt="Trainer Headshot"  />
+        <img src= {ProductPhoto} alt="provider"/>
    
       
       <div className={cssClasses.header}>
@@ -112,12 +98,12 @@ const decs = limit(Productdec, 53);
          
 
           <div className={cssClasses.title}>
-          <p>{greeting} ....</p>
+          <p>{name} </p>
         </div>
         </div>
         
         <div className='Productdec'>
-          <p>{decs}.....</p>
+          <p>{greeting}</p>
         </div>
         <div className={cssClasses.ProductPriceClass}>
         
@@ -126,7 +112,7 @@ const decs = limit(Productdec, 53);
           
             <div className={cssClasses.ctaButton}>
               <div className="sm:text-body align-middle font-heading  font-medium sm:text-base">
-                <a target="_blank" onClick={knowmoreEventClick} href={ProductLandingPage} className='ctaBtn'>Learn More</a>
+                <a onClick={knowmoreEventClick} href='#' className='ctaBtn'>Learn More</a>
                  </div>
             </div>
           

@@ -9,30 +9,32 @@ import StandardSection from '../sections/StandardSection';
 import { LocationCard } from '../components/cards/LocationCard';
 import { VideoCard } from '../components/cards/VideoCard';
 import {ProviderCard} from '../components/cards/providerCard';
+import { ArticleCard } from '../components/cards/ArticleCard';
 
 
 
 
 export type UniversalResultsConfig = Record<string, VerticalConfig>;
+export const universallimit = 3;
 
 export const universalResultsConfig: UniversalResultsConfig = {
 
   product: {
      label: 'products',
      viewAllButton: true,
-     
+     limit:3,
      cardConfig: {
        CardComponent: ProductsCard,
        showOrdinal: false
      }
    },
   
-  help_articles: {
+   help_articles: {
     label: 'Help Articles',
     viewAllButton: true,
   
     cardConfig: {
-      CardComponent: FaqCard,
+      CardComponent: ArticleCard,
       showOrdinal: false
     }
   },
@@ -45,7 +47,7 @@ export const universalResultsConfig: UniversalResultsConfig = {
        showOrdinal: false
      }
    },
-  locations: {
+   locations: {
     label: 'Location',
     SectionComponent: LocationSection,
     //viewMapButton: true,

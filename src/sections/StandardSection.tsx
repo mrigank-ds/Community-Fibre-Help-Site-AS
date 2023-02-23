@@ -26,7 +26,7 @@ const StandardSection: SectionComponent = function (props: StandardSectionConfig
   const cardComponent = cardConfig?.CardComponent || StandardCard;
   
   return (
-    <section className={cssClasses.section + "mt-5 border border-blackLight border-opacity-10"}>
+    <section className={cssClasses.section + "mt-5 border mx-4 md:mx-0 border-blackLight border-opacity-10"}>
       {header}
       <VerticalResultsDisplay
         results={results}

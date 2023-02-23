@@ -70,16 +70,21 @@ export function FaqCard(props: TrainerCardProps): JSX.Element {
   const { result } = props;
   const trainer = result.rawData as unknown as TrainerData;
   const FaqVertical: any = result.rawData;
-  const Ans = trainer.body;
+  const Ans = FaqVertical.body;
+  const data = FaqVertical.c_descriptionArticles
   const FaqLandingPage = FaqVertical.landingPageUrl ? FaqVertical.landingPageUrl : '#';
   //   const screenSize = useContext(ResponsiveContext);/
 
    function limit(string = '', limit = 0) {
      return string.substring(0, limit)
    }
-   const greeting = limit(Ans, 100);
-  //  console.log(greeting, "greeting");
-   
+   const greeting = limit(Ans, 500);
+  //  console.log(greeting.length, "greeting");
+   //const regex = /[`!@#$%^&*()_+\=\[\]{};':"\\|,\/?~]/g;
+   //const articles1 = greeting.replace(regex," ")
+
+   //const articles = articles1.replace('httpwwwcommunityfibrecoukcontact-ushttpwwwcommunityfibrecouk', "").replace('undefined', "");
+
   const [faqClass, setFaqClass] = useState("");
 
   const cssClasses = useComposedCssClasses(builtInCssClasses);
@@ -95,7 +100,7 @@ export function FaqCard(props: TrainerCardProps): JSX.Element {
 
   const isVertical = useAnswersState((s) => s.meta.searchType) === 'vertical';
 
-
+// console.log(isVertical,'isVertical')
   /**
    * This function helps FAQ accordion to open ones at a time
    * @param e - Elements of the Div
@@ -126,15 +131,19 @@ export function FaqCard(props: TrainerCardProps): JSX.Element {
     eventClickAnalytics( 'CTA_CLICK', trainer.id , "faqs", queryId, searcher );
     
   };
+  function limit1(string = '', limit = 0) {
+    return string.substring(0, limit)
+  }
+  const greeting1 = limit1(data, 500);
 
-
+  
   return (
     <>
        <div className={'faq-block md:col-span-3 ' + trainer.id + ' ' + faqClass} >
         <div className='faq-title' onClick={(e) => isShowContent(e, trainer.id)} >{renderName(trainer.name)}</div>
-        <div className={cssClasses.ctaButton + ' faq-content'}>
-          {renderQuote(greeting)}
-          <a target="_blank" onClick={knowmoreEventClick}  href={FaqLandingPage}>
+        <div  className={cssClasses.ctaButton + ' faq-content'}>
+          <div dangerouslySetInnerHTML={{ __html: (greeting1)}}/><span>......</span>
+          <a  onClick={knowmoreEventClick} className="readmore" href={FaqLandingPage}>
             <div className={cssClasses.ctaButtonText}>Read more</div>
           </a>
         </div>

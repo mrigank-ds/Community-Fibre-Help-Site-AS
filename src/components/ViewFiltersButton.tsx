@@ -10,7 +10,7 @@ interface ViewFiltersButtonCssClasses {
 
 const builtInCssClasses: ViewFiltersButtonCssClasses = { 
   container: 'flex-grow justify-end flex',
-  button: 'p-1 mb-7'
+  button: 'filter-icn'
 }
 
 interface Props {
@@ -26,12 +26,12 @@ export default function ViewFiltersButton ({ customCssClasses, cssCompositionMet
   const cssClasses = useComposedCssClasses(builtInCssClasses, customCssClasses, cssCompositionMethod);
   return (
     <div className={cssClasses.container}>
-      <button
+      {/* <button
         className={cssClasses.button}
         onClick={() => { setPageView(PageView.FiltersVisibleMobile)}}
       >
         <FiltersIcon />
-      </button>
+      </button> */}
     </div>
   );
 }

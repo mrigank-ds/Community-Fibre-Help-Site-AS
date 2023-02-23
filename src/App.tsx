@@ -12,7 +12,7 @@ export default function App() {
     
         <PageViewContextProvider >
         <div className='flex justify-center'>
-            <div className='w-full max-w-5xl'>
+            <div className='w-full '>
               <PageRouter
                 Layout={StandardLayout}
                 routes={routeConfig}

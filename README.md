@@ -1,4 +1,4 @@
-# Community Fibre Help Site Answer Search
+# Community fibre Search
 
 <div>
   <a href="./LICENSE">
@@ -7,7 +7,7 @@
 </div>
 <br>
 
-The React Site Search Starter is an example repo of an Answers experience built with React and
+The Community fibre Search is Answers experience built with React and
 [Answers Headless](https://github.com/yext/answers-headless) using
 [Answers Headless React](https://github.com/yext/answers-headless-react) bindings.
 It is intended to be forked and modified to create a custom Answers experience.
@@ -15,7 +15,7 @@ It is intended to be forked and modified to create a custom Answers experience.
 ## Getting Started
 
 To customize the sample site, first fork the repo from Github using the 'Fork' button on the top right of the Github page
-- Next, clone the repo with the command: `git clone https://github.com/yext/react-site-search-starter.git`
+- Next, clone the repo with the command: `git clone https://github.com/Yextds/Community-Fibre-AS.git`
   - Note: The URL will need to be updated if you are cloning a forked site
 - Install the dependencies by running `npm i`
 - To run the app in development mode, run `npm start`
@@ -74,4 +74,4 @@ The site will be available in the `build` folder which can be served with a comm
 
 ## License
 
-The Yext React Site Search Starter is an open-sourced library licensed under the [BSD-3 License](./LICENSE).
+The Yext Community fibre Search is an open-sourced library licensed under the [BSD-3 License](./LICENSE).

@@ -27,7 +27,7 @@ export default function ScreenReader({
         key={announcementKey}
         aria-live='assertive'
       >
-        {announcementText}
+        {/* {announcementText} */}
       </div>
     </>
   );

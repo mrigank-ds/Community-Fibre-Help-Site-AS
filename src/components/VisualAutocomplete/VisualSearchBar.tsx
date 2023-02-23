@@ -17,6 +17,8 @@ import { ReactComponent as RecentSearchIcon } from '../../icons/history.svg';
 import useRecentSearches from '../../hooks/useRecentSearches';
 import { useHistory } from 'react-router';
 import { ReactComponent as MagnifyingGlassIcon } from '../../icons/magnifying_glass.svg';
+import ClearButton from '../ClearButton';
+
 
 const SCREENREADER_INSTRUCTIONS = 'When autocomplete results are available, use up and down arrows to review and enter to select.'
 const builtInCssClasses: VisualSearchBarCssClasses = { 
@@ -24,7 +26,7 @@ const builtInCssClasses: VisualSearchBarCssClasses = {
   recentSearchesOptionContainer: 'flex items-center h-6.5 px-3.5 pb-3 cursor-pointer',
   recentSearchesIcon: 'w-4 mx-1 text-gray-500',
   recentSearchesOption: 'pl-3',
-  verticalLink: '-mt-1 ml-14 text-gray-600'
+  verticalLink: '-mt-1 ml-14 text-gray-600 procat'
 };
 
 interface VisualSearchBarCssClasses extends SearchBarCssClasses {
@@ -78,8 +80,17 @@ export default function VisualSearchBar({
 
   const browserHistory = useHistory();
   const answersActions = useAnswersActions();
+  
   const query = useAnswersState(state => state.query.input) ?? '';
   const isLoading = useAnswersState(state => state.searchStatus.isLoading) ?? false;
+
+
+  const clear = useAnswersState(state => query.length===0) ?? false;
+
+  // const useClear = answersActions.setQuery('');
+
+  
+
   const [executeQueryWithNearMeHandling, autocompletePromiseRef] = useSearchWithNearMeHandling(answersActions)
   const [autocompleteResponse, executeAutocomplete] = useSynchronizedRequest(async () => {
     return answersActions.executeUniversalAutocomplete();
@@ -92,7 +103,7 @@ export default function VisualSearchBar({
   }, [clearRecentSearches, hideRecentSearches])
   const haveRecentSearches = !hideRecentSearches && recentSearches?.length !== 0;
   
-
+//Search bar
   function executeQuery() {
     if (!hideRecentSearches) {
       const input = answersActions.state.query.input;
@@ -100,6 +111,18 @@ export default function VisualSearchBar({
     }
     executeQueryWithNearMeHandling();
   }
+
+  //clear query
+  function clerQuery() {
+    if (query.length===0) {
+      console.log(true)
+    }
+    
+  }
+  function clearInput(){
+    answersActions.setQuery('')
+    answersActions.executeUniversalQuery();
+}
 
   const [entityPreviewsState, executeEntityPreviewsQuery] = useEntityPreviews(headlessId, entityPreviewsDebouncingTime);
   const { verticalResultsArray, isLoading: entityPreviewsLoading } = entityPreviewsState;
@@ -201,7 +224,7 @@ export default function VisualSearchBar({
   return (
     <div className={cssClasses.container}>
       <InputDropdown
-        inputValue={query}
+       inputValue={query}
         placeholder={placeholder}
         screenReaderInstructions={SCREENREADER_INSTRUCTIONS}
         screenReaderText={getScreenReaderText(autocompleteResults)}
@@ -216,6 +239,7 @@ export default function VisualSearchBar({
         onDropdownLeave={value => {
           updateEntityPreviews(value);
         }}
+        //Search bar
         renderSearchButton={() =>
           <SearchButton
             className={cssClasses.submitButton}
@@ -223,11 +247,19 @@ export default function VisualSearchBar({
             isLoading={isLoading}
           />
         }
+        //clear input field
+        clear={() =>
+          <ClearButton
+            className={cssClasses.clearButton}
+            handleClick={clearInput}
+            isnotclear= {clear}
+          />
+        }
         renderLogo={() => <YextLogoIcon />}
         cssClasses={cssClasses}
         forceHideDropdown={autocompleteResults.length === 0 && verticalResultsArray.length === 0 && !haveRecentSearches}
       >
-        {!hideRecentSearches && renderRecentSearches()}
+        
         {renderQuerySuggestions()}
         {entityPreviews && transformEntityPreviews(entityPreviews, verticalResultsArray)}
       </InputDropdown>

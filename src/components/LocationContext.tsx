@@ -16,7 +16,8 @@ type LocationStateType = {
   selectedLocation?: MapLocationData,
   mapLocations?: MapLocationData[],
   showMap: boolean,
-  noGymsMessage?: string
+  noGymsMessage?: string,
+  mainPhone?:string
 };
 
 const locationState = {
@@ -30,7 +31,7 @@ export const LocationContext = createContext<{ state: LocationStateType, dispatc
 });
 
 const mainReducer = (
-  { hoveredLocation, selectedLocation, mapLocations, showMap, noGymsMessage }: LocationStateType,
+  { hoveredLocation, selectedLocation, mapLocations, showMap, noGymsMessage,mainPhone }: LocationStateType,
   action: MapActions | LocationActions
 ): LocationStateType => {
   const newState = {

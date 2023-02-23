@@ -14,6 +14,8 @@ module.exports = {
       'secondary': '#370050',
       'purple1': '#370050',
       'orangelight': '#FEF1E1',
+      'buttonhover': '#EC6225',
+     
     },
     fontFamily: {
       'main-text-font': ['"Campton", Georgia, Arial, sans-serif'],
@@ -25,7 +27,9 @@ module.exports = {
     extend: {},
   },
   variants: {
-    extend: {},
+    extend: {
+     
+    },
   },
   plugins: [ 
     require("@tailwindcss/forms")({

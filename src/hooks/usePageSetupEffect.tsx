@@ -1,6 +1,8 @@
 import { useLayoutEffect } from "react";
-import { useAnswersActions, SearchIntent } from "@yext/answers-headless-react";
+import { useAnswersActions, SearchIntent, UniversalLimit } from "@yext/answers-headless-react";
 import { executeSearch, getSearchIntents, updateLocationIfNeeded } from "../utils/search-operations";
+import { universallimit } from "../config/universalResultsConfig";
+import { verticalLimit } from "../config/routeConfig";
 
 /**
  * Sets up the state for a page
@@ -16,21 +18,38 @@ export default function usePageSetupEffect(verticalKey?: string, limit?:number) 
       universal: {},
       vertical: {}
     }
-    const key = verticalKey;
+    const key:any = verticalKey;
+    let universalverticalkey:any=[
+        'product',
+        'video',
+        'help_articles',
+        'provider_switching',
+        'locations'
+    ]
     const cardlimit =limit;
     answersActions.setState({
       ...answersActions.state,
       ...stateToClear
     });
-    verticalKey
-      ? answersActions.setVertical(verticalKey)
-      : answersActions.setUniversal();
+    if(verticalKey){
+       answersActions.setVertical(verticalKey)}
+      else{answersActions.setUniversal();
+     
+      const universalLimit: any= {};
+      universalverticalkey.map((res:any)=>{
+        return  universalLimit[res] = universallimit || null;
+      })
+       
+       const newuniversallimit: UniversalLimit =universalLimit;
+      searchActions.setUniversalLimit(
+        newuniversallimit);}
 
-  
-       if(verticalKey == key){
-        
-        searchActions.setVerticalLimit(18);
-       } 
+     
+       if(verticalKey == key){        
+        searchActions.setVerticalLimit(verticalLimit);
+       }
+      
+       
  
     const executeQuery = async () => {
       let searchIntents: SearchIntent[] = [];

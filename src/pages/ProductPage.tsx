@@ -20,20 +20,10 @@ import SampleVisualSearchBar from '../components/VisualAutocomplete/SampleVisual
 import Navigation from '../components/Navigation';
 import { universalResultsConfig } from '../config/universalResultsConfig';
 import VerticalResults from '../components/VerticalResults';
-import NewPagination from '../components/pagination';
 
 
 
-const filterSearchFields = [{
-  fieldApiName: 'name',
-  entityType: 'location'
-}, {
-  fieldApiName: 'paymentOptions',
-  entityType: 'location'
-}, {
-  fieldApiName: 'services',
-  entityType: 'location'
-}];
+
 const navLinks = [
   {
     to: '/',
@@ -47,8 +37,6 @@ const navLinks = [
 export default function ProductPage({ verticalKey }: {
   verticalKey: string
 }) {
-
-  const TotalResult = useAnswersState((state) => state.vertical.resultsCount) || [];
   const { pageView } = useContext(PageViewContext);
   usePageSetupEffect(verticalKey);
   const isVertical = useAnswersState(s => s.meta.searchType) === SearchTypeEnum.Vertical;
@@ -65,7 +53,16 @@ export default function ProductPage({ verticalKey }: {
    
     <div className='flex'> 
       <FilterDisplayManager>
+        {/* <FilterSearch
+          label='Filter Search'
+          sectioned={true}
+          searchFields={filterSearchFields}/> */}
         <Divider />
+        {/* <Facets
+          searchOnChange={true}
+          searchable={true}
+          collapsible={true}
+          defaultExpanded={true}/> */}
       </FilterDisplayManager>
       { (pageView === PageView.Desktop || pageView === PageView.FiltersHiddenMobile) &&
         <div className='flex-grow'>
@@ -85,9 +82,9 @@ export default function ProductPage({ verticalKey }: {
         verticalsConfig={[
          
           { label: 'Help Articles', verticalKey: 'help_articles'},
-          { label: 'Blogs', verticalKey: 'blogs'},
+         
           { label: 'Video', verticalKey:'videos'},
-          { label: 'Location', verticalKey:'location'},
+          { label: 'Location', verticalKey:'locations'},
           { label: 'Provider Switching', verticalKey:'provider_switching'},
 
         ]}
@@ -95,7 +92,7 @@ export default function ProductPage({ verticalKey }: {
           <VerticalResults
             CardComponent={ProductsCard}
           />
-          
+          <LocationBias />
         </div>
       }
     </div>

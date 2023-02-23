@@ -9,7 +9,7 @@ interface ResultsCountCssClasses {
 }
 
 const builtInCssClasses: ResultsCountCssClasses = {
-  container: 'pb-7 md:pb-4',
+  container: 'show-count',
   text: 'text-sm text-gray-700',
   number: 'font-medium'
 }
@@ -52,11 +52,12 @@ export function ResultsCountDisplay({
     'Showing ',
     offset + 1,
     ' to ',
-    resultsLength+offset ,
+    offset + resultsLength ,
     ' of ',
     resultsCount,
     ' Results'
   ];
+
 
   const spanArray = messageArray.map((value, index) => {
     const isNumber = typeof value === 'number';

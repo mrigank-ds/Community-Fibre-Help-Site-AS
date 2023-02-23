@@ -59,13 +59,15 @@ export default function AlternativeVerticals ({
   verticalsConfig,
   displayAllOnNoResults = true,
   customCssClasses,
-  cssCompositionMethod
+  cssCompositionMethod,
+  
 }: Props): JSX.Element | null {
   const cssClasses = useComposedCssClasses(builtInCssClasses, customCssClasses, cssCompositionMethod);
 
   const alternativeVerticals = useAnswersState(state => state.vertical.noResults?.alternativeVerticals) || [];
   const allResultsForVertical = useAnswersState(state => state.vertical.noResults?.allResultsForVertical.results) || [];
   const query = useAnswersState(state => state.query.mostRecentSearch);
+  const verticalResults = useAnswersState(state => state.vertical.results) || [];
 
   const verticalSuggestions = buildVerticalSuggestions(verticalsConfig, alternativeVerticals);
   const isShowingAllResults = displayAllOnNoResults && allResultsForVertical.length > 0;
@@ -74,7 +76,6 @@ export default function AlternativeVerticals ({
   const containerClassNames = classNames(cssClasses.container, {
     [cssClasses.alternativeVerticals___loading ?? '']: isLoading
   });
-
   function buildVerticalSuggestions(
     verticalsConfig: VerticalConfig[],
     alternativeVerticals: VerticalResults[]) : VerticalSuggestion[] {
@@ -96,12 +97,21 @@ export default function AlternativeVerticals ({
       .filter(verticalSuggestion => verticalSuggestion.resultsCount > 0);
   }
 
+
+// <div className='no-result'> No results found</div>
   if (verticalSuggestions.length <= 0) {
-    return null;
+    if(isLoading===false && verticalResults.length == 0 ){      
+      return (<>  <div className='no-result'> No results found</div> </>);      
+    }else{
+      return null;
+    }  
+    
   }
 
+
   return  (
-    <div className={containerClassNames}>
+    <>
+    {verticalSuggestions.length <= 0 ? null : <div className={containerClassNames}>
       {renderNoResultsInfo()}
       {verticalSuggestions &&
         <div className={cssClasses.suggestions}>
@@ -121,16 +131,16 @@ export default function AlternativeVerticals ({
           {renderUniversalDetails()}
         </div>
       }
-    </div>
+    </div>}
+    
+    </>
   );
 
   function renderNoResultsInfo() {
     return (
       <div className={cssClasses.noResultsText}>
         <span>No results found in {currentVerticalLabel}.</span>
-        {isShowingAllResults &&
-          <span> Showing all {currentVerticalLabel} instead.</span>
-        }
+        
       </div>
     );
   }
@@ -145,7 +155,7 @@ export default function AlternativeVerticals ({
       </li>
     );
   }
-
+ 
   function renderUniversalDetails() {
     return (
       <div className={cssClasses.categoriesText}>

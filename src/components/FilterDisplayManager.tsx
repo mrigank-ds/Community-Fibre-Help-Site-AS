@@ -15,7 +15,7 @@ interface FilterDisplayManagerCssClasses {
 
 const builtInCssClasses: FilterDisplayManagerCssClasses = {
   container___desktop: 'mr-0',
-  container___mobileFiltersExpanded: 'py-5 px-4 flex flex-col overflow-x-hidden fixed bg-white inset-0 z-10',
+  container___mobileFiltersExpanded: ' relative py-5 z-[99999] px-4 flex flex-col overflow-x-hidden fixed bg-white inset-0 z-10',
   divider: 'w-screen relative right-4 border-t border-gray-200 my-4',
   collapseFiltersButton: 'w-5 h-5 p-1 self-end my-2'
 }

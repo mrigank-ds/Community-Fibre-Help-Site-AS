@@ -18,24 +18,7 @@ import SearchBar from '../components/SearchBar';
 import SampleVisualSearchBar from '../components/VisualAutocomplete/SampleVisualSearchBar';
 import Navigation from '../components/Navigation';
 
-/**
- * Static Filter/Facets
- */
-// const staticFiltersConfig = [{
-//   title: 'Venue',
-//   options: [
-//     {
-//       label: 'West End Avenue',
-//       fieldId: 'venueName',
-//       value: 'West End Avenue'
-//     },
-//     {
-//       label: 'Peaceful Coffee',
-//       fieldId: 'venueName',
-//       value: 'Peaceful Coffee',
-//     },
-//   ]
-// }]
+
 const navLinks = [
   {
     to: '/',
@@ -65,9 +48,7 @@ export default function VideoPage({ verticalKey }: {
       <Navigation links={navLinks} /> 
     <div className='flex'>
       <FilterDisplayManager>
-        {/* <StaticFilters
-          filterConfig={staticFiltersConfig}
-        /> */}
+
       </FilterDisplayManager>
       { (pageView === PageView.Desktop || pageView === PageView.FiltersHiddenMobile) &&
         <div className='flex-grow'>
@@ -86,7 +67,8 @@ export default function VideoPage({ verticalKey }: {
             verticalsConfig={[
               { label: 'Help Articles', verticalKey: 'help_articles'}, 
               { label: 'Products', verticalKey: 'product'},
-              { label: 'Blogs', verticalKey: 'blogs'},
+            
+              { label: 'Location', verticalKey:'locations'},
               { label: 'Provider Switching', verticalKey:'provider_switching'},
             ]}
           />

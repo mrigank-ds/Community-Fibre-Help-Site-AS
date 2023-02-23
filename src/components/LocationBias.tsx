@@ -37,6 +37,7 @@ export default function LocationBias({
       locationBias?.method === LocationBiasMethod.Ip ? ' (based on your internet address) - '
         : locationBias?.method === LocationBiasMethod.Device ? ' (based on your device) - '
           : ' - ';
+          
 
   async function handleGeolocationClick() {
     try {

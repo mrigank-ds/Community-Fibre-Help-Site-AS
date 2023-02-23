@@ -31,21 +31,18 @@ body{
   @apply bg-white
 }
 
-.active-pagination-button{
-  background-color: yellowgreen;
-}
 .search-nav{
   @apply py-5 bg-white px-2 lg:px-0
 }
 .search-nav > div{
-  @apply max-w-5xl mx-auto
+  @apply max-w-7xl mx-auto
 }
 .search-nav input{
   @apply bg-white
 }
 
 .answer-nav{
-  @apply flex justify-center items-center bg-primary; 
+  @apply flex justify-center items-center w-full   bg-primary; 
 }
 .answer-nav a{
   @apply px-5
@@ -58,40 +55,19 @@ body{
   @apply  stroke-current
 }
 
-.map-section{
-  @apply mb-2.5
-}
+.map-section{  @apply mb-2.5}
+.buttons{  @apply flex flex-wrap}
+.buttons a{  @apply w-full mt-0}
+.buttons a + a{  @apply mt-2.5}
+.location-result.result{  @apply flex flex-row justify-between items-center md:col-span-3 pb-4 border-b border-secondary border-opacity-10 }
+.location-result.result.location-result.result:last-child{  @apply border-b-0}
+.single-line{  min-height: 1.25rem;}
 
-.buttons{
-  @apply flex flex-wrap
-}
-.buttons a{
-  @apply w-full mt-0
-}
-.buttons a + a{
-  @apply mt-2.5
-}
+.faq-block{  @apply  border border-secondary  border-opacity-10 px-3 py-2}
+.faq-block:hover{ background-color: #f5f5f5;}
+.faq-title{  @apply font-semibold py-2.5 pr-5 relative cursor-pointer}
+.faq-title:after{  content: '';  @apply absolute top-3.5 right-0.5 border-b-2 border-r-2 border-primary transform rotate-45 w-3 h-3 transition-all duration-300
 
-.location-result.result{
-  @apply flex flex-row justify-between items-center md:col-span-3 pb-4 border-b border-secondary border-opacity-10 
-}
-.location-result.result.location-result.result:last-child{
-  @apply border-b-0 pb-0
-}
-.single-line{
-  min-height: 1.25rem;
-}
-
-.faq-block{
-  @apply  border border-secondary border-opacity-10 px-3 py-2
-}
-
-.faq-title{
-  @apply font-semibold py-2.5 relative cursor-pointer
-}
-.faq-title:after{
-  content: '';
-  @apply absolute top-3.5 right-0.5 border-b-2 border-r-2 border-primary transform rotate-45 w-3 h-3 transition-all duration-300
 }
 .faq-block.opened .faq-title:after{
   transform: rotate(-135deg);
@@ -104,9 +80,13 @@ body{
   @apply block
 }
 .faq-content a{
-  @apply bg-primary text-white px-5 py-2 inline-block rounded mt-3 capitalize hover:bg-purple1
+  color: #EC6225;
 }
-
+.faq-content a.readmore{
+  @apply bg-primary text-white px-5 py-2 inline-block rounded mt-3 capitalize hover:bg-opacity-90  
+}
+.faq-content a:hover{ opacity:0.9; color: #EC6225; }
+.faq-content a.readmore:hover{  color: #fff;  }
 
 .imageContainer{
   padding-top: 57%;
@@ -115,32 +95,55 @@ body{
   padding-top: 24%;
 }
 .ctaBtn{
-  @apply bg-primary hover:bg-secondary capitalize text-white px-5 py-2 inline-block rounded mt-3
-}
 
+  @apply bg-primary  hover:bg-opacity-90 capitalize text-white px-5 py-2 inline-block rounded-lg mt-3
+
+}
+.ctaBtn:hover{ opacity:0.9;  background-color: #EC6225; }
 
 iframe{
   @apply hidden
 }
+
+
+.header-main nav{ @apply mx-auto max-w-7xl px-0 lg:px-8}
+.logo-hdr{ background-color: #f8f8f8; @apply py-6}
+
+
 
 .header-before{@apply flex justify-between px-6 lg:px-0}
 nav ul.menu{@apply flex}
 .trust-bx li{@apply p-4}
 nav ul.menu li{    font-size: 15px;
   @apply pt-3 pl-3}
-.centered-container ul li a{font-family:Arboria-Medium;    color: #524658;
-  @apply text-lg}
+.centered-container ul li a{font-family:Arboria-Medium;    color: #524658;  @apply text-lg font-medium}
 .centered-container nav{@apply flex justify-between}
 .submenu{@apply items-center}
 .container-custom-before{@apply border-b border-blackLight border-opacity-10}
-.footer-sec {@apply flex justify-between pt-5 p-8}
+.footer-sec {     border-top: 1px solid #370050; margin-top: 20px; }
+.footer-sec-inner {@apply flex justify-between pt-5 p-8  max-w-7xl mx-auto}
 .connect-img img{@apply w-7}
 .footer-sec li{@apply p-2 pl-0}
 .footer-sec h4{@apply text-xl font-bold text-purple1}
-.footer-sec li a{@apply text-purple1}
+.footer-sec li a{ font-family: 'Arboria-Medium'; @apply text-purple1 }
 .ArticlesImage{@apply m-auto}
 .ArticlesTitle{@apply m-auto}
 .menu span{@apply mx-1}
+
+
+
+.more-button{@apply flex items-center text-white font-medium text-md h-12 mt-1 p-3 border-opacity-0 rounded-md }
+.more-button svg{ fill:#fff ;}
+.open-submenu{ @apply absolute flex-col bg-white border top-14 py-2 rounded-lg shadow-lg w-52 z-10}
+
+.sepate-links{ font-family:'Arboria-Book'; display: none;}
+.menu-opened .sepate-links{ font-family:'Arboria-Book'; display: block;}
+
+.sepate-links a{ font-family:'Arboria-Book'!important;}
+.menu-opened .centered-container .trust-bx nav{ width: 100%; max-width:100%!important; padding-left: 1rem!important;  justify-content: space-between;}
+.menu-opened .centered-container .trust-bx nav .nav-elements{ width: 100%;}
+.menu-opened .centered-container .trust-bx nav .menu-left{  width: 100%; justify-content: space-between;}
+
 
 /* Location */
 
@@ -152,12 +155,23 @@ nav ul.menu li{    font-size: 15px;
 .location-page .buttons{@apply block}
 img.addressLogo{@apply w-6 h-6 bg-primary rounded-xl p-1}
 .location-page .single-line img{@apply w-6 h-6 bg-primary rounded-xl p-1}
-.location-result.result:hover{
-  background-color: #FEF1E1 !important;
-}
+.location-result.result:hover{ background-color: #FEF1E1 !important;}
+
+.location-result.result.click-active{ background-color: #FEF1E1 !important;}
+.procat{  margin-left: 2.3rem!important;}
+.procat span {   margin-left: 0!important; color: #EC6225; }
+
+.location-result .ctaBtn{ @apply text-center}
+
 .flex.location-page a.ctaBtn{@apply text-center}
 .drop-shadow-page {
   box-shadow: 0 5px 20px #0000001a;
+}
+/* .scrollbar-container {
+  @apply pr-0 ;
+} */
+.scrollbar-container.ps--active-y {
+  @apply pr-5;
 }
 /* header */
 .menu-button svg path{@apply fill-current}
@@ -209,7 +223,7 @@ ul.menu.menu-right li{
 .menu-toggle {
   position: absolute;
   right: 1.5rem;
-  top: 17px;
+  top:24px;
   border-left-width: 1px;
   border-color: transparent;
   z-index: 111;
@@ -230,22 +244,15 @@ ul.menu.menu-right li{
   background-color: rgb(58 53 109 / var(--tw-bg-opacity));
 }
 
-.centered-container .trust-bx  nav{
-  justify-content: center;
-}
-.centered-container .trust-bx a {
-  font-family: 'Arboria-Book';
-}
-.centered-container .trust-bx nav .nav-elements {
-  border-bottom: 1px solid #dfdde2;
-}
+.centered-container .trust-bx  nav{ justify-content: center;}
+.centered-container .trust-bx a {  font-family: 'Arboria-Book';}
+.centered-container .trust-bx nav .nav-elements {  border-bottom: 1px solid #dfdde2;}
 
 /* Video */
-.videoVertical .ProductTitle {
-  min-height: 90px;
-}
-.videoVertical p.mb-2\.5.text-primary,.faq-block .text-purple1 {
-  font-family: 'Arboria-Medium';}
+.videoVertical .ProductTitle { min-height:56px; margin-top: 20px;}
+.videoVertical .ProductTitle .text-purple1{ line-height: 24px;}
+
+.videoVertical p.mb-2\.5.text-primary,.faq-block .text-purple1 { font-family: 'Arboria-Medium';}
 
 
 
@@ -270,35 +277,121 @@ ul.menu.menu-right li{
   max-height: 190px;
   object-fit: contain;
 }
+
+.filter-icn{@apply pt-2 pr-4 mb-0}
+
 .ProviderVerticalContainer .ProductTitle {
-  min-height: 70px;
+  min-height:56px;  margin-top: 12px;
 }
-.ProviderVerticalContainer .Productdec {
-  min-height: 85px;
+.ProviderVerticalContainer .ProductTitle .text-purple1{  line-height: 24px;}
+
+/* .ProviderVerticalContainer .Productdec {
+  min-height: 50px;
+} */
+.ProviderVerticalContainer .Productdec p{  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1; /* number of lines to show */
+          line-clamp:1; 
+  -webkit-box-orient: vertical;
 }
+
+
 .ProviderVerticalContainer .text-lg.font-bold.text-purple1:hover,.title-location:hover,.videoVertical .text-lg.font-bold.text-purple1:hover,.product-page .text-lg.font-bold.truncate.text-purple1:hover
 {   
-   text-decoration: underline;
-} 
+   /* text-decoration: underline;*/
+}  
 .ProductVerticalContainer .text-purple1:hover{
-  text-decoration: underline;
+  /* text-decoration: underline; */
 }
 .top-1 .call{@apply w-6 h-6 bg-primary rounded-xl p-1}
 .ProviderVerticalContainer:hover {
   background-color: #FEF1E1 !important;
 }
+
+
+
+/* show count */
+.show-count{ margin-top: 20px; padding-left: 20px; }
+
+
+.location-page .show-count{ margin-top: 20px; margin-left:1rem; padding-left: 0px; margin-bottom: 10px;  }
+
+.no-result-data { margin: 15px; box-shadow: none;}
+.no-result-data a{ color: black;}
+
+.hours-icn-sec{ @apply mt-3 mb-4}
+.hours-icn-sec button{ @apply pl-8}
+
+
+.icon-seach-im svg{ min-width: 24px;}
+
+a.all-location-phn:hover{ text-decoration: underline;}
+
+/* pagination start  */
+
+.pagination-bx .add {
+  color: #fff;
+  background: #ec6225;
+}
+.pagination-bx button:hover{  color: #fff; background: #ec6225; }
+.pagination-bx button svg{ stroke: #ec6225;  }
+.pagination-bx button:hover svg{ stroke: #fff;  }
+
+
+
+.clear-button img {  opacity: 0.4;  max-width: 18px;}
+
+.open-submenu .active{  color: #EC6225; }
+
+
+
+.no-result{ background-color: #f6f6f6; border-radius: 5px; border: 1px solid #e4e4e4; font-weight: bold; padding: 10px 5px; margin-top: 4px; margin-left: 2px; margin-right: 2px;}
+
+
+
+
+
+
+
+.gm-style-iw{ min-width: 320px!important;}
+.gm-style-iw .addressData{ @apply flex mt-2 }
+.gm-style-iw img.addressLogo{ position: relative!important; }
+.gm-style-iw .address{ margin-left: 15px!important; }
+
+.gm-style-iw .addressphone{@apply flex }
+.gm-style-iw .addressphone .phone{margin-left: 15px!important; }
+.gm-style-iw .button-bx {@apply flex }
+.gm-style-iw .button-bx a{@apply mr-2 }
+.gm-style-iw-d .phone a:hover{ text-decoration: underline; }
+.map-card{ @apply justify-center}
+
 /* footer */
 
-.footer-link1 h5 {
-  font-size: 12px;
-  color: #370050;
+.footer-link1 h5 { font-size: 12px;  color: #370050;}
+.backto-top{@apply text-right  }
+.backto-top button{ @apply flex flex-row-reverse items-center w-full }
+.backto-top button span{font-size: 15px;  color: #370050; margin-right: 10px;   font-family: 'Arboria-Medium'; }
+.backto-top button svg{ fill: #370050; width: 35px; height: 35px; }
+
+@media screen and (min-width: 1025px) {  
+  .menu-toggle{ display: none;}
 }
-@media screen and (min-width: 1024px) {
+@media screen and (min-width: 1024px) {  
   .centered-container .submenu .trust-bx,.centered-container .submenu li svg {
-    display: none;
-  }
+    display: none;  }
+
+    
+
 }
 @media screen and (max-width: 1024px) {
+
+.logo-hdr{ background-color: #f8f8f8; @apply py-1}
+.logo-hdr img{ width:151px; height: 40px; }
+
+
+
+
   .product-page .ProductHeaderClass {
     min-height: 200px;
 }
@@ -347,6 +440,38 @@ ul.menu.menu-right li{
   background-color: #f8f8f8;
 
 }
+footer .grid-cols-4 {
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+}
+footer .column.order-4 p{text-align: left !important;}
+
+footer .accordion__button {  border-bottom: 1px solid #c7c7c7;  background-color: transparent;  padding: 0.5rem 0.5rem 0.5rem 0.25rem;}
+footer .accordion__button{  border-bottom: 1px solid #c7c7c7;}
+footer .accordion__button:before { transform: rotate(0deg); content: '\002B';  position: absolute;  right: 2.25rem;  line-height: 36px;  margin-top: 0;  width: 0px;  font-size: 32px;  border-style: none;  color: #370050; }
+footer .accordion__button[aria-expanded='true']:before{  right: 1.25rem; }
+footer .container { max-width: 80rem; padding: 0 1rem;}
+
+.social-media img{ @apply w-7 h-7}
+
+
+
+}
+
+
+
+footer .accordion{@apply border-transparent}
+/* footer .accordion__button::before{transform: inherit;} */
+footer .accordion__panel ul li { @apply p-2 }
+
+footer .accordion__panel ul li a{  font-family: 'Arboria-Medium'; @apply text-purple1    }
+
+
+
+
+
+@media screen and (max-width:1023px) {
+  footer .column.order-4 img {  margin-bottom: 1.25rem;    min-height: 4.75rem;    width: 100%;    max-width: 18rem;}
+  footer .column.order-4 p {    text-align: left!important; font-size: 12px; @apply text-purple1}
 }
 
 @media screen and (max-width: 767px) {

@@ -6,6 +6,6 @@ export function processTranslation(args: {
   if (args.count != null && args.pluralForm && args.count !== 1) {
     return args.pluralForm
   } else {
-    return args.phrase;
+    return args.phrase
   }
 }

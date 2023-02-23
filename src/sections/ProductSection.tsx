@@ -50,7 +50,7 @@ const productsSection: SectionComponent = function (props: productsSectionConfig
     ProductVerticalResults.forEach((_elements: any)  => {
         ProductResultsObj = _elements.rawData;
     });
-    // console.log(ProductResultsObj,"ProductResultsObj");
+    
 
     if (results.length === 0) {
         return null;

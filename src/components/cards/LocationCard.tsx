@@ -7,6 +7,10 @@ import { eventClickAnalytics } from '../../config/analyticsConfig';
 import { useAnswersState } from '@yext/answers-headless-react';
 import locationpin from '../../icons/location-pin.svg';
 import callicon from '../../icons/icon-call.svg';
+import React from 'react';
+import Hours from "../hours"
+import OpenClose from '../OpenClose';
+import hoursicon from '../../icons/hours-icn.svg'
 
 //prettier-ignore
 
@@ -45,16 +49,7 @@ interface DayHours {
   openIntervals: Interval[]
 }
 
-//prettier-ignore
-export interface Hours {
-  monday: DayHours,
-  tuesday: DayHours,
-  wednesday: DayHours,
-  thursday: DayHours,
-  friday: DayHours,
-  saturday: DayHours,
-  sunday: DayHours
-}
+
 
 //prettier-ignore
 export interface LocationData {
@@ -68,7 +63,7 @@ export interface LocationData {
 const builtInCssClasses = {
   container: 'location-result result',
   header: 'flex text-base',
-  body: 'text-md',
+  body: 'text-md all-location-phn',
   descriptionContainer: 'text-md relative pl-8',
   ctaContainer: 'flex flex-col justify-between ml-4',
   cta1: 'min-w-max bg-blue-600 text-white font-medium rounded-lg py-2 px-5 shadow',
@@ -86,14 +81,14 @@ export function LocationCard(props: LocationCardProps): JSX.Element {
   const addressLine1: any = load.address.line1;
   const AddressCity: any = load.address.city;
   
-  const CtaAddress = (addressLine1+','+AddressCity);
-  const PhoneNumber = load.mainPhone;
-  const LandingPage = load.landingPageUrl
- // console.log(CtaAddress, "Data");
+const CtaAddress = (addressLine1+','+AddressCity);
+  const PhoneNumber = load.mainPhone?  load.mainPhone : null;
+  const LandingPage = load.landingPageUrl? load.landingPageUrl : null;
+  const hours1 = load.hours ? load.hours : 'close';
+
   const cssClasses = useComposedCssClasses(builtInCssClasses);
 
   const screenSize = 'sm';
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { state, dispatch } = useContext(LocationContext);
   
   function renderTitle(title: string) {
@@ -105,7 +100,7 @@ export function LocationCard(props: LocationCardProps): JSX.Element {
     return (
       <div className={cssClasses.descriptionContainer}>
         <img className="addressLogo absolute top-0 left-0 w-5" src= {locationpin} width="28" height="28"
-          alt="" />
+          alt="logo" />
         <div>{location.address?.line1}</div>
         <div>{`${location.address?.city}, ${location.address?.region} `}</div>
         <div>{location.address?.postalCode}</div>
@@ -115,11 +110,7 @@ export function LocationCard(props: LocationCardProps): JSX.Element {
 
   /* hover effect on card */
   const [isHover, setIsHover] = useState(false);
-//   const boxStyle = {
-   
-//     backgroundColor: isHover ? 'rgba(236, 98, 37)' : 'white',
-//     color: isHover ? 'black' : 'black',
-//  };
+
  const handleMouseEnter = () => {
   setIsHover(true);
 };
@@ -131,8 +122,7 @@ const handleMouseLeave = () => {
   function info(index:any){
   let elements = document.querySelectorAll(".result");
   for (let index = 0; index < elements.length; index++) {
-    //elements[index].classList.remove('active')
-  //var IdNew: any= document.getElementById(("result-"+location.id)) ? document.getElementById("result-"+location.id) : 'this';
+
   
 }
   }
@@ -150,8 +140,12 @@ const handleMouseLeave = () => {
   const getPhoneEventClick = () => {      
     eventClickAnalytics( 'TAP_TO_CALL', location.id , "locations", queryId, searcher );
   };
-  
+  const [open, setOpen] = React.useState(false);
 
+  const handleOpen = () => {
+    setOpen(!open);
+  }
+  
   return (
     <div
       id={"result-" + location.id}
@@ -159,29 +153,26 @@ const handleMouseLeave = () => {
 >
       <div className='flex flex-wrap flex-col'>
         <div className={cssClasses.header}>
-          {/* {configuration.showOrdinal && result.index && renderOrdinal(result.index)} */}
           {renderTitle(location.name || '')}
         </div>
         <div className={cssClasses.body + ' my-2.5'}>
           {renderAddress(location.address)}
         </div>
         
-       
+        { PhoneNumber ?
         <div className="flex flex-row relative pl-8 single-line">
-          <div className="absolute top-0 left-0">
-          { PhoneNumber ?  <img className=" " src={callicon} width="28" height="28" alt="" /> :
-           ""
-
-} 
+          <div className="absolute  top-0 left-0">
+          { PhoneNumber ?<img className=" " src={callicon} width="28" height="28" alt="" />:""} 
            
           </div>
          <a className={cssClasses.body} target="_blank" href={`tel:${PhoneNumber}`}  onClick={getPhoneEventClick} >
               {PhoneNumber}
           </a>
-        </div>
-        <div>
+        </div>:""} 
+        <div> 
           {/* {metersToMiles(result.distance ?? 0)} mi */}
-        </div>
+        </div> 
+         
       </div>
       <div className='buttons'>
         <div>
@@ -190,7 +181,7 @@ const handleMouseLeave = () => {
         </a>
         </div>
         <div className='mt-2'>
-        <a className={cssClasses.ctaButton} target="_blank" onClick={getDirectionEventClick} href='#'>
+        <a className={cssClasses.ctaButton} onClick={getDirectionEventClick} href='#'>
             See More
         </a>
         </div>
