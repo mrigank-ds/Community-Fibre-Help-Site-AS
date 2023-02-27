@@ -38,27 +38,39 @@ export default function UniversalSearchPage(props: { universalResultsConfig: Uni
     let  urlParams : any = new URLSearchParams(queryString);
     
     const product = urlParams.get('query');
-      console.log(product,"product");
+      // console.log(product,"product");
     
     // console.log(params,"params");
 
     const answersActions = useAnswersActions();
     
-    useEffect(() => {
-        answersActions.setQuery(product)
-    }, []);
-     
-   
+    if(product!=null){
+      useEffect(() => {
+          answersActions.setQuery(product)
+      }, []);
+    }else{
+      useEffect(()=>{
+        if(SearchQuery!='' && SearchQuery!=null){
+        updateParam(SearchQuery)
+        }else{
+          updateParam('')
+        }
+      },[SearchQuery])
+    }
+
+    
     useEffect(()=>{
-      if(!SearchQuery){
+      if(SearchQuery!='' && SearchQuery!=null){
       updateParam(SearchQuery)
       }else{
         updateParam('')
       }
     },[SearchQuery])
+   
+    
     function updateParam(latestUserInput:any) {
-      var paramValue = SearchQuery; // Replace with your updated value
-      console.log(paramValue,"paramValue");
+      var paramValue = latestUserInput; // Replace with your updated value
+      // console.log(paramValue,"paramValue");
       var searchParams = new URLSearchParams(window.location.search);
       searchParams.set('query', paramValue);
       var newUrl = window.location.protocol + "//" + window.location.host + window.location.pathname + '?' + searchParams.toString();

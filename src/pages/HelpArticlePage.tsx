@@ -35,14 +35,14 @@ export default function HelpArticlePage({ verticalKey }: {
   
 
  useEffect(()=>{
-   if(!SearchQuery){
-   updateParam(SearchQuery)
-   }else{
-     updateParam('')
-   }
+  if(SearchQuery!='' && SearchQuery!=null){
+    updateParam(SearchQuery)
+    }else{
+      updateParam('')
+    }
  },[SearchQuery])
  function updateParam(latestUserInput:any) {
-   var paramValue = SearchQuery; // Replace with your updated value
+   var paramValue = latestUserInput; // Replace with your updated value
    console.log(paramValue,"paramValue");
    var searchParams = new URLSearchParams(window.location.search);
    searchParams.set('query', paramValue);

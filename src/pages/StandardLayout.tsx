@@ -1,10 +1,11 @@
 
-import { SearchTypeEnum, useAnswersState } from '@yext/answers-headless-react';
+import { SearchTypeEnum, useAnswersActions, useAnswersState } from '@yext/answers-headless-react';
 import { universalResultsConfig } from '../config/universalResultsConfig';
 import { LayoutComponent } from '../PageRouter';
 
 import Header from '../components/Header'
 import Footer from '../components/Footer'
+import { useEffect } from 'react';
 
 
 
@@ -12,6 +13,7 @@ import Footer from '../components/Footer'
  * A LayoutComponent that provides a SearchBar and Navigation tabs to a given page.
  */
 const StandardLayout: LayoutComponent = ({ page }) => {
+    
   const isVertical = useAnswersState(s => s.meta.searchType) === SearchTypeEnum.Vertical;
   return (
     <>
