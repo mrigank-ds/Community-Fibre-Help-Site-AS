@@ -51,7 +51,7 @@ export default function VideoPage({ verticalKey }: {
 //  useEffect(() => {
 //      answersActions.setQuery(product)
 //  }, []);
-  
+
 
  useEffect(()=>{
   if(SearchQuery!='' && SearchQuery!=null){

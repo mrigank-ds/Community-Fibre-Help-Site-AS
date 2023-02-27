@@ -46,7 +46,7 @@ export default function FAQsPage({ verticalKey, limit }: {
   // useEffect(() => {
   //     answersActions.setQuery(product)
   // }, []);
-   
+ 
  
   useEffect(()=>{
     if(SearchQuery!='' && SearchQuery!=null){

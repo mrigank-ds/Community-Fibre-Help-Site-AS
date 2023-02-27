@@ -28,11 +28,7 @@ export default function HelpArticlePage({ verticalKey }: {
  // console.log(params,"params");
 
  const answersActions = useAnswersActions();
- 
- useEffect(() => {
-     answersActions.setQuery(product)
- }, []);
-  
+
 
  useEffect(()=>{
   if(SearchQuery!='' && SearchQuery!=null){

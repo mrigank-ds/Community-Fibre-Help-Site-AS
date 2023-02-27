@@ -53,7 +53,7 @@ export default function ArticlesPage({ verticalKey }: {
 //  useEffect(() => {
 //      answersActions.setQuery(product)
 //  }, []);
-  
+
 
  useEffect(()=>{
   if(SearchQuery!='' && SearchQuery!=null){

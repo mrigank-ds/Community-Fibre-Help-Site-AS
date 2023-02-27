@@ -44,19 +44,22 @@ export default function UniversalSearchPage(props: { universalResultsConfig: Uni
 
     const answersActions = useAnswersActions();
     
-    if(product!=null){
+    
       useEffect(() => {
+        if(product!=null){
           answersActions.setQuery(product)
-      }, []);
-    }else{
-      useEffect(()=>{
-        if(SearchQuery!='' && SearchQuery!=null){
-        updateParam(SearchQuery)
-        }else{
-          updateParam('')
         }
-      },[SearchQuery])
-    }
+        else{
+          
+            if(SearchQuery!='' && SearchQuery!=null){
+            updateParam(SearchQuery)
+            }else{
+              updateParam('')
+            }
+          
+        }
+      }, []);
+   
 
     
     useEffect(()=>{

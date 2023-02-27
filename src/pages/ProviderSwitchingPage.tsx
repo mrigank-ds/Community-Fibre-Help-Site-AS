@@ -51,9 +51,7 @@ const product = urlParams.get('query');
 
 const answersActions = useAnswersActions();
 
-// useEffect(() => {
-//     answersActions.setQuery(product)
-// }, []);
+
  
 
 useEffect(()=>{

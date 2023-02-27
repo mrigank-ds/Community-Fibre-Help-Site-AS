@@ -71,7 +71,7 @@ export default function LocationsPage(
    
    const product = urlParams.get('query');
      console.log(product,"product");
-   
+    
    // console.log(params,"params");
     useEffect(()=>{
       if(SearchQuery!='' && SearchQuery!=null){

@@ -51,9 +51,7 @@ export default function ProductPage({ verticalKey }: {
 
    const answersActions = useAnswersActions();
    
-  //  useEffect(() => {
-  //      answersActions.setQuery(product)
-  //  }, []);
+  
     
   
    useEffect(()=>{
