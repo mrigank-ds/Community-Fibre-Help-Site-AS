@@ -24,7 +24,7 @@ import {
 } from "../hooks/useComposedCssClasses";
 import { executeSearch, getUserLocation } from "../utils/search-operations";
 import VerticalResults from "../components/VerticalResults";
-import { SetStateAction, useState } from "react";
+import { SetStateAction, useEffect, useState } from "react";
 import AlternativeVerticals from "../components/AlternativeVerticals";
 
 export const builtInCssClasses: SearchBarCssClasses = {
@@ -62,6 +62,34 @@ const navLinks = [
 export default function LocationsPage(
   { verticalKey, geolocationOptions }: Props,
 ) {
+
+   // Getting URL code starts here
+   let SearchQuery :any  = useAnswersState(state => state.query.input);
+   // console.log(SearchQuery,"SearchQuery");
+   const queryString : any = window.location.search;
+   let  urlParams : any = new URLSearchParams(queryString);
+   
+   const product = urlParams.get('query');
+     console.log(product,"product");
+   
+   // console.log(params,"params");
+    useEffect(()=>{
+     if(!SearchQuery){
+     updateParam(SearchQuery)
+     }else{
+       updateParam('')
+     }
+   },[SearchQuery])
+   function updateParam(latestUserInput:any) {
+     var paramValue = SearchQuery; // Replace with your updated value
+     console.log(paramValue,"paramValue");
+     var searchParams = new URLSearchParams(window.location.search);
+     searchParams.set('query', paramValue);
+     var newUrl = window.location.protocol + "//" + window.location.host + window.location.pathname + '?' + searchParams.toString();
+     window.history.replaceState({}, '', newUrl);
+   }
+   // Getting URL code ends here
+
   usePageSetupEffect(verticalKey);
   const screenSize = "sm";
   const results = useAnswersState((state) => state.vertical.results) || [];

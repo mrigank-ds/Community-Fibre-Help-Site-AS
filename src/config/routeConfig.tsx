@@ -41,7 +41,7 @@ export const routeConfig = [
     page: <ProviderSwitchingPage verticalKey='provider_switching'/>
   },
   {
-    path: '/videos',
+    path: '/video',
     page: <VideoPages verticalKey='video' />
 
   }

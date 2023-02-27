@@ -223,6 +223,13 @@ export default function InputDropdown({
     [cssClasses.inputDropdownContainer___active ?? '']: shouldDisplayDropdown
   });
 
+  // useEffect(()=>{
+  //   const urlParams = new URLSearchParams(window.location.search);
+  //   const currentValue:any = urlParams.get('query');
+  //   console.log(currentValue,"currentValue");
+  //   setLatestUserInput(currentValue);
+  // })
+
   return (
     <div className={inputDropdownContainerCssClasses} ref={inputDropdownRef} onBlur={handleBlur}>
       <div className={cssClasses?.inputContainer} >

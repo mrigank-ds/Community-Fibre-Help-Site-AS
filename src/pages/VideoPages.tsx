@@ -10,10 +10,10 @@ import usePageSetupEffect from '../hooks/usePageSetupEffect';
 import StaticFilters from '../components/StaticFilters';
 import FilterDisplayManager from '../components/FilterDisplayManager';
 import ViewFiltersButton from '../components/ViewFiltersButton';
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import { PageView, PageViewContext } from '../context/PageViewContext';
 import { universalResultsConfig } from '../config/universalResultsConfig';
-import { SearchTypeEnum, useAnswersState } from '@yext/answers-headless-react';
+import { SearchTypeEnum, useAnswersActions, useAnswersState } from '@yext/answers-headless-react';
 import SearchBar from '../components/SearchBar';
 import SampleVisualSearchBar from '../components/VisualAutocomplete/SampleVisualSearchBar';
 import Navigation from '../components/Navigation';
@@ -33,6 +33,42 @@ const navLinks = [
 export default function VideoPage({ verticalKey }: {
   verticalKey: string
 }) {
+
+
+ // Getting URL code starts here
+ let SearchQuery :any  = useAnswersState(state => state.query.input);
+ // console.log(SearchQuery,"SearchQuery");
+ const queryString : any = window.location.search;
+ let  urlParams : any = new URLSearchParams(queryString);
+ 
+ const product = urlParams.get('query');
+   console.log(product,"product");
+ 
+ // console.log(params,"params");
+
+ const answersActions = useAnswersActions();
+ 
+//  useEffect(() => {
+//      answersActions.setQuery(product)
+//  }, []);
+  
+
+ useEffect(()=>{
+   if(SearchQuery!="" && SearchQuery!=null){
+   updateParam(SearchQuery)
+   }else{
+     updateParam('')
+   }
+ },[SearchQuery])
+ function updateParam(latestUserInput:any) {
+   var paramValue = SearchQuery; // Replace with your updated value
+   console.log(paramValue,"paramValue");
+   var searchParams = new URLSearchParams(window.location.search);
+   searchParams.set('query', paramValue);
+   var newUrl = window.location.protocol + "//" + window.location.host + window.location.pathname + '?' + searchParams.toString();
+   window.history.replaceState({}, '', newUrl);
+ }
+ // Getting URL code ends here
   const { pageView } = useContext(PageViewContext);
   usePageSetupEffect(verticalKey);
   const isVertical = useAnswersState(s => s.meta.searchType) === SearchTypeEnum.Vertical;
