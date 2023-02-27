@@ -127,6 +127,8 @@ export default function VisualSearchBar({
   const [entityPreviewsState, executeEntityPreviewsQuery] = useEntityPreviews(headlessId, entityPreviewsDebouncingTime);
   const { verticalResultsArray, isLoading: entityPreviewsLoading } = entityPreviewsState;
   const autocompleteResults = autocompleteResponse?.results || [];
+  // let ResultCount  = useAnswersState(state=>state.vertical.noResults?.alternativeVerticals)
+  // console.log(ResultCount,"ResultCount");
   const entityPreviews = renderEntityPreviews && renderEntityPreviews(entityPreviewsLoading, verticalResultsArray);
   function updateEntityPreviews(query: string) {
     if (!renderEntityPreviews) {
@@ -157,6 +159,7 @@ export default function VisualSearchBar({
         return;
       }
       const verticalKeys = result.verticalKeys;
+    
       let verticalLinks: VerticalLink[]|undefined = verticalKeys?.map(verticalKey => {
         return { 
           label: verticalKeyToLabel ? verticalKeyToLabel(verticalKey) : verticalKey,

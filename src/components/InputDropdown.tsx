@@ -100,10 +100,11 @@ export default function InputDropdown({
   }
 
   let numSections = 0;
-  const childrenWithProps = recursivelyMapChildren(children, child => {
+  const childrenWithProps : any= recursivelyMapChildren(children, child => {
     if (!(React.isValidElement(child) && child.type === DropdownSection)) {
       return child;
     }
+    
     const currentSectionIndex = numSections;
     numSections++;
 
@@ -229,6 +230,7 @@ export default function InputDropdown({
   //   console.log(currentValue,"currentValue");
   //   setLatestUserInput(currentValue);
   // })
+  
 
   return (
     <div className={inputDropdownContainerCssClasses} ref={inputDropdownRef} onBlur={handleBlur}>
@@ -283,10 +285,10 @@ export default function InputDropdown({
           : ''
         }
       />
-      {shouldDisplayDropdown && Children.count(children) !== 0 &&
+      {shouldDisplayDropdown && Children.count(children) !== 0 && childrenWithProps.length > 1 && 
         <>
           <div className={cssClasses.divider}></div>
-          <div className={cssClasses.dropdownContainer} ref={dropdownRef}>
+          <div id="DropDownMenus" className={cssClasses.dropdownContainer} ref={dropdownRef}>
             {childrenWithProps}
           </div>
         </>

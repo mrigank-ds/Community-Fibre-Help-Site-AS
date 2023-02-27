@@ -72,6 +72,7 @@ export default function SearchBar({
   const answersActions = useAnswersActions();
   const query = useAnswersState(state => state.query.input) ?? '';
   const clear = useAnswersState(state => query.length===0) ?? false;
+ 
 
 
   const isLoading = useAnswersState(state => state.searchStatus.isLoading);
