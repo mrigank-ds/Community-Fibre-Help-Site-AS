@@ -36,12 +36,10 @@ export default function UniversalSearchPage(props: { universalResultsConfig: Uni
   // console.log(SearchQuery,"SearchQuery");
   const queryString: any = window.location.search;
   let urlParams: any = new URLSearchParams(queryString);
-
+  
+     
+      
   const product = urlParams.get('query');
-  // console.log(product,"product");
-
-  // console.log(params,"params");
-
   const answersActions = useAnswersActions();
 
 
@@ -73,7 +71,6 @@ export default function UniversalSearchPage(props: { universalResultsConfig: Uni
 
   function updateParam(latestUserInput: any) {
     var paramValue = latestUserInput; // Replace with your updated value
-    // console.log(paramValue,"paramValue");
     var searchParams = new URLSearchParams(window.location.search);
     searchParams.set('query', paramValue);
     var newUrl = window.location.protocol + "//" + window.location.host + window.location.pathname + '?' + searchParams.toString();
@@ -168,3 +165,5 @@ export default function UniversalSearchPage(props: { universalResultsConfig: Uni
     </>
   );
 }
+
+

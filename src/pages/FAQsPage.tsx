@@ -64,7 +64,7 @@ export default function FAQsPage({ verticalKey, limit }: {
     window.history.replaceState({}, '', newUrl);
   }
   // Getting URL code ends here
-  usePageSetupEffect(verticalKey);
+  usePageSetupEffect(verticalKey,15);
   const isVertical = useAnswersState(s => s.meta.searchType) === SearchTypeEnum.Vertical;
 
   return (

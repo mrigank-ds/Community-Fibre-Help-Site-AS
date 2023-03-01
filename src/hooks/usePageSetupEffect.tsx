@@ -8,7 +8,7 @@ import { verticalLimit } from "../config/routeConfig";
  * Sets up the state for a page
  * @param verticalKey - The verticalKey associated with the page, or undefined for universal pages
  */
-export default function usePageSetupEffect(verticalKey?: string, limit?:number) {
+export default function usePageSetupEffect(verticalKey?: string, limit?:any) {
   const answersActions = useAnswersActions();
   const searchActions = useAnswersActions();
 
@@ -26,7 +26,7 @@ export default function usePageSetupEffect(verticalKey?: string, limit?:number) 
         'provider_switching',
         'locations'
     ]
-    const cardlimit =limit;
+    const cardlimit : any =limit;
     answersActions.setState({
       ...answersActions.state,
       ...stateToClear
@@ -46,7 +46,7 @@ export default function usePageSetupEffect(verticalKey?: string, limit?:number) 
 
      
        if(verticalKey == key){        
-        searchActions.setVerticalLimit(verticalLimit);
+        searchActions.setVerticalLimit(limit);
        }
       
        

@@ -70,7 +70,7 @@ export default function VideoPage({ verticalKey }: {
  }
  // Getting URL code ends here
   const { pageView } = useContext(PageViewContext);
-  usePageSetupEffect(verticalKey);
+  usePageSetupEffect(verticalKey,6);
   const isVertical = useAnswersState(s => s.meta.searchType) === SearchTypeEnum.Vertical;
 
   return (

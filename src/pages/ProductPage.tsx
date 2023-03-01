@@ -38,99 +38,106 @@ export default function ProductPage({ verticalKey }: {
   verticalKey: string
 }) {
 
-   // Getting URL code starts here
-   let SearchQuery :any  = useAnswersState(state => state.query.input);
-   // console.log(SearchQuery,"SearchQuery");
-   const queryString : any = window.location.search;
-   let  urlParams : any = new URLSearchParams(queryString);
-   
-   const product = urlParams.get('query');
-     console.log(product,"product");
-   
-   // console.log(params,"params");
+  // Getting URL code starts here
+  let SearchQuery: any = useAnswersState(state => state.query.input);
+  // console.log(SearchQuery,"SearchQuery");
+  
+  
 
-   const answersActions = useAnswersActions();
-   
   
-    
-  
-   useEffect(()=>{
-    if(SearchQuery!='' && SearchQuery!=null){
-      updateParam(SearchQuery)
-      }else{
-        updateParam('')
+  let originUrl = window.location.origin; //  originUrl - contains origin of url like - http://192.168.3.180:3000
+  let pathUrl = window.location.pathname; // pathUrl  - contains paths like /product,/helpArticles
+  let newUrl = originUrl + pathUrl;  // newUrl - Contains the combination of originUrl and pathUrl = http://192.168.3.180:3000/helpArticles
+  /**
+   * Below in useEffect we check whether page is reloaded or not if reloaded the we redirect
+   * it to index.html page(main page)
+   */
+  useEffect(() => {
+    if (window.performance) {
+      if (performance.navigation.type == 1) {
+        window.location.replace(originUrl + '?query=');
+        console.log("redirected");
       }
-   },[SearchQuery])
-   function updateParam(latestUserInput:any) {
-     var paramValue = latestUserInput; // Replace with your updated value
-     console.log(paramValue,"paramValue");
-     var searchParams = new URLSearchParams(window.location.search);
-     searchParams.set('query', paramValue);
-     var newUrl = window.location.protocol + "//" + window.location.host + window.location.pathname + '?' + searchParams.toString();
-     window.history.replaceState({}, '', newUrl);
-   }
-   // Getting URL code ends here
+    }
+  }, [newUrl]);
+
+  useEffect(() => {
+    if (SearchQuery != '' && SearchQuery != null) {
+      updateParam(SearchQuery)
+    } else {
+      updateParam('')
+    }
+  }, [SearchQuery])
+  function updateParam(latestUserInput: any) {
+    var paramValue = latestUserInput; // Replace with your updated value
+    console.log(paramValue, "paramValue");
+    var searchParams = new URLSearchParams(window.location.search);
+    searchParams.set('query', paramValue);
+    var newUrl = window.location.protocol + "//" + window.location.host + window.location.pathname + '?' + searchParams.toString();
+    window.history.replaceState({}, '', newUrl);
+  }
+  // Getting URL code ends here
 
 
   const { pageView } = useContext(PageViewContext);
-  usePageSetupEffect(verticalKey);
+  usePageSetupEffect(verticalKey, 6);
   const isVertical = useAnswersState(s => s.meta.searchType) === SearchTypeEnum.Vertical;
   return (
     <>
-    {isVertical
+      {isVertical
         ? <SearchBar
-          placeholder= 'Products'
+          placeholder='Products'
         />
         : <SampleVisualSearchBar />
       }
       <Navigation links={navLinks} />
-    
-   
-    <div className='flex'> 
-      <FilterDisplayManager>
-        {/* <FilterSearch
+
+
+      <div className='flex'>
+        <FilterDisplayManager>
+          {/* <FilterSearch
           label='Filter Search'
           sectioned={true}
           searchFields={filterSearchFields}/> */}
-        <Divider />
-        {/* <Facets
+          <Divider />
+          {/* <Facets
           searchOnChange={true}
           searchable={true}
           collapsible={true}
           defaultExpanded={true}/> */}
-      </FilterDisplayManager>
-      { (pageView === PageView.Desktop || pageView === PageView.FiltersHiddenMobile) &&
-        <div className='flex-grow'>
-          <DirectAnswer />
-          <SpellCheck />
-          <div className='flex'>
-            <ResultsCount />
-            {pageView === PageView.FiltersHiddenMobile && 
-              <ViewFiltersButton />}
-          </div>
-          <AppliedFilters
-            hiddenFields={['builtin.entityType']}
-          />
-  <AlternativeVerticals
-      
-        currentVerticalLabel='products'
-        verticalsConfig={[
-         
-          { label: 'Help Articles', verticalKey: 'help_articles'},
-         
-          { label: 'Video', verticalKey:'videos'},
-          { label: 'Location', verticalKey:'locations'},
-          { label: 'Provider Switching', verticalKey:'provider_switching'},
+        </FilterDisplayManager>
+        {(pageView === PageView.Desktop || pageView === PageView.FiltersHiddenMobile) &&
+          <div className='flex-grow'>
+            <DirectAnswer />
+            <SpellCheck />
+            <div className='flex'>
+              <ResultsCount />
+              {pageView === PageView.FiltersHiddenMobile &&
+                <ViewFiltersButton />}
+            </div>
+            <AppliedFilters
+              hiddenFields={['builtin.entityType']}
+            />
+            <AlternativeVerticals
 
-        ]}
-          />
-          <VerticalResults
-            CardComponent={ProductsCard}
-          />
-          <LocationBias />
-        </div>
-      }
-    </div>
+              currentVerticalLabel='products'
+              verticalsConfig={[
+
+                { label: 'Help Articles', verticalKey: 'help_articles' },
+
+                { label: 'Video', verticalKey: 'videos' },
+                { label: 'Location', verticalKey: 'locations' },
+                { label: 'Provider Switching', verticalKey: 'provider_switching' },
+
+              ]}
+            />
+            <VerticalResults
+              CardComponent={ProductsCard}
+            />
+            <LocationBias />
+          </div>
+        }
+      </div>
     </>
   )
 }

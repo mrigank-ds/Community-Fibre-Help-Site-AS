@@ -13,7 +13,8 @@ import { getUserLocation } from '../utils/search-operations';
 /**
  * This defines the pasth and page used for showing a vertical on front-end.
  */
-export const verticalLimit = 18
+export const verticalLimit = 3
+// export const ProductVerticalLimit = 5
 
 export const routeConfig = [
   {
@@ -34,7 +35,7 @@ export const routeConfig = [
 
   {
     path: '/product',
-    page: <ProductPage verticalKey='product' />
+    page: <ProductPage verticalKey='product'/>
   },
   {
     path: '/provider_switching',
