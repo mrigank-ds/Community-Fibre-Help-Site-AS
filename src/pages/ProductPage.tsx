@@ -45,21 +45,21 @@ export default function ProductPage({ verticalKey }: {
   
 
   
-  let originUrl = window.location.origin; //  originUrl - contains origin of url like - http://192.168.3.180:3000
-  let pathUrl = window.location.pathname; // pathUrl  - contains paths like /product,/helpArticles
-  let newUrl = originUrl + pathUrl;  // newUrl - Contains the combination of originUrl and pathUrl = http://192.168.3.180:3000/helpArticles
-  /**
-   * Below in useEffect we check whether page is reloaded or not if reloaded the we redirect
-   * it to index.html page(main page)
-   */
-  useEffect(() => {
-    if (window.performance) {
-      if (performance.navigation.type == 1) {
-        window.location.replace(originUrl + '?query=');
-        console.log("redirected");
-      }
-    }
-  }, [newUrl]);
+  // let originUrl = window.location.origin; //  originUrl - contains origin of url like - http://192.168.3.180:3000
+  // let pathUrl = window.location.pathname; // pathUrl  - contains paths like /product,/helpArticles
+  // let newUrl = originUrl + pathUrl;  // newUrl - Contains the combination of originUrl and pathUrl = http://192.168.3.180:3000/helpArticles
+  // /**
+  //  * Below in useEffect we check whether page is reloaded or not if reloaded the we redirect
+  //  * it to index.html page(main page)
+  //  */
+  // useEffect(() => {
+  //   if (window.performance) {
+  //     if (performance.navigation.type == 1) {
+  //       window.location.replace(originUrl + '?query=');
+  //       console.log("redirected");
+  //     }
+  //   }
+  // }, [newUrl]);
 
   useEffect(() => {
     if (SearchQuery != '' && SearchQuery != null) {
